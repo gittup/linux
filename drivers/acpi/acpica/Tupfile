@@ -1,4 +1,3 @@
-exit-n @(ACPI)
 include_rules
 modname = acpica
 #
@@ -47,5 +46,5 @@ acpi-y += utalloc.c utdebug.c uteval.c utinit.c utmisc.c utxface.c \
 		utcopy.c utdelete.c utglobal.c utmath.c utobject.c \
 		utstate.c utmutex.c utresrc.c utlock.c
 
-obj-y	+= $(acpi-y)
+obj-@(ACPI)	+= $(acpi-y)
 include $(LINUX_ROOT)/linux.tup
