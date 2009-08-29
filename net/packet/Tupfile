@@ -1,0 +1,8 @@
+include_rules
+modname = packet
+#
+# Makefile for the packet AF.
+#
+
+obj-@(PACKET) += af_packet.c
+include $(LINUX_ROOT)/linux.tup

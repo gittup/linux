@@ -1,0 +1,10 @@
+include_rules
+modname = irq
+
+obj-y := handle.c manage.c spurious.c resend.c chip.c devres.c
+obj-@(GENERIC_IRQ_PROBE) += autoprobe.c
+obj-@(PROC_FS) += proc.c
+obj-@(GENERIC_PENDING_IRQ) += migration.c
+obj-@(NUMA_IRQ_DESC) += numa_migrate.c
+obj-@(PM_SLEEP) += pm.c
+include $(LINUX_ROOT)/linux.tup

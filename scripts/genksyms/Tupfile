@@ -1,0 +1,14 @@
+include_rules
+
+CFLAGS += -Wall
+CFLAGS += -Wstrict-prototypes
+CFLAGS += -fomit-frame-pointer
+CFLAGS += -I$(LINUX_ROOT)/include
+CFLAGS += -I$(LINUX_ROOT)/arch/x86/include
+CFLAGS += -I.
+: parse.c_shipped |> cp %f %o |> parse.c
+: parse.h_shipped |> cp %f %o |> parse.h
+: lex.c_shipped |> cp %f %o |> lex.c
+: keywords.c_shipped |> cp %f %o |> keywords.c
+: foreach genksyms.c parse.c lex.c | keywords.c parse.h |> !cc |> %B.o {objs}
+: {objs} |> !ld |> genksyms

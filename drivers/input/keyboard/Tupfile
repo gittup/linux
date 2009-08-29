@@ -1,0 +1,36 @@
+include_rules
+modname = keyboard
+#
+# Makefile for the input core drivers.
+#
+
+# Each configuration option enables a list of files.
+
+obj-@(KEYBOARD_AAED2000)		+= aaed2000_kbd.c
+obj-@(KEYBOARD_AMIGA)		+= amikbd.c
+obj-@(KEYBOARD_ATARI)		+= atakbd.c
+obj-@(KEYBOARD_ATKBD)		+= atkbd.c
+obj-@(KEYBOARD_BFIN)		+= bf54x-keys.c
+obj-@(KEYBOARD_CORGI)		+= corgikbd.c
+obj-@(KEYBOARD_EP93XX)		+= ep93xx_keypad.c
+obj-@(KEYBOARD_GPIO)		+= gpio_keys.c
+obj-@(KEYBOARD_HIL)		+= hil_kbd.c
+obj-@(KEYBOARD_HIL_OLD)		+= hilkbd.c
+obj-@(KEYBOARD_HP6XX)		+= jornada680_kbd.c
+obj-@(KEYBOARD_HP7XX)		+= jornada720_kbd.c
+obj-@(KEYBOARD_LKKBD)		+= lkkbd.c
+obj-@(KEYBOARD_LM8323)		+= lm8323.c
+obj-@(KEYBOARD_LOCOMO)		+= locomokbd.c
+obj-@(KEYBOARD_MAPLE)		+= maple_keyb.c
+obj-@(KEYBOARD_MATRIX)		+= matrix_keypad.c
+obj-@(KEYBOARD_NEWTON)		+= newtonkbd.c
+obj-@(KEYBOARD_OMAP)		+= omap-keypad.c
+obj-@(KEYBOARD_PXA27x)		+= pxa27x_keypad.c
+obj-@(KEYBOARD_PXA930_ROTARY)	+= pxa930_rotary.c
+obj-@(KEYBOARD_SH_KEYSC)		+= sh_keysc.c
+obj-@(KEYBOARD_SPITZ)		+= spitzkbd.c
+obj-@(KEYBOARD_STOWAWAY)		+= stowaway.c
+obj-@(KEYBOARD_SUNKBD)		+= sunkbd.c
+obj-@(KEYBOARD_TOSA)		+= tosakbd.c
+obj-@(KEYBOARD_XTKBD)		+= xtkbd.c
+include $(LINUX_ROOT)/linux.tup

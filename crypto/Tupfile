@@ -1,0 +1,94 @@
+include_rules
+modname = crypto
+#
+# Cryptographic API
+#
+
+crypto-y := api.c cipher.c digest.c compress.c
+
+obj-@(CRYPTO_WORKQUEUE) += crypto_wq.c
+
+obj-@(CRYPTO_FIPS) += fips.c
+
+crypto_algapi-@(PROC_FS) += proc.c
+crypto_algapi-y := algapi.c scatterwalk.c $(crypto_algapi-y)
+obj-@(CRYPTO_ALGAPI2) += $(crypto_algapi-y)
+
+obj-@(CRYPTO_AEAD2) += aead.c
+
+crypto_blkcipher-y := ablkcipher.c
+crypto_blkcipher-y += blkcipher.c
+obj-@(CRYPTO_BLKCIPHER2) += crypto_blkcipher.c
+obj-@(CRYPTO_BLKCIPHER2) += chainiv.c
+obj-@(CRYPTO_BLKCIPHER2) += eseqiv.c
+obj-@(CRYPTO_SEQIV) += seqiv.c
+
+crypto_hash-y := hash.c
+crypto_hash-y += ahash.c
+crypto_hash-y += shash.c
+obj-@(CRYPTO_HASH2) += $(crypto_hash-y)
+
+obj-@(CRYPTO_PCOMP) += pcompress.c
+
+cryptomgr-y := algboss.c testmgr.c
+
+obj-@(CRYPTO_MANAGER2) += cryptomgr.c
+obj-@(CRYPTO_HMAC) += hmac.c
+obj-@(CRYPTO_XCBC) += xcbc.c
+obj-@(CRYPTO_NULL) += crypto_null.c
+obj-@(CRYPTO_MD4) += md4.c
+obj-@(CRYPTO_MD5) += md5.c
+obj-@(CRYPTO_RMD128) += rmd128.c
+obj-@(CRYPTO_RMD160) += rmd160.c
+obj-@(CRYPTO_RMD256) += rmd256.c
+obj-@(CRYPTO_RMD320) += rmd320.c
+obj-@(CRYPTO_SHA1) += sha1_generic.c
+obj-@(CRYPTO_SHA256) += sha256_generic.c
+obj-@(CRYPTO_SHA512) += sha512_generic.c
+obj-@(CRYPTO_WP512) += wp512.c
+obj-@(CRYPTO_TGR192) += tgr192.c
+obj-@(CRYPTO_GF128MUL) += gf128mul.c
+obj-@(CRYPTO_ECB) += ecb.c
+obj-@(CRYPTO_CBC) += cbc.c
+obj-@(CRYPTO_PCBC) += pcbc.c
+obj-@(CRYPTO_CTS) += cts.c
+obj-@(CRYPTO_LRW) += lrw.c
+obj-@(CRYPTO_XTS) += xts.c
+obj-@(CRYPTO_CTR) += ctr.c
+obj-@(CRYPTO_GCM) += gcm.c
+obj-@(CRYPTO_CCM) += ccm.c
+obj-@(CRYPTO_CRYPTD) += cryptd.c
+obj-@(CRYPTO_DES) += des_generic.c
+obj-@(CRYPTO_FCRYPT) += fcrypt.c
+obj-@(CRYPTO_BLOWFISH) += blowfish.c
+obj-@(CRYPTO_TWOFISH) += twofish.c
+obj-@(CRYPTO_TWOFISH_COMMON) += twofish_common.c
+obj-@(CRYPTO_SERPENT) += serpent.c
+obj-@(CRYPTO_AES) += aes_generic.c
+obj-@(CRYPTO_CAMELLIA) += camellia.c
+obj-@(CRYPTO_CAST5) += cast5.c
+obj-@(CRYPTO_CAST6) += cast6.c
+obj-@(CRYPTO_ARC4) += arc4.c
+obj-@(CRYPTO_TEA) += tea.c
+obj-@(CRYPTO_KHAZAD) += khazad.c
+obj-@(CRYPTO_ANUBIS) += anubis.c
+obj-@(CRYPTO_SEED) += seed.c
+obj-@(CRYPTO_SALSA20) += salsa20_generic.c
+obj-@(CRYPTO_DEFLATE) += deflate.c
+obj-@(CRYPTO_ZLIB) += zlib.c
+obj-@(CRYPTO_MICHAEL_MIC) += michael_mic.c
+obj-@(CRYPTO_CRC32C) += crc32c.c
+obj-@(CRYPTO_AUTHENC) += authenc.c
+obj-@(CRYPTO_LZO) += lzo.c
+obj-@(CRYPTO_RNG2) += rng.c
+obj-@(CRYPTO_RNG2) += krng.c
+obj-@(CRYPTO_ANSI_CPRNG) += ansi_cprng.c
+obj-@(CRYPTO_TEST) += tcrypt.c
+
+#
+# generic algorithms and the async_tx api
+#
+obj-@(XOR_BLOCKS) += xor.c
+link-@(ASYNC_CORE) += async_tx/built-in.o
+obj-@(CRYPTO) += $(crypto-y)
+include $(LINUX_ROOT)/linux.tup

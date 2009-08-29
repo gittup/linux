@@ -1,0 +1,24 @@
+include_rules
+
+# TODO
+BITS=32
+
+modname = acpi
+#subdir-				:= realmode
+
+obj-@(ACPI)		+= boot.c
+obj-@(ACPI_SLEEP)	+= sleep.c wakeup_rm.c wakeup_$(BITS).c
+
+acpi_processor-@(ACPI_PROCESSOR) = cstate.c processor.c
+obj-y += $(acpi_processor-y) $(acpi_processor-n)
+# TODO: ifneq
+#ifneq (@(ACPI_PROCESSOR),)
+#obj-y				+= cstate.c processor.c
+#endif
+
+#$(obj)/wakeup_rm.c:    $(obj)/realmode/wakeup.bin
+#
+#$(obj)/realmode/wakeup.bin: FORCE
+#	$(Q)$(MAKE) $(build)=$(obj)/realmode
+
+include $(LINUX_ROOT)/linux.tup

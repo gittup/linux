@@ -1,0 +1,31 @@
+include_rules
+modname = security
+#
+# Makefile for the kernel security code
+#
+
+link-@(KEYS)			+= keys/built-in.o
+subdir-@(SECURITY_SELINUX)	+= selinux
+subdir-@(SECURITY_SMACK)		+= smack
+subdir-@(SECURITY_TOMOYO)        += tomoyo
+
+# always enable default capabilities
+obj-y		+= commoncap.c
+
+# Object file lists
+obj-@(SECURITY)			+= security.c capability.c
+obj-@(SECURITYFS)		+= inode.c
+# Must precede capability.c in order to stack properly.
+obj-@(SECURITY_SELINUX)		+= selinux/built-in.c
+obj-@(SECURITY_SMACK)		+= smack/built-in.c
+ifeq (@(AUDIT),y)
+obj-@(SECURITY_SMACK)		+= lsm_audit.c
+endif
+obj-@(SECURITY_TOMOYO)		+= tomoyo/built-in.c
+obj-@(SECURITY_ROOTPLUG)		+= root_plug.c
+obj-@(CGROUP_DEVICE)		+= device_cgroup.c
+
+# Object integrity file lists
+subdir-@(IMA)			+= integrity/ima
+obj-@(IMA)			+= integrity/ima/built-in.c
+include $(LINUX_ROOT)/linux.tup

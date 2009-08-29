@@ -1,0 +1,58 @@
+include_rules
+modname = ipv4
+#
+# Makefile for the Linux TCP/IP (INET) layer.
+#
+
+obj-y     := route.c inetpeer.c protocol.c \
+	     ip_input.c ip_fragment.c ip_forward.c ip_options.c \
+	     ip_output.c ip_sockglue.c inet_hashtables.c \
+	     inet_timewait_sock.c inet_connection_sock.c \
+	     tcp.c tcp_input.c tcp_output.c tcp_timer.c tcp_ipv4.c \
+	     tcp_minisocks.c tcp_cong.c \
+	     datagram.c raw.c udp.c udplite.c \
+	     arp.c icmp.c devinet.c af_inet.c  igmp.c \
+	     fib_frontend.c fib_semantics.c \
+	     inet_fragment.c
+
+obj-@(SYSCTL) += sysctl_net_ipv4.c
+obj-@(IP_FIB_HASH) += fib_hash.c
+obj-@(IP_FIB_TRIE) += fib_trie.c
+obj-@(PROC_FS) += proc.c
+obj-@(IP_MULTIPLE_TABLES) += fib_rules.c
+obj-@(IP_MROUTE) += ipmr.c
+obj-@(NET_IPIP) += ipip.c
+obj-@(NET_IPGRE) += ip_gre.c
+obj-@(SYN_COOKIES) += syncookies.c
+obj-@(INET_AH) += ah4.c
+obj-@(INET_ESP) += esp4.c
+obj-@(INET_IPCOMP) += ipcomp.c
+obj-@(INET_XFRM_TUNNEL) += xfrm4_tunnel.c
+obj-@(INET_XFRM_MODE_BEET) += xfrm4_mode_beet.c
+obj-@(INET_LRO) += inet_lro.c
+obj-@(INET_TUNNEL) += tunnel4.c
+obj-@(INET_XFRM_MODE_TRANSPORT) += xfrm4_mode_transport.c
+obj-@(INET_XFRM_MODE_TUNNEL) += xfrm4_mode_tunnel.c
+obj-@(IP_PNP) += ipconfig.c
+obj-@(NETFILTER) += netfilter.c
+link-@(NETFILTER)	+= netfilter/built-in.o*
+obj-@(INET_DIAG) += inet_diag.c 
+obj-@(INET_TCP_DIAG) += tcp_diag.c
+obj-@(NET_TCPPROBE) += tcp_probe.c
+obj-@(TCP_CONG_BIC) += tcp_bic.c
+obj-@(TCP_CONG_CUBIC) += tcp_cubic.c
+obj-@(TCP_CONG_WESTWOOD) += tcp_westwood.c
+obj-@(TCP_CONG_HSTCP) += tcp_highspeed.c
+obj-@(TCP_CONG_HYBLA) += tcp_hybla.c
+obj-@(TCP_CONG_HTCP) += tcp_htcp.c
+obj-@(TCP_CONG_VEGAS) += tcp_vegas.c
+obj-@(TCP_CONG_VENO) += tcp_veno.c
+obj-@(TCP_CONG_SCALABLE) += tcp_scalable.c
+obj-@(TCP_CONG_LP) += tcp_lp.c
+obj-@(TCP_CONG_YEAH) += tcp_yeah.c
+obj-@(TCP_CONG_ILLINOIS) += tcp_illinois.c
+obj-@(NETLABEL) += cipso_ipv4.c
+
+obj-@(XFRM) += xfrm4_policy.c xfrm4_state.c xfrm4_input.c \
+		      xfrm4_output.c
+include $(LINUX_ROOT)/linux.tup

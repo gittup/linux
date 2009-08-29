@@ -1,0 +1,26 @@
+include_rules
+modname = base
+# Makefile for the Linux device tree
+
+obj-y			:= core.c sys.c bus.c dd.c \
+			   driver.c class.c platform.c \
+			   cpu.c firmware.c init.c map.c devres.c \
+			   attribute_container.c transport_class.c
+link-y			+= power/built-in.o*
+obj-@(HAS_DMA)	+= dma-mapping.c
+obj-@(ISA)	+= isa.c
+obj-@(FW_LOADER)	+= firmware_class.c
+obj-@(NUMA)	+= node.c
+obj-@(MEMORY_HOTPLUG_SPARSE) += memory.c
+obj-@(SMP)	+= topology.c
+obj-@(IOMMU_API) += iommu.c
+ifeq (@(SYSFS),y)
+obj-@(MODULES)	+= module.c
+endif
+obj-@(SYS_HYPERVISOR) += hypervisor.c
+
+ifeq (@(DEBUG_DRIVER),y)
+EXTRA_CFLAGS += -DDEBUG
+endif
+
+include $(LINUX_ROOT)/linux.tup

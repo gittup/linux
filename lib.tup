@@ -1,0 +1,3 @@
+include compiler.tup
+: foreach $(lib-y) | $(generated_headers) $(TUP_CWD)/scripts/genksyms/genksyms $(compiler_proper) |> ^ CC %f^ $(CC) $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" $(EXTRA_CFLAGS) -c %f -o tmp.%o && if objdump -h tmp.%o | grep -q __ksymtab; then $(CC) -E -D__GENKSYMS__ -nostdinc -isystem $(GCC_ROOT)/include-fixed -D__KERNEL__ $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR($(modname))" %f | $(TUP_CWD)/scripts/genksyms/genksyms -a i386 > tmp_%o.ver && $(LD) -m elf_i386 -r -o %o tmp.%o -T tmp_%o.ver && rm -f tmp.%o tmp_%o.ver; else mv -f tmp.%o %o; fi |> %B.o {lib-objs}
+: {lib-objs} |> !ar |> lib.a

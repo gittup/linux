@@ -1,0 +1,10 @@
+include_rules
+modname = devpts
+#
+# Makefile for the Linux /dev/pts virtual filesystem.
+#
+
+
+devpts-@(UNIX98_PTYS)		:= inode.c
+obj-@(UNIX98_PTYS)		+= $(devpts-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,144 @@
+include_rules
+include $(LINUX_ROOT)/compiler.tup
+
+#TODO
+BITS=32
+
+modname = kernel
+#
+# Makefile for the linux kernel.
+#
+
+extra-y                := head_$(BITS).S head$(BITS).c head.c init_task.c
+
+CPPFLAGS_vmlinux.lds += -U$(UTS_MACHINE)
+
+generated_headers += ../include/asm/asm-offsets.h
+: vmlinux.lds.S | $(generated_headers) $(compiler_proper) |> ^ CPP %o^ $(CC) $(CFLAGS) -P -C -Ui386 -Ui386 -D__ASSEMBLY__ -E %f > %o |> vmlinux.lds
+
+#ifdef CONFIG_FUNCTION_TRACER
+## Do not profile debug and lowlevel utilities
+#CFLAGS_REMOVE_tsc.c = -pg
+#CFLAGS_REMOVE_rtc.c = -pg
+#CFLAGS_REMOVE_paravirt-spinlocks.c = -pg
+#CFLAGS_REMOVE_ftrace.c = -pg
+#CFLAGS_REMOVE_early_printk.c = -pg
+#endif
+
+#
+# vsyscalls (which work on the user stack) should have
+# no stack-protector checks:
+#
+nostackp := $(call cc-option, -fno-stack-protector)
+CFLAGS_vsyscall_64.c	:= $(PROFILING) -g0 $(nostackp)
+CFLAGS_hpet.c		:= $(nostackp)
+CFLAGS_tsc.c		:= $(nostackp)
+CFLAGS_paravirt.c	:= $(nostackp)
+GCOV_PROFILE_vsyscall_64.c	:= n
+GCOV_PROFILE_hpet.c		:= n
+GCOV_PROFILE_tsc.c		:= n
+GCOV_PROFILE_paravirt.c		:= n
+
+CFLAGS_S += -D__ASSEMBLY__
+
+obj-y			:= process_$(BITS).c signal.c entry_$(BITS).S
+obj-y			+= traps.c irq.c irq_$(BITS).c dumpstack_$(BITS).c
+obj-y			+= time_$(BITS).c ioport.c ldt.c dumpstack.c
+obj-y			+= setup.c i8259.c irqinit.c
+obj-@(X86_VISWS)	+= visws_quirks.c
+obj-@(X86_32)	+= probe_roms_32.c
+obj-@(X86_32)	+= sys_i386_32.c i386_ksyms_32.c
+obj-@(X86_64)	+= sys_x86_64.c x8664_ksyms_64.c
+obj-@(X86_64)	+= syscall_64.c vsyscall_64.c
+obj-y			+= bootflag.c e820.c
+obj-y			+= pci-dma.c quirks.c i8237.c topology.c kdebugfs.c
+obj-y			+= alternative.c i8253.c pci-nommu.c
+obj-y			+= tsc.c io_delay.c rtc.c
+
+obj-@(X86_TRAMPOLINE)	+= trampoline.c
+obj-y				+= process.c
+obj-y				+= i387.c xsave.c
+obj-y				+= ptrace.c
+obj-@(X86_DS)		+= ds.c
+obj-@(X86_DS_SELFTEST)		+= ds_selftest.c
+obj-@(X86_32)		+= tls.c
+obj-@(IA32_EMULATION)	+= tls.c
+obj-y				+= step.c
+obj-@(STACKTRACE)	+= stacktrace.c
+link-y				+= cpu/built-in.o
+link-y				+= acpi/built-in.o*
+obj-y				+= reboot.c
+obj-@(MCA)		+= mca_32.c
+obj-@(X86_MSR)		+= msr.c
+obj-@(X86_CPUID)		+= cpuid.c
+obj-@(PCI)		+= early-quirks.c
+apm-y				:= apm_32.c
+obj-@(APM)		+= apm.c
+obj-@(SMP)		+= smp.c
+obj-@(SMP)		+= smpboot.c tsc_sync.c
+obj-@(SMP)		+= setup_percpu.c
+obj-@(X86_64_SMP)	+= tsc_sync.c
+obj-@(X86_TRAMPOLINE)	+= trampoline_$(BITS).S
+obj-@(X86_MPPARSE)	+= mpparse.c
+link-y				+= apic/built-in.o*
+obj-@(X86_REBOOTFIXUPS)	+= reboot_fixups_32.c
+obj-@(DYNAMIC_FTRACE)	+= ftrace.c
+obj-@(FUNCTION_GRAPH_TRACER) += ftrace.c
+obj-@(FTRACE_SYSCALLS)	+= ftrace.c
+obj-@(KEXEC)		+= machine_kexec_$(BITS).c
+obj-@(KEXEC)		+= relocate_kernel_$(BITS).c crash.c
+obj-@(CRASH_DUMP)	+= crash_dump_$(BITS).c
+obj-@(KPROBES)		+= kprobes.c
+obj-@(MODULES)		+= module.c
+obj-@(EFI) 		+= efi.c efi_$(BITS).c efi_stub_$(BITS).c
+obj-@(DOUBLEFAULT) 	+= doublefault_32.c
+obj-@(KGDB)		+= kgdb.c
+obj-@(VM86)		+= vm86_32.c
+obj-@(EARLY_PRINTK)	+= early_printk.c
+
+obj-@(HPET_TIMER) 	+= hpet.c
+
+obj-@(K8_NB)		+= k8.c
+obj-@(MGEODE_LX)		+= geode_32.c mfgpt_32.c
+obj-@(DEBUG_RODATA_TEST)	+= test_rodata.c
+obj-@(DEBUG_NX_TEST)	+= test_nx.c
+
+obj-@(VMI)		+= vmi_32.c vmiclock_32.c
+obj-@(KVM_GUEST)		+= kvm.c
+obj-@(KVM_CLOCK)		+= kvmclock.c
+obj-@(PARAVIRT)		+= paravirt.c paravirt_patch_$(BITS).c
+obj-@(PARAVIRT_SPINLOCKS)+= paravirt-spinlocks.c
+obj-@(PARAVIRT_CLOCK)	+= pvclock.c
+
+obj-@(PCSPKR_PLATFORM)	+= pcspeaker.c
+
+obj-@(SCx200)		+= scx200.c
+scx200-y			+= scx200_32.c
+
+obj-@(OLPC)		+= olpc.c
+
+microcode-y				:= microcode_core.c
+microcode-@(MICROCODE_INTEL)	+= microcode_intel.c
+microcode-@(MICROCODE_AMD)	+= microcode_amd.c
+obj-@(MICROCODE)			+= microcode.c
+
+obj-@(X86_CHECK_BIOS_CORRUPTION) += check.c
+
+obj-@(SWIOTLB)			+= pci-swiotlb.c
+
+###
+# 64 bit specific files
+ifeq (@(X86_64),y)
+	obj-@(X86_UV)		+= tlb_uv.c bios_uv.c uv_irq.c uv_sysfs.c uv_time.c
+	obj-@(X86_PM_TIMER)	+= pmtimer_64.c
+	obj-@(AUDIT)		+= audit_64.c
+
+	obj-@(GART_IOMMU)	+= pci-gart_64.c aperture_64.c
+	obj-@(CALGARY_IOMMU)	+= pci-calgary_64.c tce_64.c
+	obj-@(AMD_IOMMU)		+= amd_iommu_init.c amd_iommu.c
+
+	obj-@(PCI_MMCONFIG)	+= mmconf-fam10h_64.c
+	obj-y				+= vsmp_64.c
+endif
+include $(LINUX_ROOT)/extra.tup
+include $(LINUX_ROOT)/linux.tup

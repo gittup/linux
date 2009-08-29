@@ -1,0 +1,7 @@
+include_rules
+modname = notify
+obj-@(FSNOTIFY)		+= fsnotify.c notification.c group.c inode_mark.c
+
+link-y			+= dnotify/built-in.o*
+link-y			+= inotify/built-in.o*
+include $(LINUX_ROOT)/linux.tup

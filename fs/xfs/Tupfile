@@ -1,0 +1,121 @@
+include_rules
+modname = xfs
+#
+# Copyright (c) 2000-2005 Silicon Graphics, Inc.
+# All Rights Reserved.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it would be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write the Free Software Foundation,
+# Inc.,  51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+#
+
+EXTRA_CFLAGS +=	 -I$(src) -I$(src)/linux-2.6 -funsigned-char
+
+XFS_LINUX := linux-2.6
+
+ifeq (@(XFS_DEBUG),y)
+	EXTRA_CFLAGS += -g
+endif
+
+
+xfs-@(XFS_QUOTA)		+= $(addprefix quota/, \
+				   xfs_dquot.c \
+				   xfs_dquot_item.c \
+				   xfs_trans_dquot.c \
+				   xfs_qm_syscalls.c \
+				   xfs_qm_bhv.c \
+				   xfs_qm.c)
+xfs-@(XFS_QUOTA)		+= linux-2.6/xfs_quotaops.c
+
+ifeq (@(XFS_QUOTA),y)
+xfs-@(PROC_FS)		+= quota/xfs_qm_stats.c
+endif
+
+xfs-@(XFS_RT)		+= xfs_rtalloc.c
+xfs-@(XFS_POSIX_ACL)	+= $(XFS_LINUX)/xfs_acl.c
+xfs-@(PROC_FS)		+= $(XFS_LINUX)/xfs_stats.c
+xfs-@(SYSCTL)		+= $(XFS_LINUX)/xfs_sysctl.c
+xfs-@(COMPAT)		+= $(XFS_LINUX)/xfs_ioctl32.c
+
+
+xfs-y				+= xfs_alloc.c \
+				   xfs_alloc_btree.c \
+				   xfs_attr.c \
+				   xfs_attr_leaf.c \
+				   xfs_bit.c \
+				   xfs_bmap.c \
+				   xfs_bmap_btree.c \
+				   xfs_btree.c \
+				   xfs_buf_item.c \
+				   xfs_da_btree.c \
+				   xfs_dir2.c \
+				   xfs_dir2_block.c \
+				   xfs_dir2_data.c \
+				   xfs_dir2_leaf.c \
+				   xfs_dir2_node.c \
+				   xfs_dir2_sf.c \
+				   xfs_error.c \
+				   xfs_extfree_item.c \
+				   xfs_filestream.c \
+				   xfs_fsops.c \
+				   xfs_ialloc.c \
+				   xfs_ialloc_btree.c \
+				   xfs_iget.c \
+				   xfs_inode.c \
+				   xfs_inode_item.c \
+				   xfs_iomap.c \
+				   xfs_itable.c \
+				   xfs_dfrag.c \
+				   xfs_log.c \
+				   xfs_log_recover.c \
+				   xfs_mount.c \
+				   xfs_mru_cache.c \
+				   xfs_rename.c \
+				   xfs_trans.c \
+				   xfs_trans_ail.c \
+				   xfs_trans_buf.c \
+				   xfs_trans_extfree.c \
+				   xfs_trans_inode.c \
+				   xfs_trans_item.c \
+				   xfs_utils.c \
+				   xfs_vnodeops.c \
+				   xfs_rw.c \
+				   xfs_dmops.c
+
+xfs-@(XFS_TRACE)		+= xfs_btree_trace.c \
+				   xfs_dir2_trace.c
+
+# Objects in linux/
+xfs-y				+= $(addprefix $(XFS_LINUX)/, \
+				   kmem.c \
+				   xfs_aops.c \
+				   xfs_buf.c \
+				   xfs_export.c \
+				   xfs_file.c \
+				   xfs_fs_subr.c \
+				   xfs_globals.c \
+				   xfs_ioctl.c \
+				   xfs_iops.c \
+				   xfs_lrw.c \
+				   xfs_super.c \
+				   xfs_sync.c \
+				   xfs_xattr.c)
+
+# Objects in support/
+xfs-y				+= $(addprefix support/, \
+				   debug.c \
+				   uuid.c)
+
+xfs-@(XFS_TRACE)		+= support/ktrace.c
+
+obj-@(XFS_FS)		+= $(xfs-y)
+include $(LINUX_ROOT)/linux.tup

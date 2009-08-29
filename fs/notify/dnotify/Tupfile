@@ -1,0 +1,4 @@
+include_rules
+modname = dnotify
+obj-@(DNOTIFY)		+= dnotify.c
+include $(LINUX_ROOT)/linux.tup

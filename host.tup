@@ -1,0 +1,3 @@
+#: foreach $(hostprogs-y) | $(generated_headers) |> !cc_link |> %B
+# TODO: uClibc headers seem to conflict
+: foreach $(hostprogs-y) | $(generated_headers) |> gcc -I/usr/include -O2 -fomit-frame-pointer $(CFLAGS_%e) $(CFLAGS_%f) -I$(LINUX_ROOT)/arch/x86/include %f -o %o |> %B

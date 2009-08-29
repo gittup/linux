@@ -1,0 +1,16 @@
+include_rules
+modname = firmware
+#
+# Makefile for the linux kernel.
+#
+obj-@(DMI)		+= dmi_scan.c
+obj-@(EDD)		+= edd.c
+obj-@(EFI_VARS)		+= efivars.c
+obj-@(EFI_PCDP)		+= pcdp.c
+obj-@(DELL_RBU)          += dell_rbu.c
+obj-@(DCDBAS)		+= dcdbas.c
+obj-@(DMIID)		+= dmi-id.c
+obj-@(ISCSI_IBFT_FIND)	+= iscsi_ibft_find.c
+obj-@(ISCSI_IBFT)	+= iscsi_ibft.c
+obj-@(FIRMWARE_MEMMAP)	+= memmap.c
+include $(LINUX_ROOT)/linux.tup

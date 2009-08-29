@@ -1,0 +1,285 @@
+include_rules
+modname = net
+#
+# Makefile for the Linux network (ethercard) device drivers.
+#
+
+obj-@(TI_DAVINCI_EMAC) += davinci_emac.c
+
+link-@(E1000) += e1000/built-in.o
+link-@(E1000E) += e1000e/built-in.o
+link-@(IBM_NEW_EMAC) += ibm_newemac/built-in.o
+link-@(IGB) += igb/built-in.o
+link-@(IGBVF) += igbvf/built-in.o
+link-@(IXGBE) += ixgbe/built-in.o
+link-@(IXGB) += ixgb/built-in.o
+obj-@(IP1000) += ipg.c
+link-@(CHELSIO_T1) += chelsio/built-in.o
+link-@(CHELSIO_T3) += cxgb3/built-in.o
+link-@(EHEA) += ehea/built-in.o
+link-@(CAN) += can/built-in.o
+link-@(BONDING) += bonding/built-in.o
+link-@(ATL1) += atlx/built-in.o
+link-@(ATL2) += atlx/built-in.o
+link-@(ATL1E) += atl1e/built-in.o
+link-@(ATL1C) += atl1c/built-in.o
+obj-@(GIANFAR) += gianfar_driver.c
+obj-@(TEHUTI) += tehuti.c
+link-@(ENIC) += enic/built-in.o
+obj-@(JME) += jme.c
+link-@(BE2NET) += benet/built-in.o
+
+gianfar_driver-y := gianfar.c \
+		gianfar_ethtool.c \
+		gianfar_sysfs.c
+
+obj-@(UCC_GETH) += ucc_geth_driver.c
+ucc_geth_driver-y := ucc_geth.c ucc_geth_ethtool.c
+
+obj-@(FSL_PQ_MDIO) += fsl_pq_mdio.c
+
+#
+# link order important here
+#
+obj-@(PLIP) += plip.c
+
+obj-@(ROADRUNNER) += rrunner.c
+
+obj-@(HAPPYMEAL) += sunhme.c
+obj-@(SUNLANCE) += sunlance.c
+obj-@(SUNQE) += sunqe.c
+obj-@(SUNBMAC) += sunbmac.c
+obj-@(MYRI_SBUS) += myri_sbus.c
+obj-@(SUNGEM) += sungem.c sungem_phy.c
+obj-@(CASSINI) += cassini.c
+obj-@(SUNVNET) += sunvnet.c
+
+obj-@(MACE) += mace.c
+obj-@(BMAC) += bmac.c
+
+obj-@(VORTEX) += 3c59x.c
+obj-@(TYPHOON) += typhoon.c
+obj-@(NE2K_PCI) += ne2k-pci.c 8390.c
+obj-@(PCNET32) += pcnet32.c
+obj-@(E100) += e100.c
+obj-@(TLAN) += tlan.c
+obj-@(EPIC100) += epic100.c
+obj-@(SMSC9420) += smsc9420.c
+obj-@(SIS190) += sis190.c
+obj-@(SIS900) += sis900.c
+obj-@(R6040) += r6040.c
+obj-@(YELLOWFIN) += yellowfin.c
+obj-@(ACENIC) += acenic.c
+obj-@(ISERIES_VETH) += iseries_veth.c
+obj-@(NATSEMI) += natsemi.c
+obj-@(NS83820) += ns83820.c
+obj-@(STNIC) += stnic.c 8390.c
+obj-@(FEALNX) += fealnx.c
+obj-@(TIGON3) += tg3.c
+obj-@(BNX2) += bnx2.c
+obj-@(CNIC) += cnic.c
+obj-@(BNX2X) += bnx2x.c
+bnx2x-y := bnx2x_main.c bnx2x_link.c
+spidernet-y += spider_net.c spider_net_ethtool.c
+obj-@(SPIDER_NET) += spidernet.c sungem_phy.c
+obj-@(GELIC_NET) += ps3_gelic.c
+gelic_wireless-@(GELIC_WIRELESS) += ps3_gelic_wireless.c
+ps3_gelic-y += ps3_gelic_net.c $(gelic_wireless-y)
+obj-@(TC35815) += tc35815.c
+obj-@(SKGE) += skge.c
+obj-@(SKY2) += sky2.c
+link-@(SKFP) += skfp/built-in.o
+obj-@(KS8842)	+= ks8842.c
+obj-@(KS8851)	+= ks8851.c
+obj-@(VIA_RHINE) += via-rhine.c
+obj-@(VIA_VELOCITY) += via-velocity.c
+obj-@(ADAPTEC_STARFIRE) += starfire.c
+obj-@(RIONET) += rionet.c
+obj-@(SH_ETH) += sh_eth.c
+
+#
+# end link order section
+#
+
+obj-@(MII) += mii.c
+obj-@(MDIO) += mdio.c
+link-@(PHYLIB) += phy/built-in.o
+
+obj-@(SUNDANCE) += sundance.c
+obj-@(HAMACHI) += hamachi.c
+obj-@(NET) += Space.c loopback.c
+obj-@(SEEQ8005) += seeq8005.c
+obj-@(NET_SB1000) += sb1000.c
+obj-@(MAC8390) += mac8390.c
+obj-@(APNE) += apne.c 8390.c
+obj-@(PCMCIA_PCNET) += 8390.c
+obj-@(HP100) += hp100.c
+obj-@(SMC9194) += smc9194.c
+obj-@(FEC) += fec.c
+obj-@(FEC_MPC52xx) += fec_mpc52xx.c
+ifeq (@(FEC_MPC52xx_MDIO),y)
+	obj-@(FEC_MPC52xx) += fec_mpc52xx_phy.c
+endif
+obj-@(68360_ENET) += 68360enet.c
+obj-@(WD80x3) += wd.c 8390.c
+obj-@(EL2) += 3c503.c 8390p.c
+obj-@(NE2000) += ne.c 8390p.c
+obj-@(NE2_MCA) += ne2.c 8390p.c
+obj-@(HPLAN) += hp.c 8390p.c
+obj-@(HPLAN_PLUS) += hp-plus.c 8390p.c
+obj-@(ULTRA) += smc-ultra.c 8390.c
+obj-@(ULTRAMCA) += smc-mca.c 8390.c
+obj-@(ULTRA32) += smc-ultra32.c 8390.c
+obj-@(E2100) += e2100.c 8390.c
+obj-@(ES3210) += es3210.c 8390.c
+obj-@(LNE390) += lne390.c 8390.c
+obj-@(NE3210) += ne3210.c 8390.c
+obj-@(SB1250_MAC) += sb1250-mac.c
+obj-@(B44) += b44.c
+obj-@(FORCEDETH) += forcedeth.c
+obj-@(NE_H8300) += ne-h8300.c 8390.c
+obj-@(AX88796) += ax88796.c
+
+obj-@(TSI108_ETH) += tsi108_eth.c
+obj-@(MV643XX_ETH) += mv643xx_eth.c
+ll_temac-y := ll_temac_main.c ll_temac_mdio.c
+obj-@(XILINX_LL_TEMAC) += ll_temac.c
+obj-@(QLA3XXX) += qla3xxx.c
+link-@(QLGE) += qlge/built-in.o
+
+obj-@(PPP) += ppp_generic.c
+obj-@(PPP_ASYNC) += ppp_async.c
+obj-@(PPP_SYNC_TTY) += ppp_synctty.c
+obj-@(PPP_DEFLATE) += ppp_deflate.c
+obj-@(PPP_BSDCOMP) += bsd_comp.c
+obj-@(PPP_MPPE) += ppp_mppe.c
+obj-@(PPPOE) += pppox.c pppoe.c
+obj-@(PPPOL2TP) += pppox.c pppol2tp.c
+
+obj-@(SLIP) += slip.c
+obj-@(SLHC) += slhc.c
+
+obj-@(XEN_NETDEV_FRONTEND) += xen-netfront.c
+
+obj-@(DUMMY) += dummy.c
+obj-@(IFB) += ifb.c
+obj-@(MACVLAN) += macvlan.c
+obj-@(DE600) += de600.c
+obj-@(DE620) += de620.c
+obj-@(LANCE) += lance.c
+obj-@(SUN3_82586) += sun3_82586.c
+obj-@(SUN3LANCE) += sun3lance.c
+obj-@(DEFXX) += defxx.c
+obj-@(SGISEEQ) += sgiseeq.c
+obj-@(SGI_O2MACE_ETH) += meth.c
+obj-@(AT1700) += at1700.c
+obj-@(EL1) += 3c501.c
+obj-@(EL16) += 3c507.c
+obj-@(ELMC) += 3c523.c
+obj-@(IBMLANA) += ibmlana.c
+obj-@(ELMC_II) += 3c527.c
+obj-@(EL3) += 3c509.c
+obj-@(3C515) += 3c515.c
+obj-@(EEXPRESS) += eexpress.c
+obj-@(EEXPRESS_PRO) += eepro.c
+obj-@(8139CP) += 8139cp.c
+obj-@(8139TOO) += 8139too.c
+obj-@(ZNET) += znet.c
+obj-@(CPMAC) += cpmac.c
+obj-@(DEPCA) += depca.c
+obj-@(EWRK3) += ewrk3.c
+obj-@(ATP) += atp.c
+obj-@(NI5010) += ni5010.c
+obj-@(NI52) += ni52.c
+obj-@(NI65) += ni65.c
+obj-@(ELPLUS) += 3c505.c
+obj-@(AC3200) += ac3200.c 8390.c
+obj-@(APRICOT) += 82596.c
+obj-@(LASI_82596) += lasi_82596.c
+obj-@(SNI_82596) += sni_82596.c
+obj-@(MVME16x_NET) += 82596.c
+obj-@(BVME6000_NET) += 82596.c
+obj-@(SC92031) += sc92031.c
+
+# This is also a 82596 and should probably be merged
+obj-@(LP486E) += lp486e.c
+
+obj-@(ETH16I) += eth16i.c
+obj-@(ZORRO8390) += zorro8390.c 8390.c
+obj-@(HPLANCE) += hplance.c 7990.c
+obj-@(MVME147_NET) += mvme147.c 7990.c
+obj-@(EQUALIZER) += eql.c
+obj-@(KORINA) += korina.c
+obj-@(MIPS_JAZZ_SONIC) += jazzsonic.c
+obj-@(MIPS_AU1X00_ENET) += au1000_eth.c
+obj-@(MIPS_SIM_NET) += mipsnet.c
+obj-@(SGI_IOC3_ETH) += ioc3-eth.c
+obj-@(DECLANCE) += declance.c
+obj-@(ATARILANCE) += atarilance.c
+obj-@(A2065) += a2065.c
+obj-@(HYDRA) += hydra.c 8390.c
+obj-@(ARIADNE) += ariadne.c
+obj-@(CS89x0) += cs89x0.c
+obj-@(MACSONIC) += macsonic.c
+obj-@(MACMACE) += macmace.c
+obj-@(MAC89x0) += mac89x0.c
+obj-@(TUN) += tun.c
+obj-@(VETH) += veth.c
+obj-@(NET_NETX) += netx-eth.c
+obj-@(DL2K) += dl2k.c
+obj-@(R8169) += r8169.c
+obj-@(AMD8111_ETH) += amd8111e.c
+obj-@(IBMVETH) += ibmveth.c
+obj-@(S2IO) += s2io.c
+link-@(VXGE) += vxge/built-in.o
+link-@(MYRI10GE) += myri10ge/built-in.o
+obj-@(SMC91X) += smc91x.c
+obj-@(SMC911X) += smc911x.c
+obj-@(SMSC911X) += smsc911x.c
+obj-@(BFIN_MAC) += bfin_mac.c
+obj-@(DM9000) += dm9000.c
+obj-@(PASEMI_MAC) += pasemi_mac_driver.c
+pasemi_mac_driver-y := pasemi_mac.c pasemi_mac_ethtool.c
+link-@(MLX4_CORE) += mlx4/built-in.o
+obj-@(ENC28J60) += enc28j60.c
+obj-@(ETHOC) += ethoc.c
+
+obj-@(XTENSA_XT2000_SONIC) += xtsonic.c
+
+obj-@(DNET) += dnet.c
+obj-@(MACB) += macb.c
+obj-@(S6GMAC) += s6gmac.c
+
+link-@(ARM) += arm/built-in.o
+link-@(DEV_APPLETALK) += appletalk/built-in.o
+link-@(TR) += tokenring/built-in.o
+link-@(WAN) += wan/built-in.o
+link-@(ARCNET) += arcnet/built-in.o
+link-@(NET_PCMCIA) += pcmcia/built-in.o
+
+link-@(USB_CATC)          += usb/built-in.o
+link-@(USB_KAWETH)        += usb/built-in.o
+link-@(USB_PEGASUS)       += usb/built-in.o
+link-@(USB_RTL8150)       += usb/built-in.o
+link-@(USB_HSO)		+= usb/built-in.o
+link-@(USB_USBNET)        += usb/built-in.o
+link-@(USB_ZD1201)        += usb/built-in.o
+
+link-y += wireless/built-in.o*
+link-@(NET_TULIP) += tulip/built-in.o
+link-@(HAMRADIO) += hamradio/built-in.o
+link-@(IRDA) += irda/built-in.o
+link-@(ETRAX_ETHERNET) += cris/built-in.o
+link-@(ENP2611_MSF_NET) += ixp2000/built-in.o
+
+obj-@(NETCONSOLE) += netconsole.c
+
+link-@(FS_ENET) += fs_enet/built-in.o
+
+link-@(NETXEN_NIC) += netxen/built-in.o
+obj-@(NIU) += niu.c
+obj-@(VIRTIO_NET) += virtio_net.c
+link-@(SFC) += sfc/built-in.o
+
+link-@(WIMAX) += wimax/built-in.o
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,12 @@
+include_rules
+modname = udf
+#
+# Makefile for the linux udf-filesystem routines.
+#
+
+
+udf-y     := balloc.c dir.c file.c ialloc.c inode.c lowlevel.c namei.c \
+		partition.c super.c truncate.c symlink.c \
+		directory.c misc.c udftime.c unicode.c
+obj-@(UDF_FS) += $(udf-y)
+include $(LINUX_ROOT)/linux.tup

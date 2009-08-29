@@ -1,0 +1,40 @@
+CFLAGS += -nostdinc
+CFLAGS += -I$(TUP_CWD)/include
+CFLAGS += -I$(TUP_CWD)/arch/@(ARCH)/include
+CFLAGS += -isystem $(GCC_ROOT)/gcc/ginclude
+
+# -isystem /usr/lib/gcc/i686-pc-linux-gnu/4.1.2/include
+CFLAGS += -D__KERNEL__
+CFLAGS += -Wall
+CFLAGS += -Wundef
+CFLAGS += -Wstrict-prototypes
+CFLAGS += -Wno-trigraphs
+CFLAGS += -fno-strict-aliasing
+CFLAGS += -fno-common
+CFLAGS += -Werror-implicit-function-declaration
+CFLAGS += -m32
+CFLAGS += -msoft-float
+CFLAGS += -mregparm=3
+CFLAGS += -freg-struct-return
+CFLAGS += -mpreferred-stack-boundary=2
+CFLAGS += -march=i686
+CFLAGS += -mtune=pentium4
+CFLAGS += -mtune=i686
+CFLAGS += -ffreestanding
+CFLAGS += -DCONFIG_AS_CFI=1
+CFLAGS += -DCONFIG_AS_CFI_SIGNAL_FRAME=1
+CFLAGS += -pipe
+CFLAGS += -Wno-sign-compare
+CFLAGS += -fno-asynchronous-unwind-tables
+CFLAGS += -mno-sse
+CFLAGS += -mno-mmx
+CFLAGS += -mno-sse2
+CFLAGS += -mno-3dnow
+#-I$(TUP_CWD)/include/asm-x86/mach-default
+CFLAGS += -fno-stack-protector
+CFLAGS += -fomit-frame-pointer
+CFLAGS += -Wdeclaration-after-statement
+CFLAGS += -Wno-pointer-sign
+
+CC = $(SLASH_ROOT)/bin/xgcc -B$(SLASH_ROOT)/bin
+LD = $(SLASH_ROOT)/bin/ld

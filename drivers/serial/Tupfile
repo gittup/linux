@@ -1,0 +1,82 @@
+include_rules
+modname = serial
+#
+# Makefile for the kernel serial device drivers.
+#
+
+obj-@(SERIAL_CORE) += serial_core.c
+obj-@(SERIAL_21285) += 21285.c
+
+# These Sparc drivers have to appear before others such as 8250
+# which share ttySx minor node space.  Otherwise console device
+# names change and other unplesantries.
+obj-@(SERIAL_SUNCORE) += suncore.c
+obj-@(SERIAL_SUNHV) += sunhv.c
+obj-@(SERIAL_SUNZILOG) += sunzilog.c
+obj-@(SERIAL_SUNSU) += sunsu.c
+obj-@(SERIAL_SUNSAB) += sunsab.c
+
+obj-@(SERIAL_8250) += 8250.c
+obj-@(SERIAL_8250_PNP) += 8250_pnp.c
+obj-@(SERIAL_8250_GSC) += 8250_gsc.c
+obj-@(SERIAL_8250_PCI) += 8250_pci.c
+obj-@(SERIAL_8250_HP300) += 8250_hp300.c
+obj-@(SERIAL_8250_CS) += serial_cs.c
+obj-@(SERIAL_8250_ACORN) += 8250_acorn.c
+obj-@(SERIAL_8250_CONSOLE) += 8250_early.c
+obj-@(SERIAL_8250_FOURPORT) += 8250_fourport.c
+obj-@(SERIAL_8250_ACCENT) += 8250_accent.c
+obj-@(SERIAL_8250_BOCA) += 8250_boca.c
+obj-@(SERIAL_8250_EXAR_ST16C554) += 8250_exar_st16c554.c
+obj-@(SERIAL_8250_HUB6) += 8250_hub6.c
+obj-@(SERIAL_8250_MCA) += 8250_mca.c
+obj-@(SERIAL_AMBA_PL010) += amba-pl010.c
+obj-@(SERIAL_AMBA_PL011) += amba-pl011.c
+obj-@(SERIAL_CLPS711X) += clps711x.c
+obj-@(SERIAL_PXA) += pxa.c
+obj-@(SERIAL_PNX8XXX) += pnx8xxx_uart.c
+obj-@(SERIAL_SA1100) += sa1100.c
+obj-@(SERIAL_BFIN) += bfin_5xx.c
+obj-@(SERIAL_BFIN_SPORT) += bfin_sport_uart.c
+obj-@(SERIAL_SAMSUNG) += samsung.c
+obj-@(SERIAL_S3C2400) += s3c2400.c
+obj-@(SERIAL_S3C2410) += s3c2410.c
+obj-@(SERIAL_S3C2412) += s3c2412.c
+obj-@(SERIAL_S3C2440) += s3c2440.c
+obj-@(SERIAL_S3C24A0) += s3c24a0.c
+obj-@(SERIAL_S3C6400) += s3c6400.c
+obj-@(SERIAL_MAX3100) += max3100.c
+obj-@(SERIAL_IP22_ZILOG) += ip22zilog.c
+obj-@(SERIAL_MUX) += mux.c
+obj-@(SERIAL_MCF) += mcf.c
+obj-@(SERIAL_PMACZILOG) += pmac_zilog.c
+obj-@(SERIAL_LH7A40X) += serial_lh7a40x.c
+obj-@(SERIAL_DZ) += dz.c
+obj-@(SERIAL_ZS) += zs.c
+obj-@(SERIAL_SH_SCI) += sh-sci.c
+obj-@(SERIAL_SGI_L1_CONSOLE) += sn_console.c
+link-@(SERIAL_CPM) += cpm_uart/built-in.o
+obj-@(SERIAL_IMX) += imx.c
+obj-@(SERIAL_MPC52xx) += mpc52xx_uart.c
+obj-@(SERIAL_ICOM) += icom.c
+obj-@(SERIAL_M32R_SIO) += m32r_sio.c
+obj-@(SERIAL_MPSC) += mpsc.c
+obj-@(SERIAL_SB1250_DUART) += sb1250-duart.c
+obj-@(ETRAX_SERIAL) += crisv10.c
+obj-@(SERIAL_SC26XX) += sc26xx.c
+link-@(SERIAL_JSM) += jsm/built-in.o
+obj-@(SERIAL_TXX9) += serial_txx9.c
+obj-@(SERIAL_VR41XX) += vr41xx_siu.c
+obj-@(SERIAL_SGI_IOC4) += ioc4_serial.c
+obj-@(SERIAL_SGI_IOC3) += ioc3_serial.c
+obj-@(SERIAL_ATMEL) += atmel_serial.c
+obj-@(SERIAL_UARTLITE) += uartlite.c
+obj-@(SERIAL_MSM) += msm_serial.c
+obj-@(SERIAL_OF_PLATFORM) += of_serial.c
+obj-@(SERIAL_OF_PLATFORM_NWPSERIAL) += nwpserial.c
+obj-@(SERIAL_KS8695) += serial_ks8695.c
+obj-@(KGDB_SERIAL_CONSOLE) += kgdboc.c
+obj-@(SERIAL_QE) += ucc_uart.c
+obj-@(SERIAL_TIMBERDALE)	+= timbuart.c
+obj-@(SERIAL_NETX) += $(serial-y)
+include $(LINUX_ROOT)/linux.tup

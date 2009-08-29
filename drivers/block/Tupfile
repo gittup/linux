@@ -1,0 +1,43 @@
+include_rules
+modname = block
+#
+# Makefile for the kernel block device drivers.
+#
+# 12 June 2000, Christoph Hellwig <hch@infradead.crg>
+# Rewritten to use lists instead of if-statements.
+# 
+
+obj-@(MAC_FLOPPY)	+= swim3.c
+obj-@(BLK_DEV_SWIM)	+= swim_mod.c
+obj-@(BLK_DEV_FD)	+= floppy.c
+obj-@(AMIGA_FLOPPY)	+= amiflop.c
+obj-@(PS3_DISK)		+= ps3disk.c
+obj-@(PS3_VRAM)		+= ps3vram.c
+obj-@(ATARI_FLOPPY)	+= ataflop.c
+obj-@(AMIGA_Z2RAM)	+= z2ram.c
+obj-@(BLK_DEV_RAM)	+= brd.c
+obj-@(BLK_DEV_LOOP)	+= loop.c
+obj-@(BLK_DEV_XD)	+= xd.c
+obj-@(BLK_CPQ_DA)	+= cpqarray.c
+obj-@(BLK_CPQ_CISS_DA)  += cciss.c
+obj-@(BLK_DEV_DAC960)	+= DAC960.c
+obj-@(XILINX_SYSACE)	+= xsysace.c
+obj-@(CDROM_PKTCDVD)	+= pktcdvd.c
+obj-@(MG_DISK)		+= mg_disk.c
+obj-@(SUNVDC)		+= sunvdc.c
+obj-@(BLK_DEV_OSD)	+= osdblk.c
+
+obj-@(BLK_DEV_UMEM)	+= umem.c
+obj-@(BLK_DEV_NBD)	+= nbd.c
+obj-@(BLK_DEV_CRYPTOLOOP) += cryptoloop.c
+obj-@(VIRTIO_BLK)	+= virtio_blk.c
+
+obj-@(VIODASD)		+= viodasd.c
+obj-@(BLK_DEV_SX8)	+= sx8.c
+obj-@(BLK_DEV_UB)	+= ub.c
+obj-@(BLK_DEV_HD)	+= hd.c
+
+obj-@(XEN_BLKDEV_FRONTEND)	+= xen-blkfront.c
+
+swim_mod-y	:= swim.c swim_asm.c
+include $(LINUX_ROOT)/linux.tup

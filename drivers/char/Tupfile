@@ -1,0 +1,120 @@
+include_rules
+modname = char
+#
+# Makefile for the kernel character device drivers.
+#
+
+#
+# This file contains the font map for the default (hardware) font
+#
+FONTMAPFILE = cp437.uni
+
+obj-y	 += mem.c random.c tty_io.c n_tty.c tty_ioctl.c tty_ldisc.c tty_buffer.c tty_port.c
+
+pty-@(LEGACY_PTYS)	= pty.c
+pty-@(UNIX98_PTYS)	= pty.c
+obj-y += $(pty-y)
+obj-y				+= misc.c
+obj-@(VT)		+= vt_ioctl.c vc_screen.c selection.c keyboard.c
+obj-@(CONSOLE_TRANSLATIONS) += consolemap.c consolemap_deftbl.c
+obj-@(HW_CONSOLE)	+= vt.c defkeymap.c
+obj-@(AUDIT)		+= tty_audit.c
+obj-@(MAGIC_SYSRQ)	+= sysrq.c
+obj-@(ESPSERIAL)		+= esp.c
+obj-@(MVME147_SCC)	+= generic_serial.c vme_scc.c
+obj-@(MVME162_SCC)	+= generic_serial.c vme_scc.c
+obj-@(BVME6000_SCC)	+= generic_serial.c vme_scc.c
+obj-@(ROCKETPORT)	+= rocket.c
+obj-@(SERIAL167)		+= serial167.c
+obj-@(CYCLADES)		+= cyclades.c
+obj-@(STALLION)		+= stallion.c
+obj-@(ISTALLION)		+= istallion.c
+obj-@(NOZOMI)		+= nozomi.c
+obj-@(DIGIEPCA)		+= epca.c
+obj-@(SPECIALIX)		+= specialix.c
+obj-@(MOXA_INTELLIO)	+= moxa.c
+obj-@(A2232)		+= ser_a2232.c generic_serial.c
+obj-@(ATARI_DSP56K)	+= dsp56k.c
+obj-@(MOXA_SMARTIO)	+= mxser.c
+obj-@(RISCOM8)		+= riscom8.c
+obj-@(ISI)		+= isicom.c
+obj-@(SYNCLINK)		+= synclink.c
+obj-@(SYNCLINKMP)	+= synclinkmp.c
+obj-@(SYNCLINK_GT)	+= synclink_gt.c
+obj-@(N_HDLC)		+= n_hdlc.c
+obj-@(AMIGA_BUILTIN_SERIAL) += amiserial.c
+obj-@(SX)		+= sx.c generic_serial.c
+obj-@(RIO)		+= rio/ generic_serial.c
+obj-@(HVC_CONSOLE)	+= hvc_vio.c hvsi.c
+obj-@(HVC_ISERIES)	+= hvc_iseries.c
+obj-@(HVC_RTAS)		+= hvc_rtas.c
+obj-@(HVC_BEAT)		+= hvc_beat.c
+obj-@(HVC_DRIVER)	+= hvc_console.c
+obj-@(HVC_IRQ)		+= hvc_irq.c
+obj-@(HVC_XEN)		+= hvc_xen.c
+obj-@(VIRTIO_CONSOLE)	+= virtio_console.c
+obj-@(RAW_DRIVER)	+= raw.c
+obj-@(SGI_SNSC)		+= snsc.c snsc_event.c
+obj-@(MSPEC)		+= mspec.c
+obj-@(MMTIMER)		+= mmtimer.c
+obj-@(VIOTAPE)		+= viotape.c
+obj-@(HVCS)		+= hvcs.c
+obj-@(IBM_BSR)		+= bsr.c
+obj-@(SGI_MBCS)		+= mbcs.c
+obj-@(BRIQ_PANEL)	+= briq_panel.c
+obj-@(BFIN_OTP)		+= bfin-otp.c
+
+obj-@(PRINTER)		+= lp.c
+
+obj-@(APM_EMULATION)	+= apm-emulation.c
+
+obj-@(DTLK)		+= dtlk.c
+obj-@(R3964)		+= n_r3964.c
+obj-@(APPLICOM)		+= applicom.c
+obj-@(SONYPI)		+= sonypi.c
+obj-@(RTC)		+= rtc.c
+obj-@(HPET)		+= hpet.c
+obj-@(GEN_RTC)		+= genrtc.c
+obj-@(EFI_RTC)		+= efirtc.c
+obj-@(SGI_DS1286)	+= ds1286.c
+obj-@(SGI_IP27_RTC)	+= ip27-rtc.c
+obj-@(DS1302)		+= ds1302.c
+ifeq (@(GENERIC_NVRAM),y)
+  obj-@(NVRAM)	+= generic_nvram.c
+else
+  obj-@(NVRAM)	+= nvram.c
+endif
+obj-@(TOSHIBA)		+= toshiba.c
+obj-@(I8K)		+= i8k.c
+obj-@(DS1620)		+= ds1620.c
+obj-@(PPDEV)		+= ppdev.c
+obj-@(NWBUTTON)		+= nwbutton.c
+obj-@(NWFLASH)		+= nwflash.c
+obj-@(SCx200_GPIO)	+= scx200_gpio.c
+obj-@(PC8736x_GPIO)	+= pc8736x_gpio.c
+obj-@(NSC_GPIO)		+= nsc_gpio.c
+obj-@(CS5535_GPIO)	+= cs5535_gpio.c
+obj-@(GPIO_VR41XX)	+= vr41xx_giu.c
+obj-@(GPIO_TB0219)	+= tb0219.c
+obj-@(TELCLOCK)		+= tlclk.c
+
+
+obj-@(HANGCHECK_TIMER)	+= hangcheck-timer.c
+
+obj-@(PS3_FLASH)		+= ps3flash.c
+
+obj-@(JS_RTC)		+= rtc.c
+
+: ../../scripts/conmakehash |> ^ CONMAKEHASH %o^ ./%f $(FONTMAPFILE) > %o |> consolemap_deftbl.c
+: defkeymap.map |> ^ LOADKEYS %o^ loadkeys --mktable %f | sed 's/^static *//' > %o |> defkeymap.c
+
+link-@(COMPUTONE)         += ip2/built-in.o
+link-@(XILINX_HWICAP)     += xilinx_hwicap/built-in.o
+link-@(HW_RANDOM)         += hw_random/built-in.o
+link-@(MWAVE)             += mwave/built-in.o
+link-@(AGP)               += agp/built-in.o
+link-@(PCMCIA)            += pcmcia/built-in.o
+link-@(IPMI_HANDLER)      += ipmi/built-in.o
+link-@(TCG_TPM)           += tpm/built-in.o
+
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,20 @@
+include_rules
+modname = pci
+obj-y				:= i386.c init.c
+
+obj-@(PCI_BIOS)		+= pcbios.c
+obj-@(PCI_MMCONFIG)	+= mmconfig_$(BITS).c direct.c mmconfig-shared.c
+obj-@(PCI_DIRECT)	+= direct.c
+obj-@(PCI_OLPC)		+= olpc.c
+
+obj-y				+= fixup.c
+obj-@(ACPI)		+= acpi.c
+obj-y				+= legacy.c irq.c
+
+obj-@(X86_VISWS)		+= visws.c
+
+obj-@(X86_NUMAQ)		+= numaq_32.c
+
+obj-y				+= common.c early.c
+obj-y				+= amd_bus.c
+include $(LINUX_ROOT)/linux.tup

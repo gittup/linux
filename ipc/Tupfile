@@ -1,0 +1,15 @@
+include_rules
+modname = ipc
+#
+# Makefile for the linux ipc.
+#
+
+obj-@(SYSVIPC_COMPAT) += compat.c
+obj-@(SYSVIPC) += util.c msgutil.c msg.c sem.c shm.c ipcns_notifier.c
+obj-@(SYSVIPC_SYSCTL) += ipc_sysctl.c
+obj_mq-@(COMPAT) += compat_mq.c
+obj-@(POSIX_MQUEUE) += mqueue.c msgutil.c $(obj_mq-y)
+obj-@(IPC_NS) += namespace.c
+obj-@(POSIX_MQUEUE_SYSCTL) += mq_sysctl.c
+
+include $(LINUX_ROOT)/linux.tup

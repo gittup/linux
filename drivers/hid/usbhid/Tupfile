@@ -1,0 +1,23 @@
+include_rules
+modname = usbhid
+#
+# Makefile for the USB input drivers
+#
+
+# Multipart objects.
+usbhid-y	:= hid-core.c hid-quirks.c
+
+# Optional parts of multipart objects.
+
+ifeq (@(USB_HIDDEV),y)
+	usbhid-y	+= hiddev.c
+endif
+ifeq (@(HID_PID),y)
+	usbhid-y	+= hid-pidff.c
+endif
+
+obj-@(USB_KBD)		+= usbkbd.c
+obj-@(USB_MOUSE)		+= usbmouse.c
+
+obj-@(USB_HID)		+= $(usbhid-y)
+include $(LINUX_ROOT)/linux.tup

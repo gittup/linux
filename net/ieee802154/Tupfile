@@ -1,0 +1,8 @@
+include_rules
+modname = ieee802154
+obj-@(IEEE802154) +=	nl802154.c af_802154.c
+nl802154-y		:= netlink.c nl_policy.c
+af_802154-y		:= af_ieee802154.c raw.c dgram.c
+
+ccflags-y += -Wall -DDEBUG
+include $(LINUX_ROOT)/linux.tup

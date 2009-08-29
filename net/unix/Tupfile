@@ -1,0 +1,11 @@
+include_rules
+modname = unix
+#
+# Makefile for the Linux unix domain socket layer.
+#
+
+
+unix-y			:= af_unix.c garbage.c
+unix-@(SYSCTL)	+= sysctl_net_unix.c
+obj-@(UNIX)	+= $(unix-y)
+include $(LINUX_ROOT)/linux.tup

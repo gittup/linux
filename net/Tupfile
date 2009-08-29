@@ -1,0 +1,80 @@
+include_rules
+modname = net
+#
+# Makefile for the linux networking.
+#
+# 2 Sep 2000, Christoph Hellwig <hch@infradead.crg>
+# Rewritten to use lists instead of if-statements.
+#
+
+obj-y	:= nonet.c
+
+obj-@(NET)		:= socket.c
+link-@(NET)		+= core/built-in.o
+
+tmp-@(COMPAT) 		:= compat.c
+obj-@(NET)		+= $(tmp-y)
+
+# LLC has to be linked before the files in net/802/
+link-@(LLC)		+= llc/built-in.o
+link-@(NET)		+= ethernet/built-in.o 802/built-in.o* sched/built-in.o netlink/built-in.o
+link-@(NETFILTER)		+= netfilter/built-in.o
+link-@(INET)		+= ipv4/built-in.o
+link-@(XFRM)		+= xfrm/built-in.o
+link-@(UNIX)		+= unix/built-in.o
+# TODO: ifneq?
+#ifneq (@(IPV6),)
+#link-y				+= ipv6/built-in.o
+#endif
+link-@(IPV6)				+= ipv6/built-in.o
+
+link-@(PACKET)		+= packet/built-in.o
+link-@(NET_KEY)		+= key/built-in.o
+link-@(NET_SCHED)		+= sched/built-in.o
+link-@(BRIDGE)		+= bridge/built-in.o
+link-@(NET_DSA)		+= dsa/built-in.o
+link-@(IPX)		+= ipx/built-in.o
+link-@(ATALK)		+= appletalk/built-in.o
+link-@(WAN_ROUTER)	+= wanrouter/built-in.o
+link-@(X25)		+= x25/built-in.o
+link-@(LAPB)		+= lapb/built-in.o
+link-@(NETROM)		+= netrom/built-in.o
+link-@(ROSE)		+= rose/built-in.o
+link-@(AX25)		+= ax25/built-in.o
+link-@(CAN)		+= can/built-in.o
+link-@(IRDA)		+= irda/built-in.o
+link-@(BT)		+= bluetooth/built-in.o
+link-@(SUNRPC)		+= sunrpc/built-in.o
+link-@(AF_RXRPC)		+= rxrpc/built-in.o
+link-@(ATM)		+= atm/built-in.o
+link-@(DECNET)		+= decnet/built-in.o
+link-@(ECONET)		+= econet/built-in.o
+link-@(PHONET)		+= phonet/built-in.o
+# TODO: ifneq?
+#ifneq (@(VLAN_8021Q),)
+#link-y				+= 8021q/built-in.o
+#endif
+link-@(VLAN_8021Q)	+= 8021q/built-in.o
+
+link-@(IP_DCCP)		+= dccp/built-in.o
+link-@(IP_SCTP)		+= sctp/built-in.o
+link-@(RDS)		+= rds/built-in.o
+link-y				+= wireless/built-in.o*
+link-@(MAC80211)		+= mac80211/built-in.o
+link-@(TIPC)		+= tipc/built-in.o
+link-@(NETLABEL)		+= netlabel/built-in.o
+link-@(IUCV)		+= iucv/built-in.o
+link-@(RFKILL)		+= rfkill/built-in.o
+link-@(NET_9P)		+= 9p/built-in.o
+# TODO: ifneq?
+#ifneq (@(DCB),)
+#link-y				+= dcb/built-in.o
+#endif
+link-@(DCB)		+= dcb/built-in.o
+link-y				+= ieee802154/built-in.o*
+
+ifeq (@(NET),y)
+obj-@(SYSCTL)		+= sysctl_net.c
+endif
+link-@(WIMAX)		+= wimax/built-in.o
+include $(LINUX_ROOT)/linux.tup

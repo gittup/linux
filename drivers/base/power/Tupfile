@@ -1,0 +1,9 @@
+include_rules
+modname = power
+obj-@(PM)	+= sysfs.c
+obj-@(PM_SLEEP)	+= main.c
+obj-@(PM_TRACE_RTC)	+= trace.c
+
+ccflags-@(DEBUG_DRIVER) := -DDEBUG
+ccflags-@(PM_VERBOSE)   += -DDEBUG
+include $(LINUX_ROOT)/linux.tup

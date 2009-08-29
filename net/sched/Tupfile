@@ -1,0 +1,51 @@
+include_rules
+modname = sched
+#
+# Makefile for the Linux Traffic Control Unit.
+#
+
+obj-y	:= sch_generic.c
+
+obj-@(NET_SCHED)		+= sch_api.c sch_blackhole.c
+obj-@(NET_CLS)		+= cls_api.c
+obj-@(NET_CLS_ACT)	+= act_api.c
+obj-@(NET_ACT_POLICE)	+= act_police.c
+obj-@(NET_ACT_GACT)	+= act_gact.c
+obj-@(NET_ACT_MIRRED)	+= act_mirred.c
+obj-@(NET_ACT_IPT)	+= act_ipt.c
+obj-@(NET_ACT_NAT)	+= act_nat.c
+obj-@(NET_ACT_PEDIT)	+= act_pedit.c
+obj-@(NET_ACT_SIMP)	+= act_simple.c
+obj-@(NET_ACT_SKBEDIT)	+= act_skbedit.c
+obj-@(NET_SCH_FIFO)	+= sch_fifo.c
+obj-@(NET_SCH_CBQ)	+= sch_cbq.c
+obj-@(NET_SCH_HTB)	+= sch_htb.c
+obj-@(NET_SCH_HFSC)	+= sch_hfsc.c
+obj-@(NET_SCH_RED)	+= sch_red.c
+obj-@(NET_SCH_GRED)	+= sch_gred.c
+obj-@(NET_SCH_INGRESS)	+= sch_ingress.c 
+obj-@(NET_SCH_DSMARK)	+= sch_dsmark.c
+obj-@(NET_SCH_SFQ)	+= sch_sfq.c
+obj-@(NET_SCH_TBF)	+= sch_tbf.c
+obj-@(NET_SCH_TEQL)	+= sch_teql.c
+obj-@(NET_SCH_PRIO)	+= sch_prio.c
+obj-@(NET_SCH_MULTIQ)	+= sch_multiq.c
+obj-@(NET_SCH_ATM)	+= sch_atm.c
+obj-@(NET_SCH_NETEM)	+= sch_netem.c
+obj-@(NET_SCH_DRR)	+= sch_drr.c
+obj-@(NET_CLS_U32)	+= cls_u32.c
+obj-@(NET_CLS_ROUTE4)	+= cls_route.c
+obj-@(NET_CLS_FW)	+= cls_fw.c
+obj-@(NET_CLS_RSVP)	+= cls_rsvp.c
+obj-@(NET_CLS_TCINDEX)	+= cls_tcindex.c
+obj-@(NET_CLS_RSVP6)	+= cls_rsvp6.c
+obj-@(NET_CLS_BASIC)	+= cls_basic.c
+obj-@(NET_CLS_FLOW)	+= cls_flow.c
+obj-@(NET_CLS_CGROUP)	+= cls_cgroup.c
+obj-@(NET_EMATCH)	+= ematch.c
+obj-@(NET_EMATCH_CMP)	+= em_cmp.c
+obj-@(NET_EMATCH_NBYTE)	+= em_nbyte.c
+obj-@(NET_EMATCH_U32)	+= em_u32.c
+obj-@(NET_EMATCH_META)	+= em_meta.c
+obj-@(NET_EMATCH_TEXT)	+= em_text.c
+include $(LINUX_ROOT)/linux.tup

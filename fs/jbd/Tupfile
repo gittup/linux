@@ -1,0 +1,10 @@
+include_rules
+modname = jbd
+#
+# Makefile for the linux journaling routines.
+#
+
+
+jbd-y := transaction.c commit.c recovery.c checkpoint.c revoke.c journal.c
+obj-@(JBD) += $(jbd-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,25 @@
+include_rules
+modname = core
+#
+# Makefile for the Linux networking core.
+#
+
+obj-y := sock.c request_sock.c skbuff.c iovec.c datagram.c stream.c scm.c \
+	 gen_stats.c gen_estimator.c net_namespace.c
+
+obj-@(SYSCTL) += sysctl_net_core.c
+obj-@(HAS_DMA) += skb_dma_map.c
+
+obj-y		     += dev.c ethtool.c dev_mcast.c dst.c netevent.c \
+			neighbour.c rtnetlink.c utils.c link_watch.c filter.c
+
+obj-@(XFRM) += flow.c
+obj-y += net-sysfs.c
+obj-@(NET_PKTGEN) += pktgen.c
+obj-@(NETPOLL) += netpoll.c
+obj-@(NET_DMA) += user_dma.c
+obj-@(FIB_RULES) += fib_rules.c
+obj-@(TRACEPOINTS) += net-traces.c
+obj-@(NET_DROP_MONITOR) += drop_monitor.c
+
+include $(LINUX_ROOT)/linux.tup

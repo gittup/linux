@@ -1,0 +1,15 @@
+include_rules
+modname = wireless
+obj-@(WIRELESS_EXT) += wext.c
+obj-@(CFG80211) += cfg80211.c
+obj-@(LIB80211) += lib80211.c
+obj-@(LIB80211_CRYPT_WEP) += lib80211_crypt_wep.c
+obj-@(LIB80211_CRYPT_CCMP) += lib80211_crypt_ccmp.c
+obj-@(LIB80211_CRYPT_TKIP) += lib80211_crypt_tkip.c
+
+cfg80211-y += core.c sysfs.c radiotap.c util.c reg.c scan.c nl80211.c mlme.c ibss.c
+cfg80211-@(CFG80211_DEBUGFS) += debugfs.c
+cfg80211-@(WIRELESS_EXT) += wext-compat.c
+
+ccflags-y += -D__CHECK_ENDIAN__
+include $(LINUX_ROOT)/linux.tup

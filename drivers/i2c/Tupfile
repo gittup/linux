@@ -1,0 +1,15 @@
+include_rules
+modname = i2c
+#
+# Makefile for the i2c core.
+#
+
+obj-@(I2C_BOARDINFO)	+= i2c-boardinfo.c
+obj-@(I2C)		+= i2c-core.c
+obj-@(I2C_CHARDEV)	+= i2c-dev.c
+link-y				+= busses/built-in.o* chips/built-in.o* algos/built-in.o*
+
+ifeq (@(I2C_DEBUG_CORE),y)
+EXTRA_CFLAGS += -DDEBUG
+endif
+include $(LINUX_ROOT)/linux.tup

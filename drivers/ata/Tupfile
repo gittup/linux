@@ -1,0 +1,91 @@
+include_rules
+modname = ata
+
+obj-@(ATA)		+= libata.c
+
+obj-@(SATA_AHCI)		+= ahci.c
+obj-@(SATA_SVW)		+= sata_svw.c
+obj-@(ATA_PIIX)		+= ata_piix.c
+obj-@(SATA_PROMISE)	+= sata_promise.c
+obj-@(SATA_QSTOR)	+= sata_qstor.c
+obj-@(SATA_SIL)		+= sata_sil.c
+obj-@(SATA_SIL24)	+= sata_sil24.c
+obj-@(SATA_VIA)		+= sata_via.c
+obj-@(SATA_VITESSE)	+= sata_vsc.c
+obj-@(SATA_SIS)		+= sata_sis.c
+obj-@(SATA_SX4)		+= sata_sx4.c
+obj-@(SATA_NV)		+= sata_nv.c
+obj-@(SATA_ULI)		+= sata_uli.c
+obj-@(SATA_MV)		+= sata_mv.c
+obj-@(SATA_INIC162X)	+= sata_inic162x.c
+obj-@(PDC_ADMA)		+= pdc_adma.c
+obj-@(SATA_FSL)		+= sata_fsl.c
+
+obj-@(PATA_ALI)		+= pata_ali.c
+obj-@(PATA_AMD)		+= pata_amd.c
+obj-@(PATA_ARTOP)	+= pata_artop.c
+obj-@(PATA_AT32)		+= pata_at32.c
+obj-@(PATA_ATIIXP)	+= pata_atiixp.c
+obj-@(PATA_CMD640_PCI)	+= pata_cmd640.c
+obj-@(PATA_CMD64X)	+= pata_cmd64x.c
+obj-@(PATA_CS5520)	+= pata_cs5520.c
+obj-@(PATA_CS5530)	+= pata_cs5530.c
+obj-@(PATA_CS5535)	+= pata_cs5535.c
+obj-@(PATA_CS5536)	+= pata_cs5536.c
+obj-@(PATA_CYPRESS)	+= pata_cypress.c
+obj-@(PATA_EFAR)		+= pata_efar.c
+obj-@(PATA_HPT366)	+= pata_hpt366.c
+obj-@(PATA_HPT37X)	+= pata_hpt37x.c
+obj-@(PATA_HPT3X2N)	+= pata_hpt3x2n.c
+obj-@(PATA_HPT3X3)	+= pata_hpt3x3.c
+obj-@(PATA_ISAPNP)	+= pata_isapnp.c
+obj-@(PATA_IT821X)	+= pata_it821x.c
+obj-@(PATA_IT8213)	+= pata_it8213.c
+obj-@(PATA_JMICRON)	+= pata_jmicron.c
+obj-@(PATA_NETCELL)	+= pata_netcell.c
+obj-@(PATA_NINJA32)	+= pata_ninja32.c
+obj-@(PATA_NS87410)	+= pata_ns87410.c
+obj-@(PATA_NS87415)	+= pata_ns87415.c
+obj-@(PATA_OPTI)		+= pata_opti.c
+obj-@(PATA_OPTIDMA)	+= pata_optidma.c
+obj-@(PATA_MPC52xx)	+= pata_mpc52xx.c
+obj-@(PATA_MARVELL)	+= pata_marvell.c
+obj-@(PATA_MPIIX)	+= pata_mpiix.c
+obj-@(PATA_OLDPIIX)	+= pata_oldpiix.c
+obj-@(PATA_PALMLD)	+= pata_palmld.c
+obj-@(PATA_PCMCIA)	+= pata_pcmcia.c
+obj-@(PATA_PDC2027X)	+= pata_pdc2027x.c
+obj-@(PATA_PDC_OLD)	+= pata_pdc202xx_old.c
+obj-@(PATA_QDI)		+= pata_qdi.c
+obj-@(PATA_RADISYS)	+= pata_radisys.c
+obj-@(PATA_RB532)	+= pata_rb532_cf.c
+obj-@(PATA_RZ1000)	+= pata_rz1000.c
+obj-@(PATA_SC1200)	+= pata_sc1200.c
+obj-@(PATA_SERVERWORKS)	+= pata_serverworks.c
+obj-@(PATA_SIL680)	+= pata_sil680.c
+obj-@(PATA_VIA)		+= pata_via.c
+obj-@(PATA_WINBOND)	+= pata_sl82c105.c
+obj-@(PATA_WINBOND_VLB)	+= pata_winbond.c
+obj-@(PATA_SIS)		+= pata_sis.c
+obj-@(PATA_TRIFLEX)	+= pata_triflex.c
+obj-@(PATA_IXP4XX_CF)	+= pata_ixp4xx_cf.c
+obj-@(PATA_SCC)		+= pata_scc.c
+obj-@(PATA_SCH)		+= pata_sch.c
+obj-@(PATA_BF54X)	+= pata_bf54x.c
+obj-@(PATA_OCTEON_CF)	+= pata_octeon_cf.c
+obj-@(PATA_PLATFORM)	+= pata_platform.c
+obj-@(PATA_AT91)	+= pata_at91.c
+obj-@(PATA_OF_PLATFORM)	+= pata_of_platform.c
+obj-@(PATA_ICSIDE)	+= pata_icside.c
+# Should be last but two libata driver
+obj-@(PATA_ACPI)		+= pata_acpi.c
+# Should be last but one libata driver
+obj-@(ATA_GENERIC)	+= ata_generic.c
+# Should be last libata driver
+obj-@(PATA_LEGACY)	+= pata_legacy.c
+
+libata-y	:= libata-core.c libata-scsi.c libata-eh.c
+libata-@(ATA_SFF)	+= libata-sff.c
+libata-@(SATA_PMP)	+= libata-pmp.c
+libata-@(ATA_ACPI)	+= libata-acpi.c
+include $(LINUX_ROOT)/linux.tup

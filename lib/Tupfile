@@ -1,0 +1,112 @@
+include_rules
+modname = lib
+#
+# Makefile for some libs needed in the kernel.
+#
+
+# TODO: ifdef
+#ifdef CONFIG_FUNCTION_TRACER
+#ORIG_CFLAGS := $(KBUILD_CFLAGS)
+#KBUILD_CFLAGS = $(subst -pg,,$(ORIG_CFLAGS))
+#endif
+
+lib-y := ctype.c string.c vsprintf.c cmdline.c \
+	 rbtree.c radix-tree.c dump_stack.c \
+	 idr.c int_sqrt.c extable.c prio_tree.c \
+	 sha1.c irq_regs.c reciprocal_div.c argv_split.c \
+	 proportions.c prio_heap.c ratelimit.c show_mem.c \
+	 is_single_threaded.c plist.c decompress.c flex_array.c
+
+lib-@(MMU) += ioremap.c
+lib-@(SMP) += cpumask.c
+
+lib-y	+= kobject.c kref.c klist.c
+
+obj-y += bcd.c div64.c sort.c parser.c halfmd4.c debug_locks.c random32.c \
+	 bust_spinlocks.c hexdump.c kasprintf.c bitmap.c scatterlist.c \
+	 string_helpers.c gcd.c
+
+ifeq (@(DEBUG_KOBJECT),y)
+CFLAGS_kobject.c += -DDEBUG
+CFLAGS_kobject_uevent.c += -DDEBUG
+endif
+
+lib-@(HOTPLUG) += kobject_uevent.c
+obj-@(GENERIC_IOMAP) += iomap.c
+obj-@(HAS_IOMEM) += iomap_copy.c devres.c
+obj-@(CHECK_SIGNATURE) += check_signature.c
+obj-@(DEBUG_LOCKING_API_SELFTESTS) += locking-selftest.c
+obj-@(DEBUG_SPINLOCK) += spinlock_debug.c
+lib-@(RWSEM_GENERIC_SPINLOCK) += rwsem-spinlock.c
+lib-@(RWSEM_XCHGADD_ALGORITHM) += rwsem.c
+find_next_bit-@(GENERIC_FIND_FIRST_BIT) = find_next_bit.c
+find_next_bit-@(GENERIC_FIND_NEXT_BIT) = find_next_bit.c
+lib-y += $(find_next_bit-y)
+obj-@(GENERIC_FIND_LAST_BIT) += find_last_bit.c
+obj-@(GENERIC_HWEIGHT) += hweight.c
+obj-@(LOCK_KERNEL) += kernel_lock.c
+obj-@(DEBUG_PREEMPT) += smp_processor_id.c
+obj-@(DEBUG_LIST) += list_debug.c
+obj-@(DEBUG_OBJECTS) += debugobjects.c
+
+# TODO: ifneq
+ifeq (@(HAVE_DEC_LOCK),y)
+else
+  lib-y += dec_and_lock.c
+endif
+
+obj-@(BITREVERSE) += bitrev.c
+obj-@(RATIONAL)	+= rational.c
+obj-@(CRC_CCITT)	+= crc-ccitt.c
+obj-@(CRC16)	+= crc16.c
+obj-@(CRC_T10DIF)+= crc-t10dif.c
+obj-@(CRC_ITU_T)	+= crc-itu-t.c
+obj-@(CRC32)	+= crc32.c
+obj-@(CRC7)	+= crc7.c
+obj-@(LIBCRC32C)	+= libcrc32c.c
+obj-@(GENERIC_ALLOCATOR) += genalloc.c
+
+link-@(ZLIB_INFLATE) += zlib_inflate/built-in.o
+link-@(ZLIB_DEFLATE) += zlib_deflate/built-in.o
+link-@(REED_SOLOMON) += reed_solomon/built-in.o
+link-@(LZO_COMPRESS) += lzo/built-in.o
+link-@(LZO_DECOMPRESS) += lzo/built-in.o
+
+lib-@(DECOMPRESS_GZIP) += decompress_inflate.c
+lib-@(DECOMPRESS_BZIP2) += decompress_bunzip2.c
+lib-@(DECOMPRESS_LZMA) += decompress_unlzma.c
+
+obj-@(TEXTSEARCH) += textsearch.c
+obj-@(TEXTSEARCH_KMP) += ts_kmp.c
+obj-@(TEXTSEARCH_BM) += ts_bm.c
+obj-@(TEXTSEARCH_FSM) += ts_fsm.c
+obj-@(SMP) += percpu_counter.c
+obj-@(AUDIT_GENERIC) += audit.c
+
+obj-@(SWIOTLB) += swiotlb.c
+obj-@(IOMMU_HELPER) += iommu-helper.c
+obj-@(FAULT_INJECTION) += fault-inject.c
+
+lib-@(GENERIC_BUG) += bug.c
+
+obj-@(HAVE_LMB) += lmb.c
+
+obj-@(HAVE_ARCH_TRACEHOOK) += syscall.c
+
+obj-@(DYNAMIC_DEBUG) += dynamic_debug.c
+
+obj-@(NLATTR) += nlattr.c
+
+obj-@(DMA_API_DEBUG) += dma-debug.c
+
+obj-@(GENERIC_CSUM) += checksum.c
+
+obj-@(GENERIC_ATOMIC64) += atomic64.c
+
+hostprogs-y	:= gen_crc32table.c
+include $(LINUX_ROOT)/host.tup
+
+generated_headers = crc32table.h
+: gen_crc32table |> ^ GEN %o^ ./%f > %o |> crc32table.h
+include $(LINUX_ROOT)/lib.tup
+include $(LINUX_ROOT)/linux.tup

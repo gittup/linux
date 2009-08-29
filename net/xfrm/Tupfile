@@ -1,0 +1,13 @@
+include_rules
+modname = xfrm
+#
+# Makefile for the XFRM subsystem.
+#
+
+obj-@(XFRM) := xfrm_policy.c xfrm_state.c xfrm_hash.c \
+		      xfrm_input.c xfrm_output.c xfrm_algo.c \
+		      xfrm_sysctl.c
+obj-@(XFRM_STATISTICS) += xfrm_proc.c
+obj-@(XFRM_USER) += xfrm_user.c
+obj-@(XFRM_IPCOMP) += xfrm_ipcomp.c
+include $(LINUX_ROOT)/linux.tup

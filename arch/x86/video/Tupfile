@@ -1,0 +1,4 @@
+include_rules
+modname = video
+obj-@(FB)               += fbdev.c
+include $(LINUX_ROOT)/linux.tup

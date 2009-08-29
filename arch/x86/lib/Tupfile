@@ -1,0 +1,33 @@
+include_rules
+modname = lib
+
+#TODO
+BITS=32
+
+obj-@(SMP) := msr.c
+
+lib-y := delay.c
+lib-y += thunk_$(BITS).S
+lib-y += usercopy_$(BITS).c getuser.S putuser.S
+
+CFLAGS_S += -D__ASSEMBLY__ -I../kernel
+
+ifeq (@(X86_32),y)
+        obj-y += atomic64_32.c
+        lib-y += checksum_32.S
+        lib-y += strstr_32.c
+        lib-y += semaphore_32.S string_32.c
+	lib-y += memcpy_32.c
+
+        lib-@(X86_USE_3DNOW) += mmx_32.c
+else
+        obj-y += io_64.c iomap_copy_64.S
+        lib-y += csum-partial_64.c csum-copy_64.S csum-wrappers_64.c
+        lib-y += clear_page_64.S copy_page_64.S
+        lib-y += memmove_64.c memset_64.S
+        lib-y += copy_user_64.c rwlock_64.S copy_user_nocache_64.S
+	lib-y += memcpy_64.S
+endif
+generated_headers = ../include/asm/asm-offsets.h
+include $(LINUX_ROOT)/lib.tup
+include $(LINUX_ROOT)/linux.tup

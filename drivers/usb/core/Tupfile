@@ -1,0 +1,24 @@
+include_rules
+modname = core
+#
+# Makefile for USB Core files and filesystem
+#
+
+usbcore-y	:= usb.c hub.c hcd.c urb.c message.c driver.c \
+			config.c file.c buffer.c sysfs.c endpoint.c \
+			devio.c notify.c generic.c quirks.c devices.c
+
+ifeq (@(PCI),y)
+	usbcore-y	+= hcd-pci.c
+endif
+
+ifeq (@(USB_DEVICEFS),y)
+	usbcore-y	+= inode.c
+endif
+
+obj-@(USB)	+= $(usbcore-y)
+
+ifeq (@(USB_DEBUG),y)
+EXTRA_CFLAGS += -DDEBUG
+endif
+include $(LINUX_ROOT)/linux.tup

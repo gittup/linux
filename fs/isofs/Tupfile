@@ -1,0 +1,13 @@
+include_rules
+modname = isofs
+#
+# Makefile for the Linux isofs filesystem routines.
+#
+
+
+isofs-y-y 			:= namei.c inode.c dir.c util.c rock.c export.c
+isofs-y-@(JOLIET)	+= joliet.c
+isofs-y-@(ZISOFS)	+= compress.c
+isofs-y			:= $(isofs-y-y)
+obj-@(ISO9660_FS) += $(isofs-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,54 @@
+include_rules
+modname = hid
+#
+# Makefile for the HID driver
+#
+hid-y			:= hid-core.c hid-input.c
+
+
+hid-@(HID_DEBUG)		+= hid-debug.c
+hid-@(HIDRAW)		+= hidraw.c
+
+hid-logitech-y		:= hid-lg.c
+# TODO: ifdef?
+#
+#ifdef CONFIG_LOGITECH_FF
+#	hid-logitech-y	+= hid-lgff.c
+#endif
+#ifdef CONFIG_LOGIRUMBLEPAD2_FF
+#	hid-logitech-y	+= hid-lg2ff.c
+#endif
+
+obj-@(HID_A4TECH)	+= hid-a4tech.c
+obj-@(HID_APPLE)		+= hid-apple.c
+obj-@(HID_BELKIN)	+= hid-belkin.c
+obj-@(HID_CHERRY)	+= hid-cherry.c
+obj-@(HID_CHICONY)	+= hid-chicony.c
+obj-@(HID_CYPRESS)	+= hid-cypress.c
+obj-@(HID_DRAGONRISE)	+= hid-drff.c
+obj-@(HID_EZKEY)		+= hid-ezkey.c
+obj-@(HID_GYRATION)	+= hid-gyration.c
+obj-@(HID_KENSINGTON)	+= hid-kensington.c
+obj-@(HID_KYE)		+= hid-kye.c
+obj-@(HID_LOGITECH)	+= $(hid-logitech-y)
+obj-@(HID_MICROSOFT)	+= hid-microsoft.c
+obj-@(HID_MONTEREY)	+= hid-monterey.c
+obj-@(HID_NTRIG)		+= hid-ntrig.c
+obj-@(HID_PANTHERLORD)	+= hid-pl.c
+obj-@(HID_PETALYNX)	+= hid-petalynx.c
+obj-@(HID_SAMSUNG)	+= hid-samsung.c
+obj-@(HID_SMARTJOYPLUS)	+= hid-sjoy.c
+obj-@(HID_SONY)		+= hid-sony.c
+obj-@(HID_SUNPLUS)	+= hid-sunplus.c
+obj-@(HID_GREENASIA)	+= hid-gaff.c
+obj-@(HID_THRUSTMASTER)	+= hid-tmff.c
+obj-@(HID_TOPSEED)	+= hid-topseed.c
+obj-@(HID_ZEROPLUS)	+= hid-zpff.c
+obj-@(HID_WACOM)		+= hid-wacom.c
+
+link-@(USB_HID)		+= usbhid/built-in.o
+link-@(USB_MOUSE)		+= usbhid/built-in.o
+link-@(USB_KBD)		+= usbhid/built-in.o
+
+obj-@(HID)		+= $(hid-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,51 @@
+exit-n @(ACPI)
+include_rules
+modname = acpica
+#
+# Makefile for ACPICA Core interpreter
+#
+
+# TODO: cflags
+#ccflags-y			:= -Os
+#ccflags-@(ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
+
+acpi-y := dsfield.c   dsmthdat.c  dsopcode.c  dswexec.c  dswscope.c \
+	 dsmethod.c  dsobject.c  dsutils.c   dswload.c  dswstate.c \
+	 dsinit.c
+
+acpi-y += evevent.c  evregion.c  evsci.c    evxfevnt.c \
+	 evmisc.c   evrgnini.c  evxface.c  evxfregn.c \
+	 evgpe.c    evgpeblk.c
+
+acpi-y += exconfig.c  exfield.c  exnames.c   exoparg6.c  exresolv.c  exstorob.c\
+	 exconvrt.c  exfldio.c  exoparg1.c  exprep.c    exresop.c   exsystem.c\
+	 excreate.c  exmisc.c   exoparg2.c  exregion.c  exstore.c   exutils.c \
+	 exdump.c    exmutex.c  exoparg3.c  exresnte.c  exstoren.c
+
+acpi-y += hwacpi.c  hwgpe.c  hwregs.c  hwsleep.c hwxface.c hwvalid.c
+
+acpi-@(ACPI_FUTURE_USAGE) += hwtimer.c
+
+acpi-y += nsaccess.c  nsload.c    nssearch.c  nsxfeval.c \
+	 nsalloc.c   nseval.c    nsnames.c   nsutils.c   nsxfname.c \
+	 nsdump.c    nsinit.c    nsobject.c  nswalk.c    nsxfobj.c  \
+	 nsparse.c   nspredef.c
+
+acpi-@(ACPI_FUTURE_USAGE) += nsdumpdv.c
+
+acpi-y += psargs.c    psparse.c  psloop.c pstree.c   pswalk.c  \
+	 psopcode.c  psscope.c  psutils.c  psxface.c
+
+acpi-y += rsaddr.c rscreate.c rsinfo.c rsio.c rslist.c rsmisc.c rsxface.c \
+	 rscalc.c  rsirq.c  rsmemory.c  rsutils.c
+
+acpi-@(ACPI_FUTURE_USAGE) += rsdump.c
+
+acpi-y += tbxface.c tbinstal.c tbutils.c tbfind.c tbfadt.c tbxfroot.c
+
+acpi-y += utalloc.c utdebug.c uteval.c utinit.c utmisc.c utxface.c \
+		utcopy.c utdelete.c utglobal.c utmath.c utobject.c \
+		utstate.c utmutex.c utresrc.c utlock.c
+
+obj-y	+= $(acpi-y)
+include $(LINUX_ROOT)/linux.tup

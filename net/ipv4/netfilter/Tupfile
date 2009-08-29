@@ -1,0 +1,76 @@
+include_rules
+modname = netfilter
+#
+# Makefile for the netfilter modules on top of IPv4.
+#
+
+# objects for l3 independent conntrack
+nf_conntrack_ipv4-y  :=  nf_conntrack_l3proto_ipv4.c nf_conntrack_proto_icmp.c
+ifeq (@(NF_CONNTRACK_PROC_COMPAT),y)
+ifeq (@(PROC_FS),y)
+nf_conntrack_ipv4-y	+= nf_conntrack_l3proto_ipv4_compat.c
+endif
+endif
+
+nf_nat-y		:= nf_nat_core.c nf_nat_helper.c nf_nat_proto_unknown.c nf_nat_proto_common.c nf_nat_proto_tcp.c nf_nat_proto_udp.c nf_nat_proto_icmp.c
+iptable_nat-y	:= nf_nat_rule.c nf_nat_standalone.c
+
+# connection tracking
+obj-@(NF_CONNTRACK_IPV4) += nf_conntrack_ipv4.c
+
+obj-@(NF_NAT) += nf_nat.c
+
+# defrag
+obj-@(NF_DEFRAG_IPV4) += nf_defrag_ipv4.c
+
+# NAT helpers (nf_conntrack)
+obj-@(NF_NAT_AMANDA) += nf_nat_amanda.c
+obj-@(NF_NAT_FTP) += nf_nat_ftp.c
+obj-@(NF_NAT_H323) += nf_nat_h323.c
+obj-@(NF_NAT_IRC) += nf_nat_irc.c
+obj-@(NF_NAT_PPTP) += nf_nat_pptp.c
+obj-@(NF_NAT_SIP) += nf_nat_sip.c
+obj-@(NF_NAT_SNMP_BASIC) += nf_nat_snmp_basic.c
+obj-@(NF_NAT_TFTP) += nf_nat_tftp.c
+
+# NAT protocols (nf_nat)
+obj-@(NF_NAT_PROTO_DCCP) += nf_nat_proto_dccp.c
+obj-@(NF_NAT_PROTO_GRE) += nf_nat_proto_gre.c
+obj-@(NF_NAT_PROTO_UDPLITE) += nf_nat_proto_udplite.c
+obj-@(NF_NAT_PROTO_SCTP) += nf_nat_proto_sctp.c
+
+# generic IP tables 
+obj-@(IP_NF_IPTABLES) += ip_tables.c
+
+# the three instances of ip_tables
+obj-@(IP_NF_FILTER) += iptable_filter.c
+obj-@(IP_NF_MANGLE) += iptable_mangle.c
+obj-@(NF_NAT) += iptable_nat.c
+obj-@(IP_NF_RAW) += iptable_raw.c
+obj-@(IP_NF_SECURITY) += iptable_security.c
+
+# matches
+obj-@(IP_NF_MATCH_ADDRTYPE) += ipt_addrtype.c
+obj-@(IP_NF_MATCH_AH) += ipt_ah.c
+obj-@(IP_NF_MATCH_ECN) += ipt_ecn.c
+
+# targets
+obj-@(IP_NF_TARGET_CLUSTERIP) += ipt_CLUSTERIP.c
+obj-@(IP_NF_TARGET_ECN) += ipt_ECN.c
+obj-@(IP_NF_TARGET_LOG) += ipt_LOG.c
+obj-@(IP_NF_TARGET_MASQUERADE) += ipt_MASQUERADE.c
+obj-@(IP_NF_TARGET_NETMAP) += ipt_NETMAP.c
+obj-@(IP_NF_TARGET_REDIRECT) += ipt_REDIRECT.c
+obj-@(IP_NF_TARGET_REJECT) += ipt_REJECT.c
+obj-@(IP_NF_TARGET_ULOG) += ipt_ULOG.c
+
+# generic ARP tables
+obj-@(IP_NF_ARPTABLES) += arp_tables.c
+obj-@(IP_NF_ARP_MANGLE) += arpt_mangle.c
+
+# just filtering instance of ARP tables for now
+obj-@(IP_NF_ARPFILTER) += arptable_filter.c
+
+obj-@(IP_NF_QUEUE) += ip_queue.c
+
+include $(LINUX_ROOT)/linux.tup

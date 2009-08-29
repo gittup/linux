@@ -1,0 +1,4 @@
+include_rules
+hostprogs-y += bin2c.c
+hostprogs-y += conmakehash.c
+include $(LINUX_ROOT)/host.tup

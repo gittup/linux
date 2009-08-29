@@ -1,0 +1,6 @@
+include_rules
+modname = mtrr
+x86_32-@(X86_32) += amd.c cyrix.c centaur.c
+obj-@(MTRR)	+= main.c if.c generic.c state.c cleanup.c $(x86_32-y)
+
+include $(LINUX_ROOT)/linux.tup

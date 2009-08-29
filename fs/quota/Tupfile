@@ -1,0 +1,8 @@
+include_rules
+modname = quota
+obj-@(QUOTA)		+= dquot.c
+obj-@(QFMT_V1)		+= quota_v1.c
+obj-@(QFMT_V2)		+= quota_v2.c
+obj-@(QUOTA_TREE)	+= quota_tree.c
+obj-@(QUOTACTL)		+= $(quota-y)
+include $(LINUX_ROOT)/linux.tup

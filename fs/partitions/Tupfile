@@ -1,0 +1,23 @@
+include_rules
+modname = partitions
+#
+# Makefile for the linux kernel.
+#
+
+obj-@(BLOCK) := check.c
+
+obj-@(ACORN_PARTITION) += acorn.c
+obj-@(AMIGA_PARTITION) += amiga.c
+obj-@(ATARI_PARTITION) += atari.c
+obj-@(MAC_PARTITION) += mac.c
+obj-@(LDM_PARTITION) += ldm.c
+obj-@(MSDOS_PARTITION) += msdos.c
+obj-@(OSF_PARTITION) += osf.c
+obj-@(SGI_PARTITION) += sgi.c
+obj-@(SUN_PARTITION) += sun.c
+obj-@(ULTRIX_PARTITION) += ultrix.c
+obj-@(IBM_PARTITION) += ibm.c
+obj-@(EFI_PARTITION) += efi.c
+obj-@(KARMA_PARTITION) += karma.c
+obj-@(SYSV68_PARTITION) += sysv68.c
+include $(LINUX_ROOT)/linux.tup

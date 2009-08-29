@@ -1,0 +1,30 @@
+include_rules
+modname = backlight
+# Backlight & LCD drivers
+
+obj-@(LCD_CLASS_DEVICE)     += lcd.c
+obj-@(LCD_CORGI)		   += corgi_lcd.c
+obj-@(LCD_HP700)		   += jornada720_lcd.c
+obj-@(LCD_LTV350QV)	   += ltv350qv.c
+obj-@(LCD_ILI9320)	   += ili9320.c
+obj-@(LCD_PLATFORM)	   += platform_lcd.c
+obj-@(LCD_VGG2432A4)	   += vgg2432a4.c
+obj-@(LCD_TDO24M)	   += tdo24m.c
+obj-@(LCD_TOSA)		   += tosa_lcd.c
+
+obj-@(BACKLIGHT_ATMEL_PWM)    += atmel-pwm-bl.c
+obj-@(BACKLIGHT_GENERIC)	+= generic_bl.c
+obj-@(BACKLIGHT_HP700)	+= jornada720_bl.c
+obj-@(BACKLIGHT_HP680)	+= hp680_bl.c
+obj-@(BACKLIGHT_LOCOMO)	+= locomolcd.c
+obj-@(BACKLIGHT_OMAP1)	+= omap1_bl.c
+obj-@(BACKLIGHT_PROGEAR) += progear_bl.c
+obj-@(BACKLIGHT_CARILLO_RANCH) += cr_bllcd.c
+obj-@(BACKLIGHT_PWM)	+= pwm_bl.c
+obj-@(BACKLIGHT_DA903X)	+= da903x_bl.c
+obj-@(BACKLIGHT_MBP_NVIDIA) += mbp_nvidia_bl.c
+obj-@(BACKLIGHT_TOSA)	+= tosa_bl.c
+obj-@(BACKLIGHT_SAHARA)	+= kb3886_bl.c
+
+obj-@(BACKLIGHT_CLASS_DEVICE) += $(backlight-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,34 @@
+include_rules
+
+head-y += arch/x86/kernel/head_32.o
+head-y += arch/x86/kernel/head32.o
+head-y += arch/x86/kernel/head.o
+head-y += arch/x86/kernel/init_task.o
+head-y += init/built-in.o
+
+#link-y += usr/built-in.o
+link-y += arch/x86/kernel/built-in.o
+link-y += arch/x86/mm/built-in.o
+#link-y += arch/x86/mach-default/built-in.o
+#link-y += arch/x86/crypto/built-in.o
+link-y += arch/x86/vdso/built-in.o
+link-y += kernel/built-in.o
+link-y += mm/built-in.o
+link-y += fs/built-in.o
+link-y += ipc/built-in.o
+link-y += security/built-in.o
+link-y += crypto/built-in.o
+link-y += block/built-in.o
+link-y += lib/lib.a
+link-y += arch/x86/lib/lib.a
+link-y += lib/built-in.o
+link-y += arch/x86/lib/built-in.o
+link-y += drivers/built-in.o
+#link-y += sound/built-in.o
+#link-y += firmware/built-in.o
+link-y += arch/x86/pci/built-in.o
+#link-y += arch/x86/power/built-in.o
+#link-y += arch/x86/video/built-in.o
+link-y += net/built-in.o
+
+: $(head-y) $(link-y) arch/x86/kernel/vmlinux.lds | $(compiler_files) |> ^ LINK %o^ $(SLASH_ROOT)/bin/ld -m elf_i386 --build-id -o %o -T arch/x86/kernel/vmlinux.lds $(head-y) --start-group $(link-y) --end-group |> vmlinux

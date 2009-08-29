@@ -1,0 +1,35 @@
+include_rules
+modname = mouse
+#
+# Makefile for the mouse drivers.
+#
+
+# Each configuration option enables a list of files.
+
+obj-@(MOUSE_AMIGA)		+= amimouse.c
+obj-@(MOUSE_APPLETOUCH)		+= appletouch.c
+obj-@(MOUSE_ATARI)		+= atarimouse.c
+obj-@(MOUSE_BCM5974)		+= bcm5974.c
+obj-@(MOUSE_GPIO)		+= gpio_mouse.c
+obj-@(MOUSE_HIL)			+= hil_ptr.c
+obj-@(MOUSE_INPORT)		+= inport.c
+obj-@(MOUSE_LOGIBM)		+= logibm.c
+obj-@(MOUSE_MAPLE)		+= maplemouse.c
+obj-@(MOUSE_PC110PAD)		+= pc110pad.c
+obj-@(MOUSE_PXA930_TRKBALL)	+= pxa930_trkball.c
+obj-@(MOUSE_RISCPC)		+= rpcmouse.c
+obj-@(MOUSE_SERIAL)		+= sermouse.c
+obj-@(MOUSE_SYNAPTICS_I2C)	+= synaptics_i2c.c
+obj-@(MOUSE_VSXXXAA)		+= vsxxxaa.c
+
+psmouse-y := psmouse-base.c synaptics.c
+
+psmouse-@(MOUSE_PS2_ALPS)	+= alps.c
+psmouse-@(MOUSE_PS2_ELANTECH)	+= elantech.c
+psmouse-@(MOUSE_PS2_OLPC)	+= hgpk.c
+psmouse-@(MOUSE_PS2_LOGIPS2PP)	+= logips2pp.c
+psmouse-@(MOUSE_PS2_LIFEBOOK)	+= lifebook.c
+psmouse-@(MOUSE_PS2_TRACKPOINT)	+= trackpoint.c
+psmouse-@(MOUSE_PS2_TOUCHKIT)	+= touchkit_ps2.c
+obj-@(MOUSE_PS2)			+= $(psmouse-y)
+include $(LINUX_ROOT)/linux.tup

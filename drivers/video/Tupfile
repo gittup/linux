@@ -1,0 +1,147 @@
+include_rules
+modname = video
+# Makefile for the Linux video drivers.
+# 5 Aug 1999, James Simmons, <mailto:jsimmons@users.sf.net>
+# Rewritten to use lists instead of if-statements.
+
+# Each configuration option enables a list of files.
+
+obj-@(VGASTATE)            += vgastate.c
+obj-y                             += fb_notify.c
+obj-@(FB)                  += fb.c
+fb-y                              := fbmem.c fbmon.c fbcmap.c fbsysfs.c \
+                                     modedb.c fbcvt.c
+fb-y                           := $(fb-y)
+
+link-@(VT)		  += console/built-in.o
+link-@(LOGO)		  += logo/built-in.o
+link-y				  += backlight/built-in.o* display/built-in.o*
+
+obj-@(FB_CFB_FILLRECT)  += cfbfillrect.c
+obj-@(FB_CFB_COPYAREA)  += cfbcopyarea.c
+obj-@(FB_CFB_IMAGEBLIT) += cfbimgblt.c
+obj-@(FB_SYS_FILLRECT)  += sysfillrect.c
+obj-@(FB_SYS_COPYAREA)  += syscopyarea.c
+obj-@(FB_SYS_IMAGEBLIT) += sysimgblt.c
+obj-@(FB_SYS_FOPS)      += fb_sys_fops.c
+obj-@(FB_SVGALIB)       += svgalib.c
+obj-@(FB_MACMODES)      += macmodes.c
+obj-@(FB_DDC)           += fb_ddc.c
+obj-@(FB_DEFERRED_IO)   += fb_defio.c
+
+# Hardware specific drivers go first
+obj-@(FB_AMIGA)            += amifb.c c2p_planar.c
+obj-@(FB_ARC)              += arcfb.c
+obj-@(FB_CLPS711X)         += clps711xfb.c
+obj-@(FB_CYBER2000)        += cyber2000fb.c
+obj-@(FB_PM2)              += pm2fb.c
+obj-@(FB_PM3)		  += pm3fb.c
+
+link-@(FB_MATROX)		  += matrox/built-in.o
+link-@(FB_RIVA)		  += riva/built-in.o
+link-@(FB_NVIDIA)		  += nvidia/built-in.o
+obj-@(FB_ATY)		  += aty/ macmodes.c
+obj-@(FB_ATY128)		  += aty/ macmodes.c
+link-@(FB_RADEON)		  += aty/built-in.o
+link-@(FB_SIS)		  += sis/built-in.o
+link-@(FB_VIA)		  += via/built-in.o
+link-@(FB_KYRO)             += kyro/built-in.o
+link-@(FB_SAVAGE)		  += savage/built-in.o
+link-@(FB_GEODE)		  += geode/built-in.o
+link-@(FB_MBX)		  += mbx/built-in.o
+obj-@(FB_NEOMAGIC)         += neofb.c
+obj-@(FB_3DFX)             += tdfxfb.c
+obj-@(FB_CONTROL)          += controlfb.c
+obj-@(FB_PLATINUM)         += platinumfb.c
+obj-@(FB_VALKYRIE)         += valkyriefb.c
+obj-@(FB_CT65550)          += chipsfb.c
+obj-@(FB_IMSTT)            += imsttfb.c
+obj-@(FB_FM2)              += fm2fb.c
+obj-@(FB_VT8623)           += vt8623fb.c
+obj-@(FB_TRIDENT)          += tridentfb.c
+link-@(FB_LE80578)          += vermilion/built-in.o
+obj-@(FB_S3)               += s3fb.c
+obj-@(FB_ARK)              += arkfb.c
+obj-@(FB_STI)              += stifb.c
+obj-@(FB_FFB)              += ffb.c sbuslib.c
+obj-@(FB_CG6)              += cg6.c sbuslib.c
+obj-@(FB_CG3)              += cg3.c sbuslib.c
+obj-@(FB_BW2)              += bw2.c sbuslib.c
+obj-@(FB_CG14)             += cg14.c sbuslib.c
+obj-@(FB_P9100)            += p9100.c sbuslib.c
+obj-@(FB_TCX)              += tcx.c sbuslib.c
+obj-@(FB_LEO)              += leo.c sbuslib.c
+obj-@(FB_SGIVW)            += sgivwfb.c
+obj-@(FB_ACORN)            += acornfb.c
+obj-@(FB_ATARI)            += atafb.c c2p_iplan2.c atafb_mfb.c \
+                                     atafb_iplan2p2.c atafb_iplan2p4.c atafb_iplan2p8.c
+obj-@(FB_MAC)              += macfb.c
+obj-@(FB_HECUBA)           += hecubafb.c
+obj-@(FB_N411)             += n411.c
+obj-@(FB_HGA)              += hgafb.c
+obj-@(FB_XVR500)           += sunxvr500.c
+obj-@(FB_XVR2500)          += sunxvr2500.c
+obj-@(FB_IGA)              += igafb.c
+obj-@(FB_APOLLO)           += dnfb.c
+obj-@(FB_Q40)              += q40fb.c
+obj-@(FB_TGA)              += tgafb.c
+obj-@(FB_HP300)            += hpfb.c
+obj-@(FB_G364)             += g364fb.c
+obj-@(FB_SA1100)           += sa1100fb.c
+obj-@(FB_HIT)              += hitfb.c
+obj-@(FB_EPSON1355)	  += epson1355fb.c
+obj-@(FB_ATMEL)		  += atmel_lcdfb.c
+obj-@(FB_PVR2)             += pvr2fb.c
+obj-@(FB_VOODOO1)          += sstfb.c
+obj-@(FB_ARMCLCD)	  += amba-clcd.c
+obj-@(FB_68328)            += 68328fb.c
+obj-@(FB_GBE)              += gbefb.c
+obj-@(FB_CIRRUS)		  += cirrusfb.c
+obj-@(FB_ASILIANT)	  += asiliantfb.c
+obj-@(FB_PXA)		  += pxafb.c
+obj-@(FB_PXA168)		  += pxa168fb.c
+obj-@(FB_W100)		  += w100fb.c
+obj-@(FB_TMIO)		  += tmiofb.c
+obj-@(FB_AU1100)		  += au1100fb.c
+obj-@(FB_AU1200)		  += au1200fb.c
+obj-@(FB_PMAG_AA)	  += pmag-aa-fb.c
+obj-@(FB_PMAG_BA)	  += pmag-ba-fb.c
+obj-@(FB_PMAGB_B)	  += pmagb-b-fb.c
+obj-@(FB_MAXINE)		  += maxinefb.c
+obj-@(FB_METRONOME)        += metronomefb.c
+obj-@(FB_BROADSHEET)       += broadsheetfb.c
+obj-@(FB_S1D13XXX)	  += s1d13xxxfb.c
+obj-@(FB_SH7760)		  += sh7760fb.c
+obj-@(FB_IMX)              += imxfb.c
+obj-@(FB_S3C)		  += s3c-fb.c
+obj-@(FB_S3C2410)	  += s3c2410fb.c
+obj-@(FB_FSL_DIU)	  += fsl-diu-fb.c
+obj-@(FB_COBALT)           += cobalt_lcdfb.c
+link-@(FB_PNX4008_DUM)	  += pnx4008/built-in.o
+link-@(FB_PNX4008_DUM_RGB)  += pnx4008/built-in.o
+obj-@(FB_IBM_GXT4500)	  += gxt4500.c
+obj-@(FB_PS3)		  += ps3fb.c
+obj-@(FB_SM501)            += sm501fb.c
+obj-@(FB_XILINX)           += xilinxfb.c
+obj-@(FB_SH_MOBILE_LCDC)	  += sh_mobile_lcdcfb.c
+link-@(FB_OMAP)             += omap/built-in.o
+obj-@(XEN_FBDEV_FRONTEND)  += xen-fbfront.c
+obj-@(FB_CARMINE)          += carminefb.c
+link-@(FB_MB862XX)	  += mb862xx/built-in.o
+
+# Platform or fallback drivers go here
+obj-@(FB_UVESA)            += uvesafb.c
+obj-@(FB_VESA)             += vesafb.c
+obj-@(FB_EFI)              += efifb.c
+obj-@(FB_VGA16)            += vga16fb.c
+obj-@(FB_OF)               += offb.c
+obj-@(FB_BF54X_LQ043)	  += bf54x-lq043fb.c
+obj-@(FB_BFIN_T350MCQB)	  += bfin-t350mcqb-fb.c
+obj-@(FB_MX3)		  += mx3fb.c
+
+# the test framebuffer is last
+obj-@(FB_VIRTUAL)          += vfb.c
+
+#video output switch sysfs driver
+obj-@(VIDEO_OUTPUT_CONTROL) += output.c
+include $(LINUX_ROOT)/linux.tup

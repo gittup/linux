@@ -1,0 +1,67 @@
+include_rules
+modname = wireless
+#
+# Makefile for the Linux Wireless network device drivers.
+#
+
+link-@(IPW2100) += ipw2x00/built-in.o
+link-@(IPW2200) += ipw2x00/built-in.o
+
+obj-@(STRIP) += strip.c
+obj-@(ARLAN) += arlan.c 
+
+arlan-y := arlan-main.c arlan-proc.c
+
+# Obsolete cards
+obj-@(WAVELAN)		+= wavelan.c
+obj-@(PCMCIA_NETWAVE)	+= netwave_cs.c
+obj-@(PCMCIA_WAVELAN)	+= wavelan_cs.c
+
+link-@(HERMES)		+= orinoco/built-in.o
+
+obj-@(AIRO)		+= airo.c
+obj-@(AIRO_CS)		+= airo_cs.c airo.c
+
+obj-@(ATMEL)             += atmel.c
+obj-@(PCI_ATMEL)         += atmel_pci.c 
+obj-@(PCMCIA_ATMEL)      += atmel_cs.c
+
+obj-@(AT76C50X_USB)      += at76c50x-usb.c
+
+link-@(PRISM54)		+= prism54/built-in.o
+
+link-@(HOSTAP)		+= hostap/built-in.o
+link-@(B43)		+= b43/built-in.o
+link-@(B43LEGACY)		+= b43legacy/built-in.o
+link-@(ZD1211RW)		+= zd1211rw/built-in.o
+link-@(RTL8180)		+= rtl818x/built-in.o
+link-@(RTL8187)		+= rtl818x/built-in.o
+
+# 16-bit wireless PCMCIA client drivers
+obj-@(PCMCIA_RAYCS)	+= ray_cs.c
+obj-@(PCMCIA_WL3501)	+= wl3501_cs.c
+
+obj-@(USB_NET_RNDIS_WLAN)	+= rndis_wlan.c
+
+obj-@(USB_ZD1201)	+= zd1201.c
+link-@(LIBERTAS)		+= libertas/built-in.o
+
+link-@(LIBERTAS_THINFIRM)	+= libertas_tf/built-in.o
+
+obj-@(ADM8211)	+= adm8211.c
+
+obj-@(MWL8K)	+= mwl8k.c
+
+link-@(IWLWIFI)	+= iwlwifi/built-in.o
+link-@(RT2X00)	+= rt2x00/built-in.o
+
+link-@(P54_COMMON)	+= p54/built-in.o
+
+link-@(ATH_COMMON)	+= ath/built-in.o
+
+obj-@(MAC80211_HWSIM)	+= mac80211_hwsim.c
+
+link-@(WL12XX)	+= wl12xx/built-in.o
+
+link-@(IWM)	+= iwmc3200wifi/built-in.o
+include $(LINUX_ROOT)/linux.tup

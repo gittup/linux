@@ -1,0 +1,17 @@
+include_rules
+modname = power
+
+ifeq (@(PM_DEBUG),y)
+EXTRA_CFLAGS	+=	-DDEBUG
+endif
+
+obj-@(PM)		+= main.c
+obj-@(PM_SLEEP)		+= console.c
+obj-@(FREEZER)		+= process.c
+obj-@(SUSPEND)		+= suspend.c
+obj-@(PM_TEST_SUSPEND)	+= suspend_test.c
+obj-@(HIBERNATION)	+= swsusp.c hibernate.c snapshot.c swap.c user.c
+obj-@(HIBERNATION_NVS)	+= hibernate_nvs.c
+
+obj-@(MAGIC_SYSRQ)	+= poweroff.c
+include $(LINUX_ROOT)/linux.tup

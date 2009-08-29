@@ -1,0 +1,36 @@
+include_rules
+modname = host
+#
+# Makefile for USB Host Controller Drivers
+#
+
+ifeq (@(USB_DEBUG),y)
+	EXTRA_CFLAGS		+= -DDEBUG
+endif
+
+isp1760-y := isp1760-hcd.c isp1760-if.c
+fhci-y := fhci-hcd.c fhci-hub.c fhci-q.c fhci-mem.c \
+	     fhci-tds.c fhci-sched.c
+ifeq (@(FHCI_DEBUG),y)
+fhci-y += fhci-dbg.c
+endif
+xhci-y := xhci-hcd.c xhci-mem.c xhci-pci.c xhci-ring.c xhci-hub.c xhci-dbg.c
+
+link-@(USB_WHCI_HCD)	+= whci/built-in.o
+
+obj-@(PCI)		+= pci-quirks.c
+
+obj-@(USB_EHCI_HCD)	+= ehci-hcd.c
+obj-@(USB_OXU210HP_HCD)	+= oxu210hp-hcd.c
+obj-@(USB_ISP116X_HCD)	+= isp116x-hcd.c
+obj-@(USB_OHCI_HCD)	+= ohci-hcd.c
+obj-@(USB_UHCI_HCD)	+= uhci-hcd.c
+obj-@(USB_FHCI_HCD)	+= fhci.c
+obj-@(USB_XHCI_HCD)	+= xhci.c
+obj-@(USB_SL811_HCD)	+= sl811-hcd.c
+obj-@(USB_SL811_CS)	+= sl811_cs.c
+obj-@(USB_U132_HCD)	+= u132-hcd.c
+obj-@(USB_R8A66597_HCD)	+= r8a66597-hcd.c
+obj-@(USB_ISP1760_HCD)	+= isp1760.c
+obj-@(USB_HWA_HCD)	+= hwa-hc.c
+include $(LINUX_ROOT)/linux.tup

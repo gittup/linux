@@ -1,0 +1,53 @@
+include_rules
+modname = mm
+#
+# Makefile for the linux memory manager.
+#
+
+mmu-y			:= nommu.c
+mmu-@(MMU)	:= fremap.c highmem.c madvise.c memory.c mincore.c \
+			   mlock.c mmap.c mprotect.c mremap.c msync.c rmap.c \
+			   vmalloc.c
+
+obj-y			:= bootmem.c filemap.c mempool.c oom_kill.c fadvise.c \
+			   maccess.c page_alloc.c page-writeback.c pdflush.c \
+			   readahead.c swap.c truncate.c vmscan.c shmem.c \
+			   prio_tree.c util.c mmzone.c vmstat.c backing-dev.c \
+			   page_isolation.c mm_init.c $(mmu-y)
+obj-y += init-mm.c
+
+obj-@(PROC_PAGE_MONITOR) += pagewalk.c
+obj-@(BOUNCE)	+= bounce.c
+obj-@(SWAP)	+= page_io.c swap_state.c swapfile.c thrash.c
+obj-@(HAS_DMA)	+= dmapool.c
+obj-@(HUGETLBFS)	+= hugetlb.c
+obj-@(NUMA) 	+= mempolicy.c
+obj-@(SPARSEMEM)	+= sparse.c
+obj-@(SPARSEMEM_VMEMMAP) += sparse-vmemmap.c
+obj-@(TMPFS_POSIX_ACL) += shmem_acl.c
+obj-@(SLOB) += slob.c
+obj-@(MMU_NOTIFIER) += mmu_notifier.c
+obj-@(PAGE_POISONING) += debug-pagealloc.c
+obj-@(SLAB) += slab.c
+obj-@(SLUB) += slub.c
+obj-@(KMEMCHECK) += kmemcheck.c
+obj-@(FAILSLAB) += failslab.c
+obj-@(MEMORY_HOTPLUG) += memory_hotplug.c
+obj-@(FS_XIP) += filemap_xip.c
+obj-@(MIGRATION) += migrate.c
+# TODO: ifdef?
+#ifdef CONFIG_HAVE_DYNAMIC_PER_CPU_AREA
+#obj-@(SMP) += percpu.c
+#else
+#obj-@(SMP) += allocpercpu.c
+#endif
+percpu- = percpu.c
+percpu-@(HAVE_DYNAMIC_PER_CPU_AREA) = allocpercpu.c
+obj-@(SMP) += $(percpu-)
+
+obj-@(QUICKLIST) += quicklist.c
+obj-@(CGROUP_MEM_RES_CTLR) += memcontrol.c page_cgroup.c
+obj-@(DEBUG_KMEMLEAK) += kmemleak.c
+obj-@(DEBUG_KMEMLEAK_TEST) += kmemleak-test.c
+obj-y += $(mm-y)
+include $(LINUX_ROOT)/linux.tup

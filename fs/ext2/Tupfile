@@ -1,0 +1,16 @@
+include_rules
+modname = ext2
+#
+# Makefile for the linux ext2-filesystem routines.
+#
+
+
+ext2-y := balloc.c dir.c file.c ialloc.c inode.c \
+	  ioctl.c namei.c super.c symlink.c
+
+ext2-@(EXT2_FS_XATTR)	 += xattr.c xattr_user.c xattr_trusted.c
+ext2-@(EXT2_FS_POSIX_ACL) += acl.c
+ext2-@(EXT2_FS_SECURITY)	 += xattr_security.c
+ext2-@(EXT2_FS_XIP)	 += xip.c
+obj-@(EXT2_FS) += $(ext2-y)
+include $(LINUX_ROOT)/linux.tup

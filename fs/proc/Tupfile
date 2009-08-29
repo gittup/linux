@@ -1,0 +1,31 @@
+include_rules
+modname = proc
+#
+# Makefile for the Linux proc filesystem routines.
+#
+
+
+proc-y			:= nommu.c task_nommu.c
+proc-@(MMU)	:= mmu.c task_mmu.c
+
+proc-y       += inode.c root.c base.c generic.c array.c \
+		proc_tty.c
+proc-y	+= cmdline.c
+proc-y	+= cpuinfo.c
+proc-y	+= devices.c
+proc-y	+= interrupts.c
+proc-y	+= loadavg.c
+proc-y	+= meminfo.c
+proc-y	+= stat.c
+proc-y	+= uptime.c
+proc-y	+= version.c
+proc-y	+= softirqs.c
+proc-@(PROC_SYSCTL)	+= proc_sysctl.c
+proc-@(NET)		+= proc_net.c
+proc-@(PROC_KCORE)	+= kcore.c
+proc-@(PROC_VMCORE)	+= vmcore.c
+proc-@(PROC_DEVICETREE)	+= proc_devtree.c
+proc-@(PRINTK)	+= kmsg.c
+proc-@(PROC_PAGE_MONITOR)	+= page.c
+obj-@(PROC_FS) += $(proc-y)
+include $(LINUX_ROOT)/linux.tup

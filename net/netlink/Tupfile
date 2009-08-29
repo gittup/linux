@@ -1,0 +1,8 @@
+include_rules
+modname = netlink
+#
+# Makefile for the netlink driver.
+#
+
+obj-y  				:= af_netlink.c genetlink.c
+include $(LINUX_ROOT)/linux.tup

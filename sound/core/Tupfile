@@ -1,0 +1,36 @@
+include_rules
+modname = core
+#
+# Makefile for ALSA
+# Copyright (c) 1999,2001 by Jaroslav Kysela <perex@perex.cz>
+#
+
+snd-y     := sound.c init.c memory.c info.c control.c misc.c device.c
+snd-@(ISA_DMA_API) += isadma.c
+snd-@(SND_OSSEMUL) += sound_oss.c info_oss.c
+snd-@(SND_VMASTER) += vmaster.c
+snd-@(SND_JACK)	  += jack.c
+
+snd-pcm-y := pcm.c pcm_native.c pcm_lib.c pcm_timer.c pcm_misc.c \
+		pcm_memory.c
+
+snd-page-alloc-y := memalloc.c
+snd-page-alloc-@(HAS_DMA) += sgbuf.c
+
+snd-rawmidi-y  := rawmidi.c
+snd-timer-y    := timer.c
+snd-hrtimer-y  := hrtimer.c
+snd-rtctimer-y := rtctimer.c
+snd-hwdep-y    := hwdep.c
+
+obj-@(SND) 		+= snd.c
+obj-@(SND_HWDEP)		+= snd-hwdep.c
+obj-@(SND_TIMER)		+= snd-timer.c
+obj-@(SND_HRTIMER)	+= snd-hrtimer.c
+obj-@(SND_RTCTIMER)	+= snd-rtctimer.c
+obj-@(SND_PCM)		+= snd-pcm.c snd-page-alloc.c
+obj-@(SND_RAWMIDI)	+= snd-rawmidi.c
+
+link-@(SND_OSSEMUL)	+= oss/built-in.o
+link-@(SND_SEQUENCER)	+= seq/built-in.o
+include $(LINUX_ROOT)/linux.tup

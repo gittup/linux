@@ -1,0 +1,12 @@
+include_rules
+modname = ramfs
+#
+# Makefile for the linux ramfs routines.
+#
+
+
+file-mmu-y := file-nommu.c
+file-mmu-@(MMU) := file-mmu.c
+ramfs-y += inode.c $(file-mmu-y)
+obj-y += $(ramfs-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,5 @@
+include_rules
+modname = inotify
+obj-@(INOTIFY_USER)	+= inotify_fsnotify.c inotify_user.c
+obj-@(INOTIFY)		+= $(inotify-y)
+include $(LINUX_ROOT)/linux.tup

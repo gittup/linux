@@ -1,0 +1,20 @@
+include_rules
+modname = block
+#
+# Makefile for the kernel block layer
+#
+
+obj-@(BLOCK) := elevator.c blk-core.c blk-tag.c blk-sysfs.c \
+			blk-barrier.c blk-settings.c blk-ioc.c blk-map.c \
+			blk-exec.c blk-merge.c blk-softirq.c blk-timeout.c \
+			ioctl.c genhd.c scsi_ioctl.c
+
+obj-@(BLK_DEV_BSG)	+= bsg.c
+obj-@(IOSCHED_NOOP)	+= noop-iosched.c
+obj-@(IOSCHED_AS)	+= as-iosched.c
+obj-@(IOSCHED_DEADLINE)	+= deadline-iosched.c
+obj-@(IOSCHED_CFQ)	+= cfq-iosched.c
+
+obj-@(BLOCK_COMPAT)	+= compat_ioctl.c
+obj-@(BLK_DEV_INTEGRITY)	+= blk-integrity.c
+include $(LINUX_ROOT)/linux.tup

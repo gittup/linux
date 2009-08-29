@@ -1,0 +1,108 @@
+include_rules
+modname = drivers
+#
+# Makefile for the Linux kernel device drivers.
+#
+# 15 Sep 2000, Christoph Hellwig <hch@infradead.crg>
+# Rewritten to use lists instead of if-statements.
+#
+
+#link-y				+= gpio/built-in.o
+link-@(PCI)		+= pci/built-in.o
+link-@(PARISC)		+= parisc/built-in.o
+link-@(RAPIDIO)		+= rapidio/built-in.o
+link-y				+= video/built-in.o
+link-@(ACPI)		+= acpi/built-in.o
+# PnP must come after ACPI since it will eventually need to check if acpi
+# was used and do nothing if so
+link-@(PNP)		+= pnp/built-in.o
+link-@(ARM_AMBA)		+= amba/built-in.o
+
+link-@(XEN)		+= xen/built-in.o
+
+# char/ comes before serial/ etc so that the VT console is the boot-time
+# default.
+link-y				+= char/built-in.o
+
+# gpu/ comes after char for AGP vs DRM startup
+#link-y				+= gpu/built-in.o
+
+link-@(CONNECTOR)		+= connector/built-in.o
+
+# i810fb and intelfb depend on char/agp/
+link-@(FB_I810)           += video/i810/built-in.o
+link-@(FB_INTEL)          += video/intelfb/built-in.o
+
+link-y				+= serial/built-in.o*
+link-@(PARPORT)		+= parport/built-in.o
+link-y				+= base/built-in.o block/built-in.o* net/built-in.o
+#link-y += media/built-in.o
+#link-y += misc/built-in.o mfd/built-in.o
+link-@(NUBUS)		+= nubus/built-in.o
+link-@(ATM)		+= atm/built-in.o
+#link-y				+= macintosh/built-in.o
+link-@(IDE)		+= ide/built-in.o
+link-@(SCSI)		+= scsi/built-in.o
+link-@(ATA)		+= ata/built-in.o
+link-@(FUSION)		+= message/built-in.o
+link-@(FIREWIRE)		+= firewire/built-in.o
+#link-y				+= ieee1394/built-in.o
+link-@(UIO)		+= uio/built-in.o
+link-y				+= cdrom/built-in.o*
+#link-y				+= auxdisplay/built-in.o
+link-@(MTD)		+= mtd/built-in.o
+link-@(SPI)		+= spi/built-in.o
+link-@(PCCARD)		+= pcmcia/built-in.o
+link-@(DIO)		+= dio/built-in.o
+link-@(SBUS)		+= sbus/built-in.o
+link-@(ZORRO)		+= zorro/built-in.o
+link-@(MAC)		+= macintosh/built-in.o
+link-@(ATA_OVER_ETH)	+= block/aoe/built-in.o
+link-@(PARIDE) 		+= block/paride/built-in.o
+link-@(TC)		+= tc/built-in.o
+#link-@(USB)		+= usb/built-in.o
+link-@(USB)		+= usb/host/built-in.o
+link-@(USB)		+= usb/core/built-in.o
+link-@(USB_MUSB_HDRC)	+= usb/musb/built-in.o
+#link-@(PCI)		+= usb/built-in.o
+link-@(USB_GADGET)	+= usb/gadget/built-in.o
+link-@(SERIO)		+= input/serio/built-in.o
+link-@(GAMEPORT)		+= input/gameport/built-in.o
+link-@(INPUT)		+= input/built-in.o
+link-@(I2O)		+= message/built-in.o
+link-@(RTC_LIB)		+= rtc/built-in.o
+link-@(I2C)		+= i2c/built-in.o
+link-@(W1)		+= w1/built-in.o
+link-@(POWER_SUPPLY)	+= power/built-in.o
+link-@(HWMON)		+= hwmon/built-in.o
+link-@(THERMAL)		+= thermal/built-in.o
+link-@(WATCHDOG)		+= watchdog/built-in.o
+link-@(PHONE)		+= telephony/built-in.o
+link-@(MD)		+= md/built-in.o
+link-@(BT)		+= bluetooth/built-in.o
+link-@(ACCESSIBILITY)	+= accessibility/built-in.o
+link-@(ISDN)		+= isdn/built-in.o
+link-@(EDAC)		+= edac/built-in.o
+link-@(MCA)		+= mca/built-in.o
+link-@(EISA)		+= eisa/built-in.o
+#link-y				+= lguest/built-in.o
+link-@(CPU_FREQ)		+= cpufreq/built-in.o
+#link-@(CPU_IDLE)		+= cpuidle/built-in.o
+link-@(MMC)		+= mmc/built-in.o
+link-@(MEMSTICK)		+= memstick/built-in.o
+link-@(NEW_LEDS)		+= leds/built-in.o
+link-@(INFINIBAND)	+= infiniband/built-in.o
+link-@(SGI_SN)		+= sn/built-in.o
+link-y				+= firmware/built-in.o
+#link-@(CRYPTO)		+= crypto/built-in.o
+link-@(SUPERH)		+= sh/built-in.o
+#link-@(GENERIC_TIME)	+= clocksource/built-in.o
+link-@(DMA_ENGINE)	+= dma/built-in.o
+link-@(DCA)		+= dca/built-in.o
+link-@(HID)		+= hid/built-in.o
+link-@(PPC_PS3)		+= ps3/built-in.o
+link-@(OF)		+= of/built-in.o
+link-@(SSB)		+= ssb/built-in.o
+link-@(VIRTIO)		+= virtio/built-in.o
+link-@(REGULATOR)		+= regulator/built-in.o
+include $(LINUX_ROOT)/linux.tup

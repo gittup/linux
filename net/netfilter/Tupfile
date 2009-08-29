@@ -1,0 +1,102 @@
+include_rules
+modname = netfilter
+netfilter-y := core.c nf_log.c nf_queue.c nf_sockopt.c
+
+nf_conntrack-y	:= nf_conntrack_core.c nf_conntrack_standalone.c nf_conntrack_expect.c nf_conntrack_helper.c nf_conntrack_proto.c nf_conntrack_l3proto_generic.c nf_conntrack_proto_generic.c nf_conntrack_proto_tcp.c nf_conntrack_proto_udp.c nf_conntrack_extend.c nf_conntrack_acct.c
+nf_conntrack-@(NF_CONNTRACK_EVENTS) += nf_conntrack_ecache.c
+
+
+obj-@(NETFILTER_NETLINK) += nfnetlink.c
+obj-@(NETFILTER_NETLINK_QUEUE) += nfnetlink_queue.c
+obj-@(NETFILTER_NETLINK_LOG) += nfnetlink_log.c
+
+# connection tracking
+obj-@(NF_CONNTRACK) += nf_conntrack.c
+
+# SCTP protocol connection tracking
+obj-@(NF_CT_PROTO_DCCP) += nf_conntrack_proto_dccp.c
+obj-@(NF_CT_PROTO_GRE) += nf_conntrack_proto_gre.c
+obj-@(NF_CT_PROTO_SCTP) += nf_conntrack_proto_sctp.c
+obj-@(NF_CT_PROTO_UDPLITE) += nf_conntrack_proto_udplite.c
+
+# netlink interface for nf_conntrack
+obj-@(NF_CT_NETLINK) += nf_conntrack_netlink.c
+
+# connection tracking helpers
+nf_conntrack_h323-y := nf_conntrack_h323_main.c nf_conntrack_h323_asn1.c
+
+obj-@(NF_CONNTRACK_AMANDA) += nf_conntrack_amanda.c
+obj-@(NF_CONNTRACK_FTP) += nf_conntrack_ftp.c
+obj-@(NF_CONNTRACK_H323) += nf_conntrack_h323.c
+obj-@(NF_CONNTRACK_IRC) += nf_conntrack_irc.c
+obj-@(NF_CONNTRACK_NETBIOS_NS) += nf_conntrack_netbios_ns.c
+obj-@(NF_CONNTRACK_PPTP) += nf_conntrack_pptp.c
+obj-@(NF_CONNTRACK_SANE) += nf_conntrack_sane.c
+obj-@(NF_CONNTRACK_SIP) += nf_conntrack_sip.c
+obj-@(NF_CONNTRACK_TFTP) += nf_conntrack_tftp.c
+
+# transparent proxy support
+obj-@(NETFILTER_TPROXY) += nf_tproxy_core.c
+
+# generic X tables 
+obj-@(NETFILTER_XTABLES) += x_tables.c xt_tcpudp.c
+
+# targets
+obj-@(NETFILTER_XT_TARGET_CLASSIFY) += xt_CLASSIFY.c
+obj-@(NETFILTER_XT_TARGET_CONNMARK) += xt_CONNMARK.c
+obj-@(NETFILTER_XT_TARGET_CONNSECMARK) += xt_CONNSECMARK.c
+obj-@(NETFILTER_XT_TARGET_DSCP) += xt_DSCP.c
+obj-@(NETFILTER_XT_TARGET_HL) += xt_HL.c
+obj-@(NETFILTER_XT_TARGET_LED) += xt_LED.c
+obj-@(NETFILTER_XT_TARGET_MARK) += xt_MARK.c
+obj-@(NETFILTER_XT_TARGET_NFLOG) += xt_NFLOG.c
+obj-@(NETFILTER_XT_TARGET_NFQUEUE) += xt_NFQUEUE.c
+obj-@(NETFILTER_XT_TARGET_NOTRACK) += xt_NOTRACK.c
+obj-@(NETFILTER_XT_TARGET_RATEEST) += xt_RATEEST.c
+obj-@(NETFILTER_XT_TARGET_SECMARK) += xt_SECMARK.c
+obj-@(NETFILTER_XT_TARGET_TPROXY) += xt_TPROXY.c
+obj-@(NETFILTER_XT_TARGET_TCPMSS) += xt_TCPMSS.c
+obj-@(NETFILTER_XT_TARGET_TCPOPTSTRIP) += xt_TCPOPTSTRIP.c
+obj-@(NETFILTER_XT_TARGET_TRACE) += xt_TRACE.c
+
+# matches
+obj-@(NETFILTER_XT_MATCH_CLUSTER) += xt_cluster.c
+obj-@(NETFILTER_XT_MATCH_COMMENT) += xt_comment.c
+obj-@(NETFILTER_XT_MATCH_CONNBYTES) += xt_connbytes.c
+obj-@(NETFILTER_XT_MATCH_CONNLIMIT) += xt_connlimit.c
+obj-@(NETFILTER_XT_MATCH_CONNMARK) += xt_connmark.c
+obj-@(NETFILTER_XT_MATCH_CONNTRACK) += xt_conntrack.c
+obj-@(NETFILTER_XT_MATCH_DCCP) += xt_dccp.c
+obj-@(NETFILTER_XT_MATCH_DSCP) += xt_dscp.c
+obj-@(NETFILTER_XT_MATCH_ESP) += xt_esp.c
+obj-@(NETFILTER_XT_MATCH_HASHLIMIT) += xt_hashlimit.c
+obj-@(NETFILTER_XT_MATCH_HELPER) += xt_helper.c
+obj-@(NETFILTER_XT_MATCH_HL) += xt_hl.c
+obj-@(NETFILTER_XT_MATCH_IPRANGE) += xt_iprange.c
+obj-@(NETFILTER_XT_MATCH_LENGTH) += xt_length.c
+obj-@(NETFILTER_XT_MATCH_LIMIT) += xt_limit.c
+obj-@(NETFILTER_XT_MATCH_MAC) += xt_mac.c
+obj-@(NETFILTER_XT_MATCH_MARK) += xt_mark.c
+obj-@(NETFILTER_XT_MATCH_MULTIPORT) += xt_multiport.c
+obj-@(NETFILTER_XT_MATCH_OSF) += xt_osf.c
+obj-@(NETFILTER_XT_MATCH_OWNER) += xt_owner.c
+obj-@(NETFILTER_XT_MATCH_PHYSDEV) += xt_physdev.c
+obj-@(NETFILTER_XT_MATCH_PKTTYPE) += xt_pkttype.c
+obj-@(NETFILTER_XT_MATCH_POLICY) += xt_policy.c
+obj-@(NETFILTER_XT_MATCH_QUOTA) += xt_quota.c
+obj-@(NETFILTER_XT_MATCH_RATEEST) += xt_rateest.c
+obj-@(NETFILTER_XT_MATCH_REALM) += xt_realm.c
+obj-@(NETFILTER_XT_MATCH_RECENT) += xt_recent.c
+obj-@(NETFILTER_XT_MATCH_SCTP) += xt_sctp.c
+obj-@(NETFILTER_XT_MATCH_SOCKET) += xt_socket.c
+obj-@(NETFILTER_XT_MATCH_STATE) += xt_state.c
+obj-@(NETFILTER_XT_MATCH_STATISTIC) += xt_statistic.c
+obj-@(NETFILTER_XT_MATCH_STRING) += xt_string.c
+obj-@(NETFILTER_XT_MATCH_TCPMSS) += xt_tcpmss.c
+obj-@(NETFILTER_XT_MATCH_TIME) += xt_time.c
+obj-@(NETFILTER_XT_MATCH_U32) += xt_u32.c
+
+# IPVS
+link-@(IP_VS) += ipvs/built-in.o
+obj-@(NETFILTER) = $(netfilter-y)
+include $(LINUX_ROOT)/linux.tup

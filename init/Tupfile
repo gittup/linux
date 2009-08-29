@@ -1,0 +1,19 @@
+include_rules
+modname = init
+#
+# Makefile for the linux kernel.
+#
+
+initramfs-y = noinitramfs.c
+initramfs-@(BLK_DEV_INITRD) = initramfs.c
+obj-y += $(initramfs-y)
+
+obj-@(GENERIC_CALIBRATE_DELAY) += calibrate.c
+
+mounts-y			+= do_mounts.c
+mounts-@(BLK_DEV_RAM)	+= do_mounts_rd.c
+mounts-@(BLK_DEV_INITRD)	+= do_mounts_initrd.c
+mounts-@(BLK_DEV_MD)	+= do_mounts_md.c
+obj-y                          += main.c version.c $(mounts-y)
+
+include $(LINUX_ROOT)/linux.tup

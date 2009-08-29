@@ -1,0 +1,22 @@
+include_rules
+modname = sound
+# Makefile for the Linux sound card driver
+#
+
+obj-@(SOUND) += soundcore.c
+obj-@(SOUND_PRIME) += sound_firmware.c
+link-@(SOUND_PRIME) += oss/built-in.o
+link-@(DMASOUND) += oss/built-in.o
+obj-@(SND) += core/ i2c/ drivers/ isa/ pci/ ppc/ arm/ sh/ synth/ usb/ \
+	sparc/ spi/ parisc/ pcmcia/ mips/ soc/ atmel/
+link-@(SND_AOA) += aoa/built-in.o
+
+# This one must be compilable even if sound is configured out
+obj-@(AC97_BUS) += ac97_bus.c
+
+ifeq (@(SND),y)
+  obj-y += last.c
+endif
+
+soundcore-y  := sound_core.c
+include $(LINUX_ROOT)/linux.tup

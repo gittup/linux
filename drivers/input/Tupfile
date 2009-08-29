@@ -1,0 +1,29 @@
+include_rules
+modname = input
+#
+# Makefile for the input core drivers.
+#
+
+# Each configuration option enables a list of files.
+
+obj-@(INPUT)		+= input.c input-compat.c ff-core.c
+
+obj-@(INPUT_FF_MEMLESS)	+= ff-memless.c
+obj-@(INPUT_POLLDEV)	+= input-polldev.c
+
+obj-@(INPUT_MOUSEDEV)	+= mousedev.c
+obj-@(INPUT_JOYDEV)	+= joydev.c
+obj-@(INPUT_EVDEV)	+= evdev.c
+obj-@(INPUT_EVBUG)	+= evbug.c
+
+link-@(INPUT_KEYBOARD)	+= keyboard/built-in.o
+link-@(INPUT_MOUSE)	+= mouse/built-in.o
+link-@(INPUT_JOYSTICK)	+= joystick/built-in.o
+link-@(INPUT_TABLET)	+= tablet/built-in.o
+link-@(INPUT_TOUCHSCREEN)	+= touchscreen/built-in.o
+link-@(INPUT_MISC)	+= misc/built-in.o
+
+obj-@(INPUT_APMPOWER)	+= apm-power.c
+
+obj-@(XEN_KBDDEV_FRONTEND)	+= xen-kbdfront.c
+include $(LINUX_ROOT)/linux.tup

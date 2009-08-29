@@ -1,0 +1,20 @@
+include_rules
+include $(LINUX_ROOT)/compiler.tup
+modname = compressed
+BITS=32
+
+generated_headers = ../../include/asm/asm-offsets.h
+
+hostprogs-y += mkpiggy.c
+include $(LINUX_ROOT)/host.tup
+
+
+: head_$(BITS).S | $(generated_headers) $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) -fPIC -D__ASSEMBLY__ -Wno-undef -c %f -o %o |> head_$(BITS).o
+
+: ../../../../vmlinux |> ^ OBJCOPY %o^ objcopy  -R .comment -S %f %o |> vmlinux.bin
+: vmlinux.bin |> ^ GZIP %o^ gzip -f -9 < %f > %o |> vmlinux.bin.gz
+: mkpiggy vmlinux.bin.gz |> ^ MKPIGGY %o^ ./mkpiggy vmlinux.bin.gz > %o |> piggy.S
+: piggy.S | vmlinux.bin.gz $(compiler_proper) |> ^ CC %f^ $(CC) $(CFLAGS) -fPIC -D__ASSEMBLY__ -c %f -o %o |> piggy.o
+: vmlinux.lds.S | $(compiler_proper) |> $(CC) $(CFLAGS) -Iinclude -P -C -Ui386 -D__ASSEMBLY__ -E %f -o %o |> vmlinux.lds
+: misc.c | $(compiler_proper) |> ^ CC %f^ $(CC) $(CFLAGS) -fPIC -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(misc)" -D"KBUILD_MODNAME=KBUILD_STR(misc)" -c %f -o %o |> misc.o
+: head_$(BITS).o misc.o piggy.o | vmlinux.lds |> ^ LD %o^ ld -m elf_i386 -T vmlinux.lds %f -o %o |> vmlinux

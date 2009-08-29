@@ -1,0 +1,30 @@
+include_rules
+
+# TODO
+BITS=32
+
+modname = mm
+obj-y:= init.c init_$(BITS).c fault.c ioremap.c extable.c pageattr.c mmap.c \
+	    pat.c pgtable.c gup.c
+
+obj-@(SMP)		+= tlb.c
+
+obj-@(X86_32)		+= pgtable_32.c iomap_32.c
+
+obj-@(HUGETLB_PAGE)	+= hugetlbpage.c
+obj-@(X86_PTDUMP)	+= dump_pagetables.c
+
+obj-@(HIGHMEM)		+= highmem_32.c
+
+link-@(KMEMCHECK)		+= kmemcheck/built-in.o
+
+obj-@(MMIOTRACE)		+= mmiotrace.c
+mmiotrace-y			:= kmmio.c pf_in.c mmio-mod.c
+obj-@(MMIOTRACE_TEST)	+= testmmiotrace.c
+
+obj-@(NUMA)		+= numa.c numa_$(BITS).c
+obj-@(K8_NUMA)		+= k8topology_64.c
+obj-@(ACPI_NUMA)		+= srat_$(BITS).c
+
+obj-@(MEMTEST)		+= memtest.c
+include $(LINUX_ROOT)/linux.tup

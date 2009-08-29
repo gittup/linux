@@ -1,0 +1,11 @@
+include_rules
+modname = time
+obj-y += timekeeping.c ntp.c clocksource.c jiffies.c timer_list.c timecompare.c
+
+obj-@(GENERIC_CLOCKEVENTS_BUILD)		+= clockevents.c
+obj-@(GENERIC_CLOCKEVENTS)		+= tick-common.c
+obj-@(GENERIC_CLOCKEVENTS_BROADCAST)	+= tick-broadcast.c
+obj-@(TICK_ONESHOT)			+= tick-oneshot.c
+obj-@(TICK_ONESHOT)			+= tick-sched.c
+obj-@(TIMER_STATS)			+= timer_stats.c
+include $(LINUX_ROOT)/linux.tup

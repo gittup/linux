@@ -1,0 +1,102 @@
+include_rules
+modname = kernel
+#
+# Makefile for the linux kernel.
+#
+
+obj-y     = sched.c fork.c exec_domain.c panic.c printk.c \
+	    cpu.c exit.c itimer.c time.c softirq.c resource.c \
+	    sysctl.c capability.c ptrace.c timer.c user.c \
+	    signal.c sys.c kmod.c workqueue.c pid.c \
+	    rcupdate.c extable.c params.c posix-timers.c \
+	    kthread.c wait.c kfifo.c sys_ni.c posix-cpu-timers.c mutex.c \
+	    hrtimer.c rwsem.c nsproxy.c srcu.c semaphore.c \
+	    notifier.c ksysfs.c pm_qos_params.c sched_clock.c cred.c \
+	    async.c
+obj-y += groups.c
+
+obj-@(PROFILING) += profile.c
+obj-@(SYSCTL_SYSCALL_CHECK) += sysctl_check.c
+obj-@(STACKTRACE) += stacktrace.c
+obj-@(DEBUG_MUTEXES) += mutex-debug.c
+obj-@(LOCKDEP) += lockdep.c
+ifeq (@(PROC_FS),y)
+obj-@(LOCKDEP) += lockdep_proc.c
+endif
+obj-@(FUTEX) += futex.c
+ifeq (@(COMPAT),y)
+obj-@(FUTEX) += futex_compat.c
+endif
+obj-@(RT_MUTEXES) += rtmutex.c
+obj-@(DEBUG_RT_MUTEXES) += rtmutex-debug.c
+obj-@(RT_MUTEX_TESTER) += rtmutex-tester.c
+obj-@(GENERIC_ISA_DMA) += dma.c
+obj-@(USE_GENERIC_SMP_HELPERS) += smp.c
+# TODO: ifneq
+ifeq (@(SMP),y)
+else
+obj-y += up.c
+endif
+obj-@(SMP) += spinlock.c
+obj-@(DEBUG_SPINLOCK) += spinlock.c
+obj-@(PROVE_LOCKING) += spinlock.c
+obj-@(UID16) += uid16.c
+obj-@(MODULES) += module.c
+obj-@(KALLSYMS) += kallsyms.c
+obj-@(BSD_PROCESS_ACCT) += acct.c
+obj-@(KEXEC) += kexec.c
+obj-@(BACKTRACE_SELF_TEST) += backtracetest.c
+obj-@(COMPAT) += compat.c
+obj-@(CGROUPS) += cgroup.c
+obj-@(CGROUP_DEBUG) += cgroup_debug.c
+obj-@(CPUSETS) += cpuset.c
+obj-@(CGROUP_NS) += ns_cgroup.c
+obj-@(UTS_NS) += utsname.c
+obj-@(USER_NS) += user_namespace.c
+obj-@(PID_NS) += pid_namespace.c
+obj-@(IKCONFIG) += configs.c
+obj-@(RESOURCE_COUNTERS) += res_counter.c
+obj-@(STOP_MACHINE) += stop_machine.c
+obj-@(KPROBES_SANITY_TEST) += test_kprobes.c
+obj-@(AUDIT) += audit.c auditfilter.c
+obj-@(AUDITSYSCALL) += auditsc.c
+obj-@(AUDIT_TREE) += audit_tree.c
+obj-@(KPROBES) += kprobes.c
+obj-@(KGDB) += kgdb.c
+obj-@(DETECT_SOFTLOCKUP) += softlockup.c
+obj-@(SECCOMP) += seccomp.c
+obj-@(RCU_TORTURE_TEST) += rcutorture.c
+obj-@(CLASSIC_RCU) += rcuclassic.c
+obj-@(TREE_RCU) += rcutree.c
+obj-@(PREEMPT_RCU) += rcupreempt.c
+obj-@(TREE_RCU_TRACE) += rcutree_trace.c
+ifeq (@(PREEMPT_RCU),y)
+obj-@(RCU_TRACE) += rcupreempt_trace.c
+endif
+obj-@(RELAY) += relay.c
+obj-@(SYSCTL) += utsname_sysctl.c
+obj-@(TASK_DELAY_ACCT) += delayacct.c
+obj-@(TASKSTATS) += taskstats.c tsacct.c
+obj-@(MARKERS) += marker.c
+obj-@(LATENCYTOP) += latencytop.c
+obj-@(HAVE_GENERIC_DMA_COHERENT) += dma-coherent.c
+obj-@(SMP) += sched_cpupri.c
+
+generated_headers += ../include/linux/utsrelease.h
+generated_headers += timeconst.h
+generated_headers += config_data.h
+
+: timeconst.pl |> ^ TIMECONST @(HZ)^ perl %f @(HZ) > %o |> timeconst.h
+
+# TODO: Generate this?
+: existing-config |> ^ GZIP %o^ cat %f | gzip > %o |> config_data.gz
+
+: config_data.gz ../scripts/bin2c |> ^ BIN2C %o^ (echo "static const char kernel_config_data[] = MAGIC_START" && cat config_data.gz | ../scripts/bin2c && echo "MAGIC_END;") > %o |> config_data.h
+
+link-y += time/built-in.o
+link-@(PM) += power/built-in.o
+link-@(GENERIC_HARDIRQS) += irq/built-in.o
+link-@(FTRACE) += trace/built-in.o
+link-@(TRACING) += trace/built-in.o
+
+include $(LINUX_ROOT)/linux.tup

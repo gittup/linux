@@ -1,0 +1,47 @@
+include_rules
+modname = cpu
+#
+# Makefile for x86-compatible CPU details, features and quirks
+#
+
+# Don't trace early stages of a secondary CPU boot
+# TODO: ifdef
+#ifdef CONFIG_FUNCTION_TRACER
+#CFLAGS_REMOVE_common.c = -pg
+#endif
+
+obj-y			:= intel_cacheinfo.c addon_cpuid_features.c
+obj-y			+= proc.c capflags.c powerflags.c common.c
+obj-y			+= vmware.c hypervisor.c
+
+obj-@(X86_32)	+= bugs.c cmpxchg.c
+obj-@(X86_64)	+= bugs_64.c
+
+obj-@(X86_CPU_DEBUG)		+= cpu_debug.c
+
+obj-@(CPU_SUP_INTEL)		+= intel.c
+obj-@(CPU_SUP_AMD)		+= amd.c
+obj-@(CPU_SUP_CYRIX_32)		+= cyrix.c
+obj-@(CPU_SUP_CENTAUR)		+= centaur.c
+obj-@(CPU_SUP_TRANSMETA_32)	+= transmeta.c
+obj-@(CPU_SUP_UMC_32)		+= umc.c
+
+obj-@(PERF_COUNTERS)		+= perf_counter.c
+
+link-@(X86_MCE)			+= mcheck/built-in.o
+link-@(MTRR)			+= mtrr/built-in.o
+link-@(CPU_FREQ)			+= cpufreq/built-in.o
+
+obj-@(X86_LOCAL_APIC)		+= perfctr-watchdog.c
+
+#quiet_cmd_mkcapflags = MKCAP   $@
+#      cmd_mkcapflags = $(PERL) $(srctree)/$(src)/mkcapflags.pl $< $@
+#
+#cpufeature = $(src)/../../include/asm/cpufeature.h
+#
+#targets += capflags.c
+#$(obj)/capflags.c: $(cpufeature) $(src)/mkcapflags.pl FORCE
+#	$(call if_changed,mkcapflags)
+cpufeature = ../../include/asm/cpufeature.h
+: mkcapflags.pl |> ^ MKCAP %o^ perl %f $(cpufeature) %o |> capflags.c
+include $(LINUX_ROOT)/linux.tup

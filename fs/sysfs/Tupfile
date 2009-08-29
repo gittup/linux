@@ -1,0 +1,9 @@
+include_rules
+modname = sysfs
+#
+# Makefile for the sysfs virtual filesystem
+#
+
+obj-y		:= inode.c file.c dir.c symlink.c mount.c bin.c \
+		   group.c
+include $(LINUX_ROOT)/linux.tup

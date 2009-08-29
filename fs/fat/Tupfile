@@ -1,0 +1,10 @@
+include_rules
+modname = fat
+#
+# Makefile for the Linux fat filesystem support.
+#
+
+
+fat-y := cache.c dir.c fatent.c file.c inode.c misc.c
+obj-@(FAT_FS) += $(fat-y)
+include $(LINUX_ROOT)/linux.tup

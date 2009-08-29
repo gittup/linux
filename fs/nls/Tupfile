@@ -1,0 +1,47 @@
+include_rules
+modname = nls
+#
+# Makefile for native language support
+#
+
+obj-@(NLS)		+= nls_base.c
+
+obj-@(NLS_CODEPAGE_437)	+= nls_cp437.c
+obj-@(NLS_CODEPAGE_737)	+= nls_cp737.c
+obj-@(NLS_CODEPAGE_775)	+= nls_cp775.c
+obj-@(NLS_CODEPAGE_850)	+= nls_cp850.c
+obj-@(NLS_CODEPAGE_852)	+= nls_cp852.c
+obj-@(NLS_CODEPAGE_855)	+= nls_cp855.c
+obj-@(NLS_CODEPAGE_857)	+= nls_cp857.c
+obj-@(NLS_CODEPAGE_860)	+= nls_cp860.c
+obj-@(NLS_CODEPAGE_861)	+= nls_cp861.c
+obj-@(NLS_CODEPAGE_862)	+= nls_cp862.c
+obj-@(NLS_CODEPAGE_863)	+= nls_cp863.c
+obj-@(NLS_CODEPAGE_864)	+= nls_cp864.c
+obj-@(NLS_CODEPAGE_865)	+= nls_cp865.c
+obj-@(NLS_CODEPAGE_866)	+= nls_cp866.c
+obj-@(NLS_CODEPAGE_869)	+= nls_cp869.c
+obj-@(NLS_CODEPAGE_874)	+= nls_cp874.c
+obj-@(NLS_CODEPAGE_932)	+= nls_cp932.c nls_euc-jp.c
+obj-@(NLS_CODEPAGE_936)	+= nls_cp936.c
+obj-@(NLS_CODEPAGE_949)	+= nls_cp949.c
+obj-@(NLS_CODEPAGE_950)	+= nls_cp950.c
+obj-@(NLS_CODEPAGE_1250) += nls_cp1250.c
+obj-@(NLS_CODEPAGE_1251)	+= nls_cp1251.c
+obj-@(NLS_ASCII)		+= nls_ascii.c
+obj-@(NLS_ISO8859_1)	+= nls_iso8859-1.c
+obj-@(NLS_ISO8859_2)	+= nls_iso8859-2.c
+obj-@(NLS_ISO8859_3)	+= nls_iso8859-3.c
+obj-@(NLS_ISO8859_4)	+= nls_iso8859-4.c
+obj-@(NLS_ISO8859_5)	+= nls_iso8859-5.c
+obj-@(NLS_ISO8859_6)	+= nls_iso8859-6.c
+obj-@(NLS_ISO8859_7)	+= nls_iso8859-7.c
+obj-@(NLS_ISO8859_8)	+= nls_cp1255.c
+obj-@(NLS_ISO8859_9)	+= nls_iso8859-9.c
+obj-@(NLS_ISO8859_13)	+= nls_iso8859-13.c
+obj-@(NLS_ISO8859_14)	+= nls_iso8859-14.c
+obj-@(NLS_ISO8859_15)	+= nls_iso8859-15.c
+obj-@(NLS_KOI8_R)	+= nls_koi8-r.c
+obj-@(NLS_KOI8_U)	+= nls_koi8-u.c nls_koi8-ru.c
+obj-@(NLS_UTF8)		+= nls_utf8.c
+include $(LINUX_ROOT)/linux.tup

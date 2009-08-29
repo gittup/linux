@@ -1,0 +1,70 @@
+include_rules
+modname = pci
+#
+# Makefile for the PCI bus specific drivers.
+#
+
+obj-y		+= access.c bus.c probe.c remove.c pci.c quirks.c \
+			pci-driver.c search.c pci-sysfs.c rom.c setup-res.c \
+			irq.c
+obj-@(PROC_FS) += proc.c
+obj-@(SYSFS) += slot.c
+
+# Build PCI Express stuff if needed
+link-@(PCIEPORTBUS) += pcie/built-in.o
+
+obj-@(HOTPLUG) += hotplug.c
+
+# Build the PCI Hotplug drivers if we were asked to
+link-@(HOTPLUG_PCI) += hotplug/built-in.o
+
+# Build the PCI MSI interrupt support
+obj-@(PCI_MSI) += msi.c
+
+# Build the Hypertransport interrupt support
+obj-@(HT_IRQ) += htirq.c
+
+# Build Intel IOMMU support
+obj-@(DMAR) += dmar.c iova.c intel-iommu.c
+
+obj-@(INTR_REMAP) += dmar.c intr_remapping.c
+
+obj-@(PCI_IOV) += iov.c
+
+#
+# Some architectures use the generic PCI setup functions
+#
+setup-bus-@(X86) = setup-bus.c
+setup-bus-@(ALPHA) = setup-bus.c
+setup-bus-@(ARM) = setup-bus.c
+setup-bus-@(PARISC) = setup-bus.c
+setup-bus-@(SUPERH) = setup-bus.c
+setup-bus-@(PPC) = setup-bus.c
+setup-bus-@(MIPS) = setup-bus.c
+setup-bus-@(MN10300) = setup-bus.c
+
+obj-@(ALPHA) += setup-irq.c
+obj-@(ARM) += setup-irq.c
+obj-@(SUPERH) += setup-irq.c
+obj-@(MIPS) += setup-irq.c
+obj-@(X86_VISWS) += setup-irq.c
+
+#
+# ACPI Related PCI FW Functions
+#
+obj-@(ACPI)    += pci-acpi.c
+
+# Cardbus & CompactPCI use setup-bus
+setup-bus-@(HOTPLUG) = setup-bus.c
+
+obj-y += $(setup-bus-y)
+
+obj-@(PCI_SYSCALL) += syscall.c
+
+obj-@(PCI_STUB) += pci-stub.c
+
+ifeq (@(PCI_DEBUG),y)
+EXTRA_CFLAGS += -DDEBUG
+endif
+obj-y += $(pci-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,46 @@
+include_rules
+modname = ipv6
+#
+# Makefile for the Linux TCP/IP (INET6) layer.
+#
+
+
+ipv6-y +=	af_inet6.c anycast.c ip6_output.c ip6_input.c addrconf.c \
+		addrlabel.c \
+		route.c ip6_fib.c ipv6_sockglue.c ndisc.c udp.c udplite.c \
+		raw.c protocol.c icmp.c mcast.c reassembly.c tcp_ipv6.c \
+		exthdrs.c datagram.c ip6_flowlabel.c inet6_connection_sock.c
+
+ipv6-@(SYSCTL) += sysctl_net_ipv6.c
+ipv6-@(IPV6_MROUTE) += ip6mr.c
+
+ipv6-@(XFRM) += xfrm6_policy.c xfrm6_state.c xfrm6_input.c \
+	xfrm6_output.c
+ipv6-@(NETFILTER) += netfilter.c
+ipv6-@(IPV6_MULTIPLE_TABLES) += fib6_rules.c
+ipv6-@(PROC_FS) += proc.c
+ipv6-@(SYN_COOKIES) += syncookies.c
+
+obj-@(INET6_AH) += ah6.c
+obj-@(INET6_ESP) += esp6.c
+obj-@(INET6_IPCOMP) += ipcomp6.c
+obj-@(INET6_XFRM_TUNNEL) += xfrm6_tunnel.c
+obj-@(INET6_TUNNEL) += tunnel6.c
+obj-@(INET6_XFRM_MODE_TRANSPORT) += xfrm6_mode_transport.c
+obj-@(INET6_XFRM_MODE_TUNNEL) += xfrm6_mode_tunnel.c
+obj-@(INET6_XFRM_MODE_ROUTEOPTIMIZATION) += xfrm6_mode_ro.c
+obj-@(INET6_XFRM_MODE_BEET) += xfrm6_mode_beet.c
+obj-@(IPV6_MIP6) += mip6.c
+link-@(NETFILTER)	+= netfilter/built-in.o*
+
+obj-@(IPV6_SIT) += sit.c
+obj-@(IPV6_TUNNEL) += ip6_tunnel.c
+
+obj-y += addrconf_core.c exthdrs_core.c
+
+# TODO
+#obj-$(subst m,y,@(IPV6)) += inet6_hashtables.c
+obj-@(IPV6) += inet6_hashtables.c
+
+obj-@(IPV6) += $(ipv6-y)
+include $(LINUX_ROOT)/linux.tup

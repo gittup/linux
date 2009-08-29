@@ -1,0 +1,27 @@
+include_rules
+modname = serio
+#
+# Makefile for the input core drivers.
+#
+
+# Each configuration option enables a list of files.
+
+obj-@(SERIO)		+= serio.c
+obj-@(SERIO_I8042)	+= i8042.c
+obj-@(SERIO_PARKBD)	+= parkbd.c
+obj-@(SERIO_SERPORT)	+= serport.c
+obj-@(SERIO_CT82C710)	+= ct82c710.c
+obj-@(SERIO_RPCKBD)	+= rpckbd.c
+obj-@(SERIO_SA1111)	+= sa1111ps2.c
+obj-@(SERIO_AMBAKMI)	+= ambakmi.c
+obj-@(SERIO_AT32PSIF)	+= at32psif.c
+obj-@(SERIO_Q40KBD)	+= q40kbd.c
+obj-@(SERIO_GSCPS2)	+= gscps2.c
+obj-@(HP_SDC)		+= hp_sdc.c
+obj-@(HIL_MLC)		+= hp_sdc_mlc.c hil_mlc.c
+obj-@(SERIO_PCIPS2)	+= pcips2.c
+obj-@(SERIO_MACEPS2)	+= maceps2.c
+obj-@(SERIO_LIBPS2)	+= libps2.c
+obj-@(SERIO_RAW)		+= serio_raw.c
+obj-@(SERIO_XILINX_XPS_PS2)	+= xilinx_ps2.c
+include $(LINUX_ROOT)/linux.tup
