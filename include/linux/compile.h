@@ -1,0 +1,7 @@
+#define UTS_MACHINE "i386"
+#define UTS_VERSION "uts version"
+#define LINUX_COMPILE_TIME "00:00:00"
+#define LINUX_COMPILE_BY "me"
+#define LINUX_COMPILE_HOST "captainfalcon"
+#define LINUX_COMPILE_DOMAIN "mod"
+#define LINUX_COMPILER "tup gcc"
