@@ -10,7 +10,7 @@ lib-y := delay.c
 lib-y += thunk_$(BITS).S
 lib-y += usercopy_$(BITS).c getuser.S putuser.S
 
-CFLAGS_S += -D__ASSEMBLY__ -I../kernel
+CFLAGS_S += -D__ASSEMBLY__
 
 ifeq (@(X86_32),y)
         obj-y += atomic64_32.c

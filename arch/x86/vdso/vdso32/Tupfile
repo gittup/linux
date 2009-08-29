@@ -1,4 +1,4 @@
 include_rules
 
 include $(LINUX_ROOT)/compiler.tup
-: foreach note.S int80.S sysenter.S | ../../include/asm/asm-offsets.h $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -I../../kernel -D__ASSEMBLY__ -c %f -o %o |> %B.o
+: foreach note.S int80.S sysenter.S | ../../include/asm/asm-offsets.h $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D__ASSEMBLY__ -c %f -o %o |> %B.o
