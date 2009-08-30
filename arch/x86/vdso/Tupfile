@@ -13,10 +13,10 @@ vdso-install-$(VDSO64-y)	+= vdso.so
 
 vdso-link = $(CC) -nostdlib -fPIC -shared -Wl,--hash-style=sysv -m elf_i386 -Wl,-soname=linux-gate.so.1 -Wl,-T,vdso32.lds
 : vdso32/vdso32.lds.S | $(compiler_proper) |> ^ VDSO32 %o^ $(CC) $(CFLAGS) -P -C -D__ASSEMBLY__ -E %f -o %o |> vdso32.lds
-: vdso32/note.o vdso32/int80.o | vdso32.lds $(compiler_proper) |> ^ VDSO32 %o^ $(vdso-link) %f -o %o |> vdso32-int80.so.dbg
+: vdso32/note.o vdso32/int80.o | vdso32.lds $(compiler_files) |> ^ VDSO32 %o^ $(vdso-link) %f -o %o |> vdso32-int80.so.dbg
 : vdso32-int80.so.dbg |> ^ VDSO32 %o^ objcopy -S %f %o |> vdso32-int80.so
 
-: vdso32/note.o vdso32/sysenter.o | vdso32.lds $(compiler_proper) |> ^ VDSO32 %o^ $(vdso-link) %f -o %o |> vdso32-sysenter.so.dbg
+: vdso32/note.o vdso32/sysenter.o | vdso32.lds $(compiler_files) |> ^ VDSO32 %o^ $(vdso-link) %f -o %o |> vdso32-sysenter.so.dbg
 : vdso32-sysenter.so.dbg |> ^ VDSO32 %o^ objcopy -S %f %o |> vdso32-sysenter.so
 
 : vdso32.S | vdso32-sysenter.so vdso32-int80.so $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) -D__ASSEMBLY__ -c %f -o %o  |> %B.o
