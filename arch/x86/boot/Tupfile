@@ -37,6 +37,7 @@ setup-y		+= version.c
 setup-@(X86_APM_BOOT) += apm.c
 
 CFLAGS_S += -D__ASSEMBLY__
+CFLAGS_S += -DSVGA_MODE=NORMAL_VGA
 
 # The link order of the video-*.o modules can matter.  In particular,
 # video-vga.o *must* be listed first, followed by video-vesa.o.
@@ -63,7 +64,7 @@ objcopy = $(BINUTILS_ROOT)/binutils/objcopy
 
 : compressed/vmlinux |> ^ NM %o^ nm %f | sed -n -e 's/^\([0-9a-fA-F]*\) . \(_text\|_end\)$/\#define VO_\2 0x\1/p' > %o |> voffset.h
 : compressed/vmlinux |> ^ NM %o^ nm %f | sed -n -e 's/^\([0-9a-fA-F]*\) . \(startup_32\|input_data\|_end\|z_.*\)$/\#define ZO_\2 0x\1/p' > %o |> zoffset.h
-: foreach $(setup-y) | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) $(CFLAGS) -D_SETUP -include $(LINUX_ROOT)/arch/x86/boot/code16gcc.h -D__BIG_KERNEL__ -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(a20)" -D"KBUILD_MODNAME=KBUILD_STR(a20)" $(EXTRA_CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -c %f -o %o |> %B.o {objs}
+: foreach $(setup-y) | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) $(CFLAGS) -D_SETUP -fno-toplevel-reorder -include $(LINUX_ROOT)/arch/x86/boot/code16gcc.h -D__BIG_KERNEL__ -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(a20)" -D"KBUILD_MODNAME=KBUILD_STR(a20)" $(EXTRA_CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -c %f -o %o |> %B.o {objs}
 : {objs} | $(compiler_files) |> ^ LD %o^ $(SLASH_ROOT)/bin/ld -m elf_i386 -T setup.ld %f -o %o |> setup.elf
 : setup.elf | $(objcopy) |> ^ OBJCOPY %o^ $(objcopy) -O binary %f %o |> setup.bin
 : compressed/vmlinux | $(objcopy) |> ^ OBJCOPY %o^ $(objcopy) -O binary -R .note -R .comment -S %f %o |> vmlinux.bin
