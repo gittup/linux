@@ -8,10 +8,9 @@ modname = video
 
 obj-@(VGASTATE)            += vgastate.c
 obj-y                             += fb_notify.c
-obj-@(FB)                  += fb.c
 fb-y                              := fbmem.c fbmon.c fbcmap.c fbsysfs.c \
                                      modedb.c fbcvt.c
-fb-y                           := $(fb-y)
+obj-@(FB)                  += $(fb-y)
 
 link-@(VT)		  += console/built-in.o
 link-@(LOGO)		  += logo/built-in.o
