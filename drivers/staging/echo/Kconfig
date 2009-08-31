@@ -1,4 +1,4 @@
-config ECHO
+config LINE_ECHO
 	tristate "Line Echo Canceller support"
 	default n
 	---help---

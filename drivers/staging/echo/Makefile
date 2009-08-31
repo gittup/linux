@@ -1,1 +1,1 @@
-obj-$(CONFIG_ECHO) += echo.o
+obj-$(CONFIG_LINE_ECHO) += echo.o
