@@ -293,7 +293,7 @@ static void __init ethif_probe2(int unit)
 		probe_list2(unit, parport_probes, base_addr == 0));
 }
 
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 /* Token-ring device probe */
 extern int ibmtr_probe_card(struct net_device *);
 extern struct net_device *smctr_probe(int unit);
@@ -342,7 +342,7 @@ static int __init net_olddevs_init(void)
 	for (num = 0; num < 8; ++num)
 		sbni_probe(num);
 #endif
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	for (num = 0; num < 8; ++num)
 		if (!trif_probe(num))
 			trif_probe2(num);

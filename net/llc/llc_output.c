@@ -36,7 +36,7 @@ int llc_mac_hdr_init(struct sk_buff *skb,
 	int rc = 0;
 
 	switch (skb->dev->type) {
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	case ARPHRD_IEEE802_TR: {
 		struct net_device *dev = skb->dev;
 		struct trh_hdr *trh;

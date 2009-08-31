@@ -601,7 +601,7 @@ CONFIG_CHELSIO_T3=m
 # CONFIG_MYRI10GE is not set
 CONFIG_NETXEN_NIC=m
 # CONFIG_MLX4_CORE is not set
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

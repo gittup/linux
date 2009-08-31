@@ -744,7 +744,7 @@ CONFIG_FEC_MPC52xx_MDIO=y
 # CONFIG_ATL2 is not set
 # CONFIG_NETDEV_1000 is not set
 # CONFIG_NETDEV_10000 is not set
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

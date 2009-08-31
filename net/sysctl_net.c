@@ -25,7 +25,7 @@
 #include <linux/if_ether.h>
 #endif
 
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 #include <linux/if_tr.h>
 #endif
 

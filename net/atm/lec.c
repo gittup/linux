@@ -24,7 +24,7 @@
 #include <linux/seq_file.h>
 
 /* TokenRing if needed */
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 #include <linux/trdevice.h>
 #endif
 
@@ -170,7 +170,7 @@ static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
  * Returns pointer to destination MAC address or fills in rdesc
  * and returns NULL.
  */
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 static unsigned char *get_tr_dst(unsigned char *packet, unsigned char *rdesc)
 {
 	struct trh_hdr *trh;
@@ -203,7 +203,7 @@ static unsigned char *get_tr_dst(unsigned char *packet, unsigned char *rdesc)
 
 	return NULL;
 }
-#endif /* CONFIG_TR */
+#endif /* CONFIG_TOKEN_RING */
 
 /*
  * Open/initialize the netdevice. This is called (in the current kernel)
@@ -256,7 +256,7 @@ static int lec_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	struct lec_arp_table *entry;
 	unsigned char *dst;
 	int min_frame_size;
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	unsigned char rdesc[ETH_ALEN];	/* Token Ring route descriptor */
 #endif
 	int is_rdesc;
@@ -298,7 +298,7 @@ static int lec_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	lec_h = (struct lecdatahdr_8023 *)skb->data;
 	lec_h->le_header = htons(priv->lecid);
 
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	/*
 	 * Ugly. Use this to realign Token Ring packets for
 	 * e.g. PCA-200E driver.
@@ -331,7 +331,7 @@ static int lec_start_xmit(struct sk_buff *skb, struct net_device *dev)
 #endif /* DUMP_PACKETS > 0 */
 
 	/* Minimum ethernet-frame size */
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	if (priv->is_trdev)
 		min_frame_size = LEC_MINIMUM_8025_SIZE;
 	else
@@ -355,7 +355,7 @@ static int lec_start_xmit(struct sk_buff *skb, struct net_device *dev)
 	/* Send to right vcc */
 	is_rdesc = 0;
 	dst = lec_h->h_dest;
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	if (priv->is_trdev) {
 		dst = get_tr_dst(skb->data + 2, rdesc);
 		if (dst == NULL) {
@@ -747,7 +747,7 @@ static void lec_push(struct atm_vcc *vcc, struct sk_buff *skb)
 			dev_kfree_skb(skb);
 			return;
 		}
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 		if (priv->is_trdev)
 			dst = ((struct lecdatahdr_8025 *)skb->data)->h_dest;
 		else
@@ -760,7 +760,7 @@ static void lec_push(struct atm_vcc *vcc, struct sk_buff *skb)
 		 */
 		spin_lock_irqsave(&priv->lec_arp_lock, flags);
 		if (lec_is_data_direct(vcc)) {
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 			if (priv->is_trdev)
 				src =
 				    ((struct lecdatahdr_8025 *)skb->data)->
@@ -788,7 +788,7 @@ static void lec_push(struct atm_vcc *vcc, struct sk_buff *skb)
 			lec_arp_check_empties(priv, vcc, skb);
 		}
 		skb_pull(skb, 2);	/* skip lec_id */
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 		if (priv->is_trdev)
 			skb->protocol = tr_type_trans(skb, dev);
 		else
@@ -868,7 +868,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
 		i = 0;
 	else
 		i = arg;
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	if (arg >= MAX_LEC_ITF)
 		return -EINVAL;
 #else				/* Reserve the top NUM_TR_DEVS for TR */
@@ -883,7 +883,7 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
 			is_trdev = 1;
 
 		size = sizeof(struct lec_priv);
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 		if (is_trdev)
 			dev_lec[i] = alloc_trdev(size);
 		else
@@ -2424,7 +2424,7 @@ lec_arp_check_empties(struct lec_priv *priv,
 	struct lec_arp_table *entry, *tmp;
 	struct lecdatahdr_8023 *hdr = (struct lecdatahdr_8023 *)skb->data;
 	unsigned char *src;
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	struct lecdatahdr_8025 *tr_hdr = (struct lecdatahdr_8025 *)skb->data;
 
 	if (priv->is_trdev)

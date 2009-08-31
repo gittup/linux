@@ -464,7 +464,7 @@ CONFIG_8139TOO_PIO=y
 # CONFIG_SC92031 is not set
 # CONFIG_NETDEV_1000 is not set
 # CONFIG_NETDEV_10000 is not set
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

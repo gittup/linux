@@ -1434,7 +1434,7 @@ CONFIG_TEHUTI=m
 CONFIG_BNX2X=m
 CONFIG_QLGE=m
 CONFIG_SFC=m
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

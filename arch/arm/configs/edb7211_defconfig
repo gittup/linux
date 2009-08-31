@@ -313,7 +313,7 @@ CONFIG_NETDEVICES=y
 #
 # Token Ring devices
 #
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN (non-hamradio)

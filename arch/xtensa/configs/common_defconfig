@@ -335,7 +335,7 @@ CONFIG_XT2000_SONIC=y
 #
 # Token Ring devices
 #
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN (non-hamradio)

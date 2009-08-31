@@ -1907,7 +1907,7 @@ static inline __u16 qeth_l3_rebuild_skb(struct qeth_card *card,
 				tg_addr, "FAKELL", card->dev->addr_len);
 	}
 
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	if (card->dev->type == ARPHRD_IEEE802_TR)
 		skb->protocol = tr_type_trans(skb, card->dev);
 	else
@@ -2977,7 +2977,7 @@ static int qeth_l3_setup_netdev(struct qeth_card *card)
 	if (card->info.type == QETH_CARD_TYPE_OSAE) {
 		if ((card->info.link_type == QETH_LINK_TYPE_LANE_TR) ||
 		    (card->info.link_type == QETH_LINK_TYPE_HSTR)) {
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 			card->dev = alloc_trdev(0);
 #endif
 			if (!card->dev)

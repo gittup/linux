@@ -655,7 +655,7 @@ CONFIG_E1000E=y
 # CONFIG_ATL1E is not set
 # CONFIG_JME is not set
 # CONFIG_NETDEV_10000 is not set
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

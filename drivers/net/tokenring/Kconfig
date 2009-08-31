@@ -3,7 +3,7 @@
 #
 
 # So far, we only have PCI, ISA, and MCA token ring devices
-menuconfig TR
+menuconfig TOKEN_RING
 	tristate "Token Ring driver support"
 	depends on NETDEVICES && !UML
 	depends on (PCI || ISA || MCA || CCW)
@@ -18,7 +18,7 @@ menuconfig TR
 	  from <http://www.tldp.org/docs.html#howto>. Most people can
 	  say N here.
 
-if TR
+if TOKEN_RING
 
 config IBMTR
 	tristate "IBM Tropic chipset based adapter support"
@@ -182,4 +182,4 @@ config SMCTR
 	  To compile this driver as a module, choose M here: the module will be
 	  called smctr.
 
-endif # TR
+endif # TOKEN_RING

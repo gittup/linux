@@ -598,7 +598,7 @@ CONFIG_NETDEV_10000=y
 # CONFIG_MYRI10GE is not set
 # CONFIG_NETXEN_NIC is not set
 # CONFIG_MLX4_CORE is not set
-# CONFIG_TR is not set
+# CONFIG_TOKEN_RING is not set
 
 #
 # Wireless LAN

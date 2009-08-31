@@ -51,7 +51,7 @@
 
 
 #if !defined(CONFIG_NET_ETHERNET) && \
-    !defined(CONFIG_TR) && !defined(CONFIG_FDDI)
+    !defined(CONFIG_TOKEN_RING) && !defined(CONFIG_FDDI)
 #error Cannot compile lcs.c without some net devices switched on.
 #endif
 
@@ -1639,7 +1639,7 @@ lcs_startlan_auto(struct lcs_card *card)
 		return 0;
 
 #endif
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	card->lan_type = LCS_FRAME_TYPE_TR;
 	rc = lcs_send_startlan(card, LCS_INITIATOR_TCPIP);
 	if (rc == 0)
@@ -2157,7 +2157,7 @@ lcs_new_device(struct ccwgroup_device *ccwgdev)
 		dev = alloc_etherdev(0);
 		break;
 #endif
-#ifdef CONFIG_TR
+#ifdef CONFIG_TOKEN_RING
 	case LCS_FRAME_TYPE_TR:
 		card->lan_type_trans = tr_type_trans;
 		dev = alloc_trdev(0);
