@@ -252,7 +252,7 @@ obj-@(S6GMAC) += s6gmac.c
 
 link-@(ARM) += arm/built-in.o
 link-@(DEV_APPLETALK) += appletalk/built-in.o
-link-@(TR) += tokenring/built-in.o
+link-@(TOKEN_RING) += tokenring/built-in.o
 link-@(WAN) += wan/built-in.o
 link-@(ARCNET) += arcnet/built-in.o
 link-@(NET_PCMCIA) += pcmcia/built-in.o
