@@ -1,7 +1,11 @@
 include_rules
 modname = ata
 
-obj-@(ATA)		+= libata.c
+libata-y	:= libata-core.c libata-scsi.c libata-eh.c
+libata-@(ATA_SFF)	+= libata-sff.c
+libata-@(SATA_PMP)	+= libata-pmp.c
+libata-@(ATA_ACPI)	+= libata-acpi.c
+obj-@(ATA)		+= $(libata-y)
 
 obj-@(SATA_AHCI)		+= ahci.c
 obj-@(SATA_SVW)		+= sata_svw.c
@@ -84,8 +88,4 @@ obj-@(ATA_GENERIC)	+= ata_generic.c
 # Should be last libata driver
 obj-@(PATA_LEGACY)	+= pata_legacy.c
 
-libata-y	:= libata-core.c libata-scsi.c libata-eh.c
-libata-@(ATA_SFF)	+= libata-sff.c
-libata-@(SATA_PMP)	+= libata-pmp.c
-libata-@(ATA_ACPI)	+= libata-acpi.c
 include $(LINUX_ROOT)/linux.tup

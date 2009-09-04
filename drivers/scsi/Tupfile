@@ -1,0 +1,174 @@
+include_rules
+modname = scsi
+#
+# Makefile for linux/drivers/scsi
+#
+# 30 May 2000, Christoph Hellwig <hch@infradead.crg>
+# Rewritten to use lists instead of if-statements.
+#
+# 20 Sep 2000, Torben Mathiasen <tmm@image.dk>
+# Changed link order to reflect new scsi initialization.
+#
+# *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
+# The link order must be, SCSI Core, SCSI HBA drivers, and
+# lastly SCSI peripheral drivers (disk/tape/cdrom/etc.) to
+# satisfy certain initialization assumptions in the SCSI layer.
+# *!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!*!
+
+
+CFLAGS_aha152x.c =   -DAHA152X_STAT -DAUTOCONF
+CFLAGS_gdth.c    = # -DDEBUG_GDTH=2 -D__SERIAL__ -D__COM2__ -DGDTH_STATISTICS
+
+link-@(PCMCIA)		+= pcmcia/built-in.o
+
+scsi_mod-y			+= scsi.c hosts.c scsi_ioctl.c constants.c \
+				   scsicam.c scsi_error.c scsi_lib.c
+scsi_mod-@(SCSI_DMA)	+= scsi_lib_dma.c
+scsi_mod-y			+= scsi_scan.c scsi_sysfs.c scsi_devinfo.c
+scsi_mod-@(SCSI_NETLINK)	+= scsi_netlink.c
+scsi_mod-@(SYSCTL)	+= scsi_sysctl.c
+scsi_mod-@(SCSI_PROC_FS)	+= scsi_proc.c
+obj-@(SCSI)		+= $(scsi_mod-y)
+obj-@(SCSI_TGT)		+= scsi_tgt.c
+
+obj-@(RAID_ATTRS)	+= raid_class.c
+
+# --- NOTE ORDERING HERE ---
+# For kernel non-modular link, transport attributes need to
+# be initialised before drivers
+# --------------------------
+obj-@(SCSI_SPI_ATTRS)	+= scsi_transport_spi.c
+obj-@(SCSI_FC_ATTRS) 	+= scsi_transport_fc.c
+obj-@(SCSI_ISCSI_ATTRS)	+= scsi_transport_iscsi.c
+obj-@(SCSI_SAS_ATTRS)	+= scsi_transport_sas.c
+link-@(SCSI_SAS_LIBSAS)	+= libsas/built-in.o
+obj-@(SCSI_SRP_ATTRS)	+= scsi_transport_srp.c
+link-@(SCSI_DH)		+= device_handler/built-in.o
+
+link-@(LIBFC)		+= libfc/built-in.o
+link-@(LIBFCOE)		+= fcoe/built-in.o
+link-@(FCOE)		+= fcoe/built-in.o
+link-@(FCOE_FNIC)		+= fnic/built-in.o
+obj-@(ISCSI_TCP) 	+= libiscsi.c	libiscsi_tcp.c iscsi_tcp.c
+obj-@(INFINIBAND_ISER) 	+= libiscsi.c
+obj-@(SCSI_A4000T)	+= 53c700.c	a4000t.c
+obj-@(SCSI_ZORRO7XX)	+= 53c700.c	zorro7xx.c
+obj-@(A3000_SCSI)	+= a3000.c	wd33c93.c
+obj-@(A2091_SCSI)	+= a2091.c	wd33c93.c
+obj-@(GVP11_SCSI)	+= gvp11.c	wd33c93.c
+obj-@(MVME147_SCSI)	+= mvme147.c	wd33c93.c
+obj-@(SGIWD93_SCSI)	+= sgiwd93.c	wd33c93.c
+obj-@(ATARI_SCSI)	+= atari_scsi.c
+obj-@(MAC_SCSI)		+= mac_scsi.c
+obj-@(SCSI_MAC_ESP)	+= esp_scsi.c	mac_esp.c
+obj-@(SUN3_SCSI)		+= sun3_scsi.c  sun3_scsi_vme.c
+obj-@(MVME16x_SCSI)	+= 53c700.c	mvme16x_scsi.c
+obj-@(BVME6000_SCSI)	+= 53c700.c	bvme6000_scsi.c
+obj-@(SCSI_SIM710)	+= 53c700.c	sim710.c
+obj-@(SCSI_ADVANSYS)	+= advansys.c
+obj-@(SCSI_BUSLOGIC)	+= BusLogic.c
+obj-@(SCSI_DPT_I2O)	+= dpt_i2o.c
+obj-@(SCSI_U14_34F)	+= u14-34f.c
+link-@(SCSI_ARCMSR)	+= arcmsr/built-in.o
+obj-@(SCSI_ULTRASTOR)	+= ultrastor.c
+obj-@(SCSI_AHA152X)	+= aha152x.c
+obj-@(SCSI_AHA1542)	+= aha1542.c
+obj-@(SCSI_AHA1740)	+= aha1740.c
+link-@(SCSI_AIC7XXX)	+= aic7xxx/built-in.o
+link-@(SCSI_AIC79XX)	+= aic7xxx/built-in.o
+link-@(SCSI_AACRAID)	+= aacraid/built-in.o
+obj-@(SCSI_AIC7XXX_OLD)	+= aic7xxx_old.c
+link-@(SCSI_AIC94XX)	+= aic94xx/built-in.o
+obj-@(SCSI_IPS)		+= ips.c
+obj-@(SCSI_FD_MCS)	+= fd_mcs.c
+obj-@(SCSI_FUTURE_DOMAIN)+= fdomain.c
+obj-@(SCSI_IN2000)	+= in2000.c
+obj-@(SCSI_GENERIC_NCR5380) += g_NCR5380.c
+obj-@(SCSI_GENERIC_NCR5380_MMIO) += g_NCR5380_mmio.c
+obj-@(SCSI_NCR53C406A)	+= NCR53c406a.c
+obj-@(SCSI_NCR_D700)	+= 53c700.c NCR_D700.c
+obj-@(SCSI_NCR_Q720)	+= NCR_Q720_mod.c
+obj-@(SCSI_SYM53C416)	+= sym53c416.c
+obj-@(SCSI_QLOGIC_FAS)	+= qlogicfas408.c	qlogicfas.c
+obj-@(PCMCIA_QLOGIC)	+= qlogicfas408.c
+obj-@(SCSI_QLOGIC_1280)	+= qla1280.c 
+link-@(SCSI_QLA_FC)	+= qla2xxx/built-in.o
+link-@(SCSI_QLA_ISCSI)	+= qla4xxx/built-in.o
+link-@(SCSI_LPFC)		+= lpfc/built-in.o
+obj-@(SCSI_PAS16)	+= pas16.c
+obj-@(SCSI_T128)		+= t128.c
+obj-@(SCSI_DMX3191D)	+= dmx3191d.c
+obj-@(SCSI_DTC3280)	+= dtc.c
+link-@(SCSI_SYM53C8XX_2)	+= sym53c8xx_2/built-in.o
+obj-@(SCSI_ZALON)	+= zalon7xx.c
+obj-@(SCSI_EATA_PIO)	+= eata_pio.c
+obj-@(SCSI_7000FASST)	+= wd7000.c
+obj-@(SCSI_IBMMCA)	+= ibmmca.c
+obj-@(SCSI_EATA)		+= eata.c
+obj-@(SCSI_DC395x)	+= dc395x.c
+obj-@(SCSI_DC390T)	+= tmscsim.c
+obj-@(MEGARAID_LEGACY)	+= megaraid.c
+link-@(MEGARAID_NEWGEN)	+= megaraid/built-in.o
+link-@(MEGARAID_SAS)	+= megaraid/built-in.o
+link-@(SCSI_MPT2SAS)	+= mpt2sas/built-in.o
+obj-@(SCSI_ACARD)	+= atp870u.c
+obj-@(SCSI_SUNESP)	+= esp_scsi.c	sun_esp.c
+obj-@(SCSI_GDTH)		+= gdth.c
+obj-@(SCSI_INITIO)	+= initio.c
+obj-@(SCSI_INIA100)	+= a100u2w.c
+obj-@(SCSI_QLOGICPTI)	+= qlogicpti.c
+obj-@(SCSI_MESH)		+= mesh.c
+obj-@(SCSI_MAC53C94)	+= mac53c94.c
+obj-@(BLK_DEV_3W_XXXX_RAID) += 3w-xxxx.c
+obj-@(SCSI_3W_9XXX)	+= 3w-9xxx.c
+obj-@(SCSI_PPA)		+= ppa.c
+obj-@(SCSI_IMM)		+= imm.c
+obj-@(JAZZ_ESP)		+= esp_scsi.c	jazz_esp.c
+obj-@(SUN3X_ESP)		+= esp_scsi.c	sun3x_esp.c
+obj-@(SCSI_LASI700)	+= 53c700.c lasi700.c
+obj-@(SCSI_SNI_53C710)	+= 53c700.c sni_53c710.c
+obj-@(SCSI_NSP32)	+= nsp32.c
+obj-@(SCSI_IPR)		+= ipr.c
+obj-@(SCSI_SRP)		+= libsrp.c
+link-@(SCSI_IBMVSCSI)	+= ibmvscsi/built-in.o
+link-@(SCSI_IBMVSCSIS)	+= ibmvscsi/built-in.o
+link-@(SCSI_IBMVFC)	+= ibmvscsi/built-in.o
+obj-@(SCSI_HPTIOP)	+= hptiop.c
+obj-@(SCSI_STEX)		+= stex.c
+link-@(SCSI_MVSAS)	+= mvsas/built-in.o
+obj-@(PS3_ROM)		+= ps3rom.c
+link-@(SCSI_CXGB3_ISCSI)	+= libiscsi.c libiscsi_tcp.c cxgb3i/built-in.o
+link-@(SCSI_BNX2_ISCSI)	+= libiscsi.c bnx2i/built-in.o
+
+link-@(ARM)		+= arm/built-in.o
+
+sd_mod-y	:= sd.c
+sd_mod-@(BLK_DEV_INTEGRITY) += sd_dif.c
+
+obj-@(CHR_DEV_ST)	+= st.c
+obj-@(CHR_DEV_OSST)	+= osst.c
+obj-@(BLK_DEV_SD)	+= $(sd_mod-y)
+obj-@(BLK_DEV_SR)	+= sr_mod.c
+obj-@(CHR_DEV_SG)	+= sg.c
+obj-@(CHR_DEV_SCH)	+= ch.c
+obj-@(SCSI_ENCLOSURE)	+= ses.c
+
+link-@(SCSI_OSD_INITIATOR) += osd/built-in.o
+
+# This goes last, so that "real" scsi devices probe earlier
+obj-@(SCSI_DEBUG)	+= scsi_debug.c
+
+obj-@(SCSI_WAIT_SCAN)	+= scsi_wait_scan.c
+
+scsi_tgt-y			+= scsi_tgt_lib.c scsi_tgt_if.c
+
+sr_mod-y	:= sr.c sr_ioctl.c sr_vendor.c
+ncr53c8xx-flags-@(SCSI_ZALON) \
+		:= -DCONFIG_NCR53C8XX_PREFETCH -DSCSI_NCR_BIG_ENDIAN \
+			-DCONFIG_SCSI_NCR53C8XX_NO_WORD_TRANSFERS
+CFLAGS_ncr53c8xx.c	:= $(ncr53c8xx-flags-y) $(ncr53c8xx-flags-m)
+zalon7xx-y	:= zalon.c ncr53c8xx.c
+NCR_Q720_mod-y	:= NCR_Q720.c ncr53c8xx.c
+oktagon_esp_mod-y	:= oktagon_esp.c oktagon_io.c
+
+include $(LINUX_ROOT)/linux.tup

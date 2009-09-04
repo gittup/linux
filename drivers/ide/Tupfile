@@ -1,0 +1,115 @@
+include_rules
+modname = ide
+#
+# link order is important here
+#
+
+EXTRA_CFLAGS				+= -Idrivers/ide
+
+ide-core-y += ide.c ide-ioctls.c ide-io.c ide-iops.c ide-lib.c ide-probe.c \
+	      ide-taskfile.c ide-pm.c ide-park.c ide-sysfs.c ide-devsets.c \
+	      ide-io-std.c ide-eh.c
+
+# core IDE code
+ide-core-@(IDE_XFER_MODE)	+= ide-pio-blacklist.c ide-xfer-mode.c
+ide-core-@(IDE_TIMINGS)		+= ide-timings.c
+ide-core-@(IDE_ATAPI)		+= ide-atapi.c
+ide-core-@(BLK_DEV_IDEPCI)	+= setup-pci.c
+ide-core-@(BLK_DEV_IDEDMA)	+= ide-dma.c
+ide-core-@(BLK_DEV_IDEDMA_SFF)	+= ide-dma-sff.c
+ide-core-@(IDE_PROC_FS)		+= ide-proc.c
+ide-core-@(BLK_DEV_IDEACPI)	+= ide-acpi.c
+ide-core-@(IDE_LEGACY)		+= ide-legacy.c
+
+obj-@(IDE)			+= $(ide-core-y)
+
+obj-@(BLK_DEV_ALI14XX)		+= ali14xx.c
+obj-@(BLK_DEV_UMC8672)		+= umc8672.c
+obj-@(BLK_DEV_DTC2278)		+= dtc2278.c
+obj-@(BLK_DEV_HT6560B)		+= ht6560b.c
+obj-@(BLK_DEV_QD65XX)		+= qd65xx.c
+obj-@(BLK_DEV_4DRIVES)		+= ide-4drives.c
+
+obj-@(BLK_DEV_GAYLE)		+= gayle.c
+obj-@(BLK_DEV_FALCON_IDE)	+= falconide.c
+obj-@(BLK_DEV_MAC_IDE)		+= macide.c
+obj-@(BLK_DEV_BUDDHA)		+= buddha.c
+
+obj-@(BLK_DEV_AEC62XX)		+= aec62xx.c
+obj-@(BLK_DEV_ALI15X3)		+= alim15x3.c
+obj-@(BLK_DEV_AMD74XX)		+= amd74xx.c
+obj-@(BLK_DEV_ATIIXP)		+= atiixp.c
+obj-@(BLK_DEV_CELLEB)		+= scc_pata.c
+obj-@(BLK_DEV_CMD64X)		+= cmd64x.c
+obj-@(BLK_DEV_CS5520)		+= cs5520.c
+obj-@(BLK_DEV_CS5530)		+= cs5530.c
+obj-@(BLK_DEV_CS5535)		+= cs5535.c
+obj-@(BLK_DEV_CS5536)		+= cs5536.c
+obj-@(BLK_DEV_SC1200)		+= sc1200.c
+obj-@(BLK_DEV_CY82C693)		+= cy82c693.c
+obj-@(BLK_DEV_DELKIN)		+= delkin_cb.c
+obj-@(BLK_DEV_HPT366)		+= hpt366.c
+obj-@(BLK_DEV_IT8172)		+= it8172.c
+obj-@(BLK_DEV_IT8213)		+= it8213.c
+obj-@(BLK_DEV_IT821X)		+= it821x.c
+obj-@(BLK_DEV_JMICRON)		+= jmicron.c
+obj-@(BLK_DEV_NS87415)		+= ns87415.c
+obj-@(BLK_DEV_OPTI621)		+= opti621.c
+obj-@(BLK_DEV_PDC202XX_OLD)	+= pdc202xx_old.c
+obj-@(BLK_DEV_PDC202XX_NEW)	+= pdc202xx_new.c
+obj-@(BLK_DEV_PIIX)		+= piix.c
+obj-@(BLK_DEV_RZ1000)		+= rz1000.c
+obj-@(BLK_DEV_SVWKS)		+= serverworks.c
+obj-@(BLK_DEV_SGIIOC4)		+= sgiioc4.c
+obj-@(BLK_DEV_SIIMAGE)		+= siimage.c
+obj-@(BLK_DEV_SIS5513)		+= sis5513.c
+obj-@(BLK_DEV_SL82C105)		+= sl82c105.c
+obj-@(BLK_DEV_SLC90E66)		+= slc90e66.c
+obj-@(BLK_DEV_TC86C001)		+= tc86c001.c
+obj-@(BLK_DEV_TRIFLEX)		+= triflex.c
+obj-@(BLK_DEV_TRM290)		+= trm290.c
+obj-@(BLK_DEV_VIA82CXXX)		+= via82cxxx.c
+
+# Must appear at the end of the block
+obj-@(BLK_DEV_GENERIC)		+= ide-pci-generic.c
+
+obj-@(IDEPCI_PCIBUS_ORDER)	+= ide-scan-pci.c
+
+obj-@(BLK_DEV_CMD640)		+= cmd640.c
+
+obj-@(BLK_DEV_IDE_PMAC)		+= pmac.c
+
+obj-@(IDE_H8300)			+= ide-h8300.c
+
+obj-@(IDE_GENERIC)		+= ide-generic.c
+obj-@(BLK_DEV_IDEPNP)		+= ide-pnp.c
+
+ide-gd_mod-y += ide-gd.c
+ide-cd_mod-y += ide-cd.c ide-cd_ioctl.c ide-cd_verbose.c
+
+ifeq (@(IDE_GD_ATA),y)
+	ide-gd_mod-y += ide-disk.c ide-disk_ioctl.c
+	ide-gd_mod-@(IDE_PROC_FS) += ide-disk_proc.c
+endif
+
+ifeq (@(IDE_GD_ATAPI),y)
+	ide-gd_mod-y += ide-floppy.c ide-floppy_ioctl.c
+	ide-gd_mod-@(IDE_PROC_FS) += ide-floppy_proc.c
+endif
+
+obj-@(IDE_GD)			+= $(ide-gd_mod-y)
+obj-@(BLK_DEV_IDECD)		+= $(ide-cd_mod-y)
+obj-@(BLK_DEV_IDETAPE)		+= ide-tape.c
+
+obj-@(BLK_DEV_IDECS)		+= ide-cs.c
+
+obj-@(BLK_DEV_PLATFORM)		+= ide_platform.c
+
+obj-@(BLK_DEV_IDE_ICSIDE)	+= icside.c
+obj-@(BLK_DEV_IDE_RAPIDE)	+= rapide.c
+obj-@(BLK_DEV_PALMCHIP_BK3710)	+= palm_bk3710.c
+
+
+obj-@(BLK_DEV_IDE_AT91)		+= at91_ide.c
+obj-@(BLK_DEV_IDE_TX4939)	+= $(ide-y)
+include $(LINUX_ROOT)/linux.tup
