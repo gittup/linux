@@ -36,6 +36,3 @@ CFLAGS += -fomit-frame-pointer
 CFLAGS += -Wdeclaration-after-statement
 CFLAGS += -Wno-pointer-sign
 CFLAGS += -ftup-linux
-
-CC = $(SLASH_ROOT)/bin/xgcc -B$(SLASH_ROOT)/bin
-LD = $(SLASH_ROOT)/bin/ld

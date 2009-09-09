@@ -31,4 +31,4 @@ link-y += arch/x86/pci/built-in.o
 #link-y += arch/x86/video/built-in.o
 link-y += net/built-in.o
 
-: $(head-y) $(link-y) arch/x86/kernel/vmlinux.lds | $(compiler_files) |> ^ LINK %o^ $(SLASH_ROOT)/bin/ld -m elf_i386 --build-id -o %o -T arch/x86/kernel/vmlinux.lds $(head-y) --start-group $(link-y) --end-group |> vmlinux
+: $(head-y) $(link-y) arch/x86/kernel/vmlinux.lds | $(compiler_files) |> ^ LINK %o^ $(LD) -m elf_i386 --build-id -o %o -T arch/x86/kernel/vmlinux.lds $(head-y) --start-group $(link-y) --end-group |> vmlinux
