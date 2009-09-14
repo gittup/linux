@@ -20,6 +20,7 @@ ipv6-@(NETFILTER) += netfilter.c
 ipv6-@(IPV6_MULTIPLE_TABLES) += fib6_rules.c
 ipv6-@(PROC_FS) += proc.c
 ipv6-@(SYN_COOKIES) += syncookies.c
+obj-@(IPV6) += $(ipv6-y)
 
 obj-@(INET6_AH) += ah6.c
 obj-@(INET6_ESP) += esp6.c
@@ -42,5 +43,4 @@ obj-y += addrconf_core.c exthdrs_core.c
 #obj-$(subst m,y,@(IPV6)) += inet6_hashtables.c
 obj-@(IPV6) += inet6_hashtables.c
 
-obj-@(IPV6) += $(ipv6-y)
 include $(LINUX_ROOT)/linux.tup

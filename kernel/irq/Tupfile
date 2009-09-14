@@ -1,5 +1,4 @@
 include_rules
-modname = irq
 
 obj-y := handle.c manage.c spurious.c resend.c chip.c devres.c
 obj-@(GENERIC_IRQ_PROBE) += autoprobe.c

@@ -62,6 +62,7 @@ link-@(PARIDE) 		+= block/paride/built-in.o
 link-@(TC)		+= tc/built-in.o
 #link-@(USB)		+= usb/built-in.o
 link-@(USB)		+= usb/host/built-in.o
+link-@(PCI)		+= usb/host/built-in.o
 link-@(USB)		+= usb/core/built-in.o
 link-@(USB_MUSB_HDRC)	+= usb/musb/built-in.o
 #link-@(PCI)		+= usb/built-in.o

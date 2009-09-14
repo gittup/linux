@@ -14,8 +14,8 @@ CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/include
 CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/arch/@(ARCH)/include
 include $(LINUX_ROOT)/host.tup
 
-: ../scripts/gen_initramfs_list.sh | gen_init_cpio |> sh %f -o %o |> initramfs_data.cpio.gz
+: ../scripts/gen_initramfs_list.sh | gen_init_cpio |> sh %f -o %o -d |> initramfs_data.cpio
 
-generated_headers += initramfs_data.cpio.gz
+generated_headers += initramfs_data.cpio
 
 include $(LINUX_ROOT)/linux.tup

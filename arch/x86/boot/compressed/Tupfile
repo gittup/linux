@@ -1,13 +1,11 @@
 include_rules
 include $(LINUX_ROOT)/compiler.tup
-modname = compressed
 BITS=32
 
 generated_headers = ../../include/asm/asm-offsets.h
 
 hostprogs-y += mkpiggy.c
 include $(LINUX_ROOT)/host.tup
-
 
 : head_$(BITS).S | $(generated_headers) $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) -fPIC -D__ASSEMBLY__ -Wno-undef -c %f -o %o |> head_$(BITS).o
 
