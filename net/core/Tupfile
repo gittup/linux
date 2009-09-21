@@ -1,3 +1,4 @@
+ifeq (@(NET),y)
 include_rules
 modname = core
 #
@@ -23,3 +24,4 @@ obj-@(TRACEPOINTS) += net-traces.c
 obj-@(NET_DROP_MONITOR) += drop_monitor.c
 
 include $(LINUX_ROOT)/linux.tup
+endif

@@ -1,3 +1,4 @@
+ifeq (@(IPV4),y)
 include_rules
 modname = ipv4
 #
@@ -56,3 +57,4 @@ obj-@(NETLABEL) += cipso_ipv4.c
 obj-@(XFRM) += xfrm4_policy.c xfrm4_state.c xfrm4_input.c \
 		      xfrm4_output.c
 include $(LINUX_ROOT)/linux.tup
+endif

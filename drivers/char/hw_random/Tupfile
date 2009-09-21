@@ -1,0 +1,20 @@
+include_rules
+modname = hw_random
+#
+# Makefile for HW Random Number Generator (RNG) device drivers.
+#
+
+obj-@(HW_RANDOM) += core.c
+obj-@(HW_RANDOM_TIMERIOMEM) += timeriomem-rng.c
+obj-@(HW_RANDOM_INTEL) += intel-rng.c
+obj-@(HW_RANDOM_AMD) += amd-rng.c
+obj-@(HW_RANDOM_GEODE) += geode-rng.c
+obj-@(HW_RANDOM_N2RNG) += n2-drv.c n2-asm.c
+obj-@(HW_RANDOM_VIA) += via-rng.c
+obj-@(HW_RANDOM_IXP4XX) += ixp4xx-rng.c
+obj-@(HW_RANDOM_OMAP) += omap-rng.c
+obj-@(HW_RANDOM_PASEMI) += pasemi-rng.c
+obj-@(HW_RANDOM_VIRTIO) += virtio-rng.c
+obj-@(HW_RANDOM_TX4939) += tx4939-rng.c
+obj-@(HW_RANDOM_MXC_RNGA) += mxc-rnga.c
+include $(LINUX_ROOT)/linux.tup

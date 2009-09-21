@@ -1,0 +1,99 @@
+include_rules
+modname = hwmon
+#
+# Makefile for sensor chip drivers.
+#
+
+obj-@(HWMON)		+= hwmon.c
+obj-@(HWMON_VID)		+= hwmon-vid.c
+
+# asb100, then w83781d go first, as they can override other drivers' addresses.
+obj-@(SENSORS_ASB100)	+= asb100.c
+obj-@(SENSORS_W83627HF)	+= w83627hf.c
+obj-@(SENSORS_W83792D)	+= w83792d.c
+obj-@(SENSORS_W83793)	+= w83793.c
+obj-@(SENSORS_W83781D)	+= w83781d.c
+obj-@(SENSORS_W83791D)	+= w83791d.c
+
+obj-@(SENSORS_ABITUGURU)	+= abituguru.c
+obj-@(SENSORS_ABITUGURU3)+= abituguru3.c
+obj-@(SENSORS_AD7414)	+= ad7414.c
+obj-@(SENSORS_AD7418)	+= ad7418.c
+obj-@(SENSORS_ADCXX)	+= adcxx.c
+obj-@(SENSORS_ADM1021)	+= adm1021.c
+obj-@(SENSORS_ADM1025)	+= adm1025.c
+obj-@(SENSORS_ADM1026)	+= adm1026.c
+obj-@(SENSORS_ADM1029)	+= adm1029.c
+obj-@(SENSORS_ADM1031)	+= adm1031.c
+obj-@(SENSORS_ADM9240)	+= adm9240.c
+obj-@(SENSORS_ADS7828)	+= ads7828.c
+obj-@(SENSORS_ADT7462)	+= adt7462.c
+obj-@(SENSORS_ADT7470)	+= adt7470.c
+obj-@(SENSORS_ADT7473)	+= adt7473.c
+obj-@(SENSORS_ADT7475)	+= adt7475.c
+
+obj-@(SENSORS_APPLESMC)	+= applesmc.c
+obj-@(SENSORS_AMS)	+= ams/built-in.o
+obj-@(SENSORS_ATK0110)	+= asus_atk0110.c
+obj-@(SENSORS_ATXP1)	+= atxp1.c
+obj-@(SENSORS_CORETEMP)	+= coretemp.c
+obj-@(SENSORS_DME1737)	+= dme1737.c
+obj-@(SENSORS_DS1621)	+= ds1621.c
+obj-@(SENSORS_F71805F)	+= f71805f.c
+obj-@(SENSORS_F71882FG)	+= f71882fg.c
+obj-@(SENSORS_F75375S)	+= f75375s.c
+obj-@(SENSORS_FSCHER)	+= fscher.c
+obj-@(SENSORS_FSCHMD)	+= fschmd.c
+obj-@(SENSORS_FSCPOS)	+= fscpos.c
+obj-@(SENSORS_G760A)	+= g760a.c
+obj-@(SENSORS_GL518SM)	+= gl518sm.c
+obj-@(SENSORS_GL520SM)	+= gl520sm.c
+obj-@(SENSORS_ULTRA45)	+= ultra45_env.c
+obj-@(SENSORS_HDAPS)	+= hdaps.c
+obj-@(SENSORS_I5K_AMB)	+= i5k_amb.c
+obj-@(SENSORS_IBMAEM)	+= ibmaem.c
+obj-@(SENSORS_IBMPEX)	+= ibmpex.c
+obj-@(SENSORS_IT87)	+= it87.c
+obj-@(SENSORS_K8TEMP)	+= k8temp.c
+obj-@(SENSORS_LIS3LV02D) += lis3lv02d.c hp_accel.c
+obj-@(SENSORS_LIS3_SPI)	+= lis3lv02d.c lis3lv02d_spi.c
+obj-@(SENSORS_LM63)	+= lm63.c
+obj-@(SENSORS_LM70)	+= lm70.c
+obj-@(SENSORS_LM75)	+= lm75.c
+obj-@(SENSORS_LM77)	+= lm77.c
+obj-@(SENSORS_LM78)	+= lm78.c
+obj-@(SENSORS_LM80)	+= lm80.c
+obj-@(SENSORS_LM83)	+= lm83.c
+obj-@(SENSORS_LM85)	+= lm85.c
+obj-@(SENSORS_LM87)	+= lm87.c
+obj-@(SENSORS_LM90)	+= lm90.c
+obj-@(SENSORS_LM92)	+= lm92.c
+obj-@(SENSORS_LM93)	+= lm93.c
+obj-@(SENSORS_LM95241)	+= lm95241.c
+obj-@(SENSORS_LTC4215)	+= ltc4215.c
+obj-@(SENSORS_LTC4245)	+= ltc4245.c
+obj-@(SENSORS_MAX1111)	+= max1111.c
+obj-@(SENSORS_MAX1619)	+= max1619.c
+obj-@(SENSORS_MAX6650)	+= max6650.c
+obj-@(SENSORS_PC87360)	+= pc87360.c
+obj-@(SENSORS_PC87427)	+= pc87427.c
+obj-@(SENSORS_PCF8591)	+= pcf8591.c
+obj-@(SENSORS_SHT15)	+= sht15.c
+obj-@(SENSORS_SIS5595)	+= sis5595.c
+obj-@(SENSORS_SMSC47B397)+= smsc47b397.c
+obj-@(SENSORS_SMSC47M1)	+= smsc47m1.c
+obj-@(SENSORS_SMSC47M192)+= smsc47m192.c
+obj-@(SENSORS_THMC50)	+= thmc50.c
+obj-@(SENSORS_TMP401)	+= tmp401.c
+obj-@(SENSORS_VIA686A)	+= via686a.c
+obj-@(SENSORS_VT1211)	+= vt1211.c
+obj-@(SENSORS_VT8231)	+= vt8231.c
+obj-@(SENSORS_W83627EHF)	+= w83627ehf.c
+obj-@(SENSORS_W83L785TS)	+= w83l785ts.c
+obj-@(SENSORS_W83L786NG)	+= w83l786ng.c
+
+#ifeq (@(HWMON_DEBUG_CHIP),y)
+#EXTRA_CFLAGS += -DDEBUG
+#endif
+
+include $(LINUX_ROOT)/linux.tup
