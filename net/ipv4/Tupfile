@@ -1,4 +1,4 @@
-ifeq (@(IPV4),y)
+ifeq (@(INET),y)
 include_rules
 modname = ipv4
 #
