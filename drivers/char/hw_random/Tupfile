@@ -17,4 +17,5 @@ obj-@(HW_RANDOM_PASEMI) += pasemi-rng.c
 obj-@(HW_RANDOM_VIRTIO) += virtio-rng.c
 obj-@(HW_RANDOM_TX4939) += tx4939-rng.c
 obj-@(HW_RANDOM_MXC_RNGA) += mxc-rnga.c
+obj-@(HW_RANDOM_OCTEON) += octeon-rng.c
 include $(LINUX_ROOT)/linux.tup

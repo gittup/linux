@@ -43,8 +43,8 @@ CFLAGS_S += -D__ASSEMBLY__
 
 obj-y			:= process_$(BITS).c signal.c entry_$(BITS).S
 obj-y			+= traps.c irq.c irq_$(BITS).c dumpstack_$(BITS).c
-obj-y			+= time_$(BITS).c ioport.c ldt.c dumpstack.c
-obj-y			+= setup.c i8259.c irqinit.c
+obj-y			+= time.c ioport.c ldt.c dumpstack.c
+obj-y			+= setup.c x86_init.c i8259.c irqinit.c
 obj-@(X86_VISWS)	+= visws_quirks.c
 obj-@(X86_32)	+= probe_roms_32.c
 obj-@(X86_32)	+= sys_i386_32.c i386_ksyms_32.c
@@ -64,6 +64,7 @@ obj-@(X86_DS_SELFTEST)		+= ds_selftest.c
 obj-@(X86_32)		+= tls.c
 obj-@(IA32_EMULATION)	+= tls.c
 obj-y				+= step.c
+obj-@(INTEL_TXT)	+= tboot.c
 obj-@(STACKTRACE)	+= stacktrace.c
 link-y				+= cpu/built-in.o
 link-y				+= acpi/built-in.o*
@@ -116,6 +117,7 @@ obj-@(SCx200)		+= scx200.c
 scx200-y			+= scx200_32.c
 
 obj-@(OLPC)		+= olpc.c
+obj-@(X86_MRST)		+= mrst.c
 
 microcode-y				:= microcode_core.c
 microcode-@(MICROCODE_INTEL)	+= microcode_intel.c

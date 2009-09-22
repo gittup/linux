@@ -28,6 +28,8 @@ else
         lib-y += copy_user_64.c rwlock_64.S copy_user_nocache_64.S
 	lib-y += memcpy_64.S
 endif
+obj-y += msr-reg.S msr-reg-export.c
+
 generated_headers = ../include/asm/asm-offsets.h
 include $(LINUX_ROOT)/lib.tup
 include $(LINUX_ROOT)/linux.tup

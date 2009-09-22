@@ -6,7 +6,6 @@ modname = hid
 hid-y			:= hid-core.c hid-input.c
 
 
-hid-@(HID_DEBUG)		+= hid-debug.c
 hid-@(HIDRAW)		+= hidraw.c
 
 hid-logitech-y		:= hid-lg.c
@@ -43,6 +42,7 @@ obj-@(HID_SUNPLUS)	+= hid-sunplus.c
 obj-@(HID_GREENASIA)	+= hid-gaff.c
 obj-@(HID_THRUSTMASTER)	+= hid-tmff.c
 obj-@(HID_TOPSEED)	+= hid-topseed.c
+obj-@(HID_TWINHAN)	+= hid-twinhan.c
 obj-@(HID_ZEROPLUS)	+= hid-zpff.c
 obj-@(HID_WACOM)		+= hid-wacom.c
 

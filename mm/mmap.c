@@ -28,7 +28,7 @@
 #include <linux/mempolicy.h>
 #include <linux/rmap.h>
 #include <linux/mmu_notifier.h>
-#include <linux/perf_counter.h>
+#include <linux/perf_event.h>
 
 #include <asm/uaccess.h>
 #include <asm/cacheflush.h>
@@ -87,9 +87,6 @@ int sysctl_overcommit_memory = OVERCOMMIT_GUESS;  /* heuristic overcommit */
 int sysctl_overcommit_ratio = 50;	/* default is 50% */
 int sysctl_max_map_count __read_mostly = DEFAULT_MAX_MAP_COUNT;
 struct percpu_counter vm_committed_as;
-
-/* amount of vm to protect from userspace access */
-unsigned long mmap_min_addr = CONFIG_DEFAULT_MMAP_MIN_ADDR;
 
 /*
  * Check that a process has enough memory to allocate a new virtual
@@ -908,7 +905,7 @@ void vm_stat_account(struct mm_struct *mm, unsigned long flags,
 #endif /* CONFIG_PROC_FS */
 
 /*
- * The caller must hold down_write(current->mm->mmap_sem).
+ * The caller must hold down_write(&current->mm->mmap_sem).
  */
 
 unsigned long do_mmap_pgoff(struct file *file, unsigned long addr,
@@ -1223,7 +1220,7 @@ munmap_back:
 	if (correct_wcount)
 		atomic_inc(&inode->i_writecount);
 out:
-	perf_counter_mmap(vma);
+	perf_event_mmap(vma);
 
 	mm->total_vm += len >> PAGE_SHIFT;
 	vm_stat_account(mm, vm_flags, file, len >> PAGE_SHIFT);
@@ -2311,7 +2308,7 @@ int install_special_mapping(struct mm_struct *mm,
 
 	mm->total_vm += len >> PAGE_SHIFT;
 
-	perf_counter_mmap(vma);
+	perf_event_mmap(vma);
 
 	return 0;
 }

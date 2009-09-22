@@ -4,7 +4,7 @@ modname = crypto
 # Cryptographic API
 #
 
-crypto-y := api.c cipher.c digest.c compress.c
+crypto-y := api.c cipher.c compress.c
 
 obj-@(CRYPTO_WORKQUEUE) += crypto_wq.c
 
@@ -23,7 +23,6 @@ obj-@(CRYPTO_BLKCIPHER2) += chainiv.c
 obj-@(CRYPTO_BLKCIPHER2) += eseqiv.c
 obj-@(CRYPTO_SEQIV) += seqiv.c
 
-crypto_hash-y := hash.c
 crypto_hash-y += ahash.c
 crypto_hash-y += shash.c
 obj-@(CRYPTO_HASH2) += $(crypto_hash-y)
@@ -34,6 +33,7 @@ cryptomgr-y := algboss.c testmgr.c
 
 obj-@(CRYPTO_MANAGER2) += cryptomgr.c
 obj-@(CRYPTO_HMAC) += hmac.c
+obj-@(CRYPTO_VMAC) += vmac.c
 obj-@(CRYPTO_XCBC) += xcbc.c
 obj-@(CRYPTO_NULL) += crypto_null.c
 obj-@(CRYPTO_MD4) += md4.c
@@ -84,6 +84,7 @@ obj-@(CRYPTO_RNG2) += rng.c
 obj-@(CRYPTO_RNG2) += krng.c
 obj-@(CRYPTO_ANSI_CPRNG) += ansi_cprng.c
 obj-@(CRYPTO_TEST) += tcrypt.c
+obj-@(CRYPTO_GHASH) += ghash-generic.c
 
 #
 # generic algorithms and the async_tx api

@@ -46,7 +46,7 @@ static int early_get_nodeid(void)
 	return node_id.s.node_id;
 }
 
-static int uv_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
+static int __init uv_acpi_madt_oem_check(char *oem_id, char *oem_table_id)
 {
 	if (!strcmp(oem_id, "SGI")) {
 		if (!strcmp(oem_table_id, "UVL"))
@@ -253,7 +253,7 @@ static void uv_send_IPI_self(int vector)
 	apic_write(APIC_SELF_IPI, vector);
 }
 
-struct apic apic_x2apic_uv_x = {
+struct apic __refdata apic_x2apic_uv_x = {
 
 	.name				= "UV large system",
 	.probe				= NULL,
@@ -387,6 +387,16 @@ static __init void map_gru_high(int max_pnode)
 	gru.v = uv_read_local_mmr(UVH_RH_GAM_GRU_OVERLAY_CONFIG_MMR);
 	if (gru.s.enable)
 		map_high("GRU", gru.s.base, shift, max_pnode, map_wb);
+}
+
+static __init void map_mmr_high(int max_pnode)
+{
+	union uvh_rh_gam_mmr_overlay_config_mmr_u mmr;
+	int shift = UVH_RH_GAM_MMR_OVERLAY_CONFIG_MMR_BASE_SHFT;
+
+	mmr.v = uv_read_local_mmr(UVH_RH_GAM_MMR_OVERLAY_CONFIG_MMR);
+	if (mmr.s.enable)
+		map_high("MMR", mmr.s.base, shift, max_pnode, map_uc);
 }
 
 static __init void map_mmioh_high(int max_pnode)
@@ -643,6 +653,7 @@ void __init uv_system_init(void)
 	}
 
 	map_gru_high(max_pnode);
+	map_mmr_high(max_pnode);
 	map_mmioh_high(max_pnode);
 
 	uv_cpu_init();

@@ -61,7 +61,7 @@
 #include <linux/blkdev.h>
 #include <linux/fs_struct.h>
 #include <linux/magic.h>
-#include <linux/perf_counter.h>
+#include <linux/perf_event.h>
 
 #include <asm/pgtable.h>
 #include <asm/pgalloc.h>
@@ -152,8 +152,7 @@ void __put_task_struct(struct task_struct *tsk)
 	WARN_ON(atomic_read(&tsk->usage));
 	WARN_ON(tsk == current);
 
-	put_cred(tsk->real_cred);
-	put_cred(tsk->cred);
+	exit_creds(tsk);
 	delayacct_tsk_free(tsk);
 
 	if (!profile_handoff_task(tsk))
@@ -426,7 +425,6 @@ static struct mm_struct * mm_init(struct mm_struct * mm, struct task_struct *p)
 	init_rwsem(&mm->mmap_sem);
 	INIT_LIST_HEAD(&mm->mmlist);
 	mm->flags = (current->mm) ? current->mm->flags : default_dump_filter;
-	mm->oom_adj = (current->mm) ? current->mm->oom_adj : 0;
 	mm->core_state = NULL;
 	mm->nr_ptes = 0;
 	set_mm_counter(mm, file_rss, 0);
@@ -816,11 +814,8 @@ static int copy_signal(unsigned long clone_flags, struct task_struct *tsk)
 {
 	struct signal_struct *sig;
 
-	if (clone_flags & CLONE_THREAD) {
-		atomic_inc(&current->signal->count);
-		atomic_inc(&current->signal->live);
+	if (clone_flags & CLONE_THREAD)
 		return 0;
-	}
 
 	sig = kmem_cache_alloc(signal_cachep, GFP_KERNEL);
 	tsk->signal = sig;
@@ -876,16 +871,6 @@ void __cleanup_signal(struct signal_struct *sig)
 	thread_group_cputime_free(sig);
 	tty_kref_put(sig->tty);
 	kmem_cache_free(signal_cachep, sig);
-}
-
-static void cleanup_signal(struct task_struct *tsk)
-{
-	struct signal_struct *sig = tsk->signal;
-
-	atomic_dec(&sig->live);
-
-	if (atomic_dec_and_test(&sig->count))
-		__cleanup_signal(sig);
 }
 
 static void copy_flags(unsigned long clone_flags, struct task_struct *p)
@@ -1022,10 +1007,7 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 	copy_flags(clone_flags, p);
 	INIT_LIST_HEAD(&p->children);
 	INIT_LIST_HEAD(&p->sibling);
-#ifdef CONFIG_PREEMPT_RCU
-	p->rcu_read_lock_nesting = 0;
-	p->rcu_flipctr_idx = 0;
-#endif /* #ifdef CONFIG_PREEMPT_RCU */
+	rcu_copy_process(p);
 	p->vfork_done = NULL;
 	spin_lock_init(&p->alloc_lock);
 
@@ -1096,7 +1078,7 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 	/* Perform scheduler related setup. Assign this task to a CPU. */
 	sched_fork(p, clone_flags);
 
-	retval = perf_counter_init_task(p);
+	retval = perf_event_init_task(p);
 	if (retval)
 		goto bad_fork_cleanup_policy;
 
@@ -1240,6 +1222,8 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 	}
 
 	if (clone_flags & CLONE_THREAD) {
+		atomic_inc(&current->signal->count);
+		atomic_inc(&current->signal->live);
 		p->group_leader = current->group_leader;
 		list_add_tail_rcu(&p->thread_group, &p->group_leader->thread_group);
 	}
@@ -1269,7 +1253,7 @@ static struct task_struct *copy_process(unsigned long clone_flags,
 	write_unlock_irq(&tasklist_lock);
 	proc_fork_connector(p);
 	cgroup_post_fork(p);
-	perf_counter_fork(p);
+	perf_event_fork(p);
 	return p;
 
 bad_fork_free_pid:
@@ -1283,7 +1267,8 @@ bad_fork_cleanup_mm:
 	if (p->mm)
 		mmput(p->mm);
 bad_fork_cleanup_signal:
-	cleanup_signal(p);
+	if (!(clone_flags & CLONE_THREAD))
+		__cleanup_signal(p->signal);
 bad_fork_cleanup_sighand:
 	__cleanup_sighand(p->sighand);
 bad_fork_cleanup_fs:
@@ -1295,7 +1280,7 @@ bad_fork_cleanup_semundo:
 bad_fork_cleanup_audit:
 	audit_free(p);
 bad_fork_cleanup_policy:
-	perf_counter_free_task(p);
+	perf_event_free_task(p);
 #ifdef CONFIG_NUMA
 	mpol_put(p->mempolicy);
 bad_fork_cleanup_cgroup:
@@ -1308,8 +1293,7 @@ bad_fork_cleanup_put_domain:
 	module_put(task_thread_info(p)->exec_domain->module);
 bad_fork_cleanup_count:
 	atomic_dec(&p->cred->user->processes);
-	put_cred(p->real_cred);
-	put_cred(p->cred);
+	exit_creds(p);
 bad_fork_free:
 	free_task(p);
 fork_out:

@@ -28,12 +28,9 @@
 #include "drmP.h"
 #include "radeon_reg.h"
 #include "radeon.h"
-#include "radeon_share.h"
 
 /* r520,rv530,rv560,rv570,r580 depends on : */
 void r100_hdp_reset(struct radeon_device *rdev);
-int rv370_pcie_gart_enable(struct radeon_device *rdev);
-void rv370_pcie_gart_disable(struct radeon_device *rdev);
 void r420_pipes_init(struct radeon_device *rdev);
 void rs600_mc_disable_clients(struct radeon_device *rdev);
 void rs600_disable_vga(struct radeon_device *rdev);
@@ -119,9 +116,6 @@ int r520_mc_init(struct radeon_device *rdev)
 
 void r520_mc_fini(struct radeon_device *rdev)
 {
-	rv370_pcie_gart_disable(rdev);
-	radeon_gart_table_vram_free(rdev);
-	radeon_gart_fini(rdev);
 }
 
 
@@ -177,7 +171,6 @@ void r520_gpu_init(struct radeon_device *rdev)
 	 */
 	/* workaround for RV530 */
 	if (rdev->family == CHIP_RV530) {
-		WREG32(0x4124, 1);
 		WREG32(0x4128, 0xFF);
 	}
 	r420_pipes_init(rdev);

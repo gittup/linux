@@ -80,26 +80,22 @@ obj-@(DETECT_HUNG_TASK) += hung_task.c
 obj-@(GENERIC_HARDIRQS) += irq/built-in.o
 obj-@(SECCOMP) += seccomp.c
 obj-@(RCU_TORTURE_TEST) += rcutorture.c
-obj-@(CLASSIC_RCU) += rcuclassic.c
 obj-@(TREE_RCU) += rcutree.c
-obj-@(PREEMPT_RCU) += rcupreempt.c
+obj-@(TREE_PREEMPT_RCU) += rcutree.c
 obj-@(TREE_RCU_TRACE) += rcutree_trace.c
-obj-@(PREEMPT_RCU_TRACE) += rcupreempt_trace.c
 obj-@(RELAY) += relay.c
 obj-@(SYSCTL) += utsname_sysctl.c
 obj-@(TASK_DELAY_ACCT) += delayacct.c
 obj-@(TASKSTATS) += taskstats.c tsacct.c
-obj-@(MARKERS) += marker.c
 obj-@(TRACEPOINTS) += tracepoint.c
 obj-@(LATENCYTOP) += latencytop.c
-obj-@(HAVE_GENERIC_DMA_COHERENT) += dma-coherent.c
 obj-@(FUNCTION_TRACER) += trace/built-in.o
 obj-@(TRACING) += trace/built-in.o
 obj-@(X86_DS) += trace/built-in.o
 obj-@(RING_BUFFER) += trace/built-in.o
 obj-@(SMP) += sched_cpupri.c
 obj-@(SLOW_WORK) += slow-work.c
-obj-@(PERF_COUNTERS) += perf_counter.c
+obj-@(PERF_EVENTS) += perf_event.c
 
 generated_headers += ../include/linux/utsrelease.h
 generated_headers += timeconst.h
@@ -110,6 +106,6 @@ generated_headers += config_data.h
 # TODO: Generate this?
 : existing-config |> ^ GZIP %o^ cat %f | gzip > %o |> config_data.gz
 
-: config_data.gz ../scripts/bin2c |> ^ BIN2C %o^ (echo "static const char kernel_config_data[] = MAGIC_START" && cat config_data.gz | ../scripts/bin2c && echo "MAGIC_END;") > %o |> config_data.h
+: config_data.gz ../scripts/bin2c |> ^ BIN2C %o^ (echo "static const char kernel_config_data[] __used = MAGIC_START" && cat config_data.gz | ../scripts/bin2c && echo "MAGIC_END;") > %o |> config_data.h
 
 include $(LINUX_ROOT)/linux.tup

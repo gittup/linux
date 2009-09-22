@@ -4,7 +4,7 @@ modname = sched
 # Makefile for the Linux Traffic Control Unit.
 #
 
-obj-y	:= sch_generic.c
+obj-y	:= sch_generic.c sch_mq.c
 
 obj-@(NET_SCHED)		+= sch_api.c sch_blackhole.c
 obj-@(NET_CLS)		+= cls_api.c

@@ -63,7 +63,7 @@ int sysctl_rose_window_size             = ROSE_DEFAULT_WINDOW_SIZE;
 static HLIST_HEAD(rose_list);
 static DEFINE_SPINLOCK(rose_list_lock);
 
-static struct proto_ops rose_proto_ops;
+static const struct proto_ops rose_proto_ops;
 
 ax25_address rose_callsign;
 
@@ -954,6 +954,7 @@ static int rose_getname(struct socket *sock, struct sockaddr *uaddr,
 	struct rose_sock *rose = rose_sk(sk);
 	int n;
 
+	memset(srose, 0, sizeof(*srose));
 	if (peer != 0) {
 		if (sk->sk_state != TCP_ESTABLISHED)
 			return -ENOTCONN;
@@ -1514,7 +1515,7 @@ static struct net_proto_family rose_family_ops = {
 	.owner		=	THIS_MODULE,
 };
 
-static struct proto_ops rose_proto_ops = {
+static const struct proto_ops rose_proto_ops = {
 	.family		=	PF_ROSE,
 	.owner		=	THIS_MODULE,
 	.release	=	rose_release,

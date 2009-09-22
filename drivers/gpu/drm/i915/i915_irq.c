@@ -190,7 +190,7 @@ u32 i915_get_vblank_counter(struct drm_device *dev, int pipe)
 	low_frame = pipe ? PIPEBFRAMEPIXEL : PIPEAFRAMEPIXEL;
 
 	if (!i915_pipe_enabled(dev, pipe)) {
-		DRM_ERROR("trying to get vblank count for disabled pipe %d\n", pipe);
+		DRM_DEBUG("trying to get vblank count for disabled pipe %d\n", pipe);
 		return 0;
 	}
 
@@ -219,7 +219,7 @@ u32 gm45_get_vblank_counter(struct drm_device *dev, int pipe)
 	int reg = pipe ? PIPEB_FRMCOUNT_GM45 : PIPEA_FRMCOUNT_GM45;
 
 	if (!i915_pipe_enabled(dev, pipe)) {
-		DRM_ERROR("trying to get vblank count for disabled pipe %d\n", pipe);
+		DRM_DEBUG("trying to get vblank count for disabled pipe %d\n", pipe);
 		return 0;
 	}
 
@@ -565,6 +565,27 @@ irqreturn_t i915_driver_irq_handler(DRM_IRQ_ARGS)
 
 			I915_WRITE(PORT_HOTPLUG_STAT, hotplug_status);
 			I915_READ(PORT_HOTPLUG_STAT);
+
+			/* EOS interrupts occurs */
+			if (IS_IGD(dev) &&
+				(hotplug_status & CRT_EOS_INT_STATUS)) {
+				u32 temp;
+
+				DRM_DEBUG("EOS interrupt occurs\n");
+				/* status is already cleared */
+				temp = I915_READ(ADPA);
+				temp &= ~ADPA_DAC_ENABLE;
+				I915_WRITE(ADPA, temp);
+
+				temp = I915_READ(PORT_HOTPLUG_EN);
+				temp &= ~CRT_EOS_INT_EN;
+				I915_WRITE(PORT_HOTPLUG_EN, temp);
+
+				temp = I915_READ(PORT_HOTPLUG_STAT);
+				if (temp & CRT_EOS_INT_STATUS)
+					I915_WRITE(PORT_HOTPLUG_STAT,
+						CRT_EOS_INT_STATUS);
+			}
 		}
 
 		I915_WRITE(IIR, iir);

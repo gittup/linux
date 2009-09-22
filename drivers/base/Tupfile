@@ -6,8 +6,10 @@ obj-y			:= core.c sys.c bus.c dd.c \
 			   driver.c class.c platform.c \
 			   cpu.c firmware.c init.c map.c devres.c \
 			   attribute_container.c transport_class.c
-link-y			+= power/built-in.o*
+obj-@(DEVTMPFS) += devtmpfs.c
+obj-y += power/built-in.o
 obj-@(HAS_DMA)	+= dma-mapping.c
+obj-@(HAVE_GENERIC_DMA_COHERENT) += dma-coherent.c
 obj-@(ISA)	+= isa.c
 obj-@(FW_LOADER)	+= firmware_class.c
 obj-@(NUMA)	+= node.c

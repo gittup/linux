@@ -10,7 +10,7 @@ subdir-@(SECURITY_SMACK)		+= smack
 subdir-@(SECURITY_TOMOYO)        += tomoyo
 
 # always enable default capabilities
-obj-y		+= commoncap.c
+obj-y		+= commoncap.c min_addr.c
 
 # Object file lists
 obj-@(SECURITY)			+= security.c capability.c
@@ -18,9 +18,7 @@ obj-@(SECURITYFS)		+= inode.c
 # Must precede capability.c in order to stack properly.
 obj-@(SECURITY_SELINUX)		+= selinux/built-in.c
 obj-@(SECURITY_SMACK)		+= smack/built-in.c
-ifeq (@(AUDIT),y)
-obj-@(SECURITY_SMACK)		+= lsm_audit.c
-endif
+obj-@(AUDIT)			+= lsm_audit.c
 obj-@(SECURITY_TOMOYO)		+= tomoyo/built-in.c
 obj-@(SECURITY_ROOTPLUG)		+= root_plug.c
 obj-@(CGROUP_DEVICE)		+= device_cgroup.c

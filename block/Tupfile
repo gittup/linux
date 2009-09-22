@@ -7,7 +7,7 @@ modname = block
 obj-@(BLOCK) := elevator.c blk-core.c blk-tag.c blk-sysfs.c \
 			blk-barrier.c blk-settings.c blk-ioc.c blk-map.c \
 			blk-exec.c blk-merge.c blk-softirq.c blk-timeout.c \
-			ioctl.c genhd.c scsi_ioctl.c
+			blk-iopoll.c ioctl.c genhd.c scsi_ioctl.c
 
 obj-@(BLK_DEV_BSG)	+= bsg.c
 obj-@(IOSCHED_NOOP)	+= noop-iosched.c
