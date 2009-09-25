@@ -15,11 +15,11 @@ usb-storage-obj-@(USB_STORAGE_DEBUG)	+= debug.c
 usb-storage-y :=	scsiglue.c protocol.c transport.c usb.c \
 			initializers.c sierra_ms.c option_ms.c $(usb-storage-obj-y)
 
-ifeq (@(USB_LIBUSUAL),n)
-	usb-storage-y	+= usual-tables.c
-else
+ifeq (@(USB_LIBUSUAL),y)
 	obj-@(USB)	+= usb-libusual.c
 	usb-libusual-y	:= libusual.c usual-tables.c
+else
+	usb-storage-y	+= usual-tables.c
 endif
 
 obj-y += $(usb-storage-y) $(usb-libusual-y)
