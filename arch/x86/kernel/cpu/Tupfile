@@ -28,9 +28,9 @@ obj-@(CPU_SUP_UMC_32)		+= umc.c
 
 obj-@(PERF_COUNTERS)		+= perf_counter.c
 
-link-@(X86_MCE)			+= mcheck/built-in.o
-link-@(MTRR)			+= mtrr/built-in.o
-link-@(CPU_FREQ)			+= cpufreq/built-in.o
+obj-@(X86_MCE)			+= mcheck/built-in.o
+obj-@(MTRR)			+= mtrr/built-in.o
+obj-@(CPU_FREQ)			+= cpufreq/built-in.o
 
 obj-@(X86_LOCAL_APIC)		+= perfctr-watchdog.c
 

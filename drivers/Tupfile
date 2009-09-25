@@ -25,7 +25,7 @@ link-@(XEN)		+= xen/built-in.o
 link-y				+= char/built-in.o
 
 # gpu/ comes after char for AGP vs DRM startup
-#link-y				+= gpu/built-in.o
+link-y				+= gpu/built-in.o
 
 link-@(CONNECTOR)		+= connector/built-in.o
 

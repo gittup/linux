@@ -1,3 +1,6 @@
+ifeq ($(linux_compiler),1)
+else
+linux_compiler = 1
 CFLAGS += -nostdinc
 CFLAGS += -I$(TUP_CWD)/include
 CFLAGS += -I$(TUP_CWD)/arch/@(ARCH)/include
@@ -37,3 +40,4 @@ CFLAGS += -fno-delete-null-pointer-checks
 CFLAGS += -fno-strict-overflow
 CFLAGS += -fno-dwarf2-cfi-asm
 CFLAGS += -ftup-linux
+endif

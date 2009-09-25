@@ -1,0 +1,4 @@
+include_rules
+modname = gpu
+obj-y			+= drm/built-in.o vga/built-in.o
+include $(LINUX_ROOT)/linux.tup
