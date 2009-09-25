@@ -1,1 +1,1 @@
-#define UTS_RELEASE "gittup"
+#define UTS_RELEASE "2.6.31-gittup"
