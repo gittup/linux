@@ -1,0 +1,32 @@
+include_rules
+modname = misc
+#
+# Makefile for the rest of the USB drivers
+# (the ones that don't fit into any other categories)
+#
+
+obj-@(USB_ADUTUX)	+= adutux.c
+obj-@(USB_APPLEDISPLAY)	+= appledisplay.c
+obj-@(USB_BERRY_CHARGE)	+= berry_charge.c
+obj-@(USB_CYPRESS_CY7C63)+= cypress_cy7c63.c
+obj-@(USB_CYTHERM)	+= cytherm.c
+obj-@(USB_EMI26)		+= emi26.c
+obj-@(USB_EMI62)		+= emi62.c
+obj-@(USB_FTDI_ELAN)	+= ftdi-elan.c
+obj-@(USB_IDMOUSE)	+= idmouse.c
+obj-@(USB_IOWARRIOR)	+= iowarrior.c
+obj-@(USB_ISIGHTFW)	+= isight_firmware.c
+obj-@(USB_LCD)		+= usblcd.c
+obj-@(USB_LD)		+= ldusb.c
+obj-@(USB_LED)		+= usbled.c
+obj-@(USB_LEGOTOWER)	+= legousbtower.c
+obj-@(USB_RIO500)	+= rio500.c
+obj-@(USB_TEST)		+= usbtest.c
+obj-@(USB_TRANCEVIBRATOR)	+= trancevibrator.c
+obj-@(USB_USS720)	+= uss720.c
+obj-@(USB_SEVSEG)	+= usbsevseg.c
+obj-@(USB_VST)		+= vstusb.c
+
+obj-@(USB_SISUSBVGA)	+= sisusbvga/built-in.o
+
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,38 @@
+include_rules
+modname = storage
+#
+# Makefile for the USB Mass Storage device drivers.
+#
+# 15 Aug 2000, Christoph Hellwig <hch@infradead.crg>
+# Rewritten to use lists instead of if-statements.
+#
+
+EXTRA_CFLAGS	:= -Idrivers/scsi
+
+
+usb-storage-obj-@(USB_STORAGE_DEBUG)	+= debug.c
+
+usb-storage-y :=	scsiglue.c protocol.c transport.c usb.c \
+			initializers.c sierra_ms.c option_ms.c $(usb-storage-obj-y)
+
+ifeq (@(USB_LIBUSUAL),n)
+	usb-storage-y	+= usual-tables.c
+else
+	obj-@(USB)	+= usb-libusual.c
+	usb-libusual-y	:= libusual.c usual-tables.c
+endif
+
+obj-y += $(usb-storage-y) $(usb-libusual-y)
+obj-@(USB_STORAGE_ALAUDA)	+= alauda.c
+obj-@(USB_STORAGE_CYPRESS_ATACB) += cypress_atacb.c
+obj-@(USB_STORAGE_DATAFAB)	+= datafab.c
+obj-@(USB_STORAGE_FREECOM)	+= freecom.c
+obj-@(USB_STORAGE_ISD200)	+= isd200.c
+obj-@(USB_STORAGE_JUMPSHOT)	+= jumpshot.c
+obj-@(USB_STORAGE_KARMA)	+= karma.c
+obj-@(USB_STORAGE_ONETOUCH)	+= onetouch.c
+obj-@(USB_STORAGE_SDDR09)	+= sddr09.c
+obj-@(USB_STORAGE_SDDR55)	+= sddr55.c
+obj-@(USB_STORAGE_USBAT)	+= usbat.c
+
+include $(LINUX_ROOT)/linux.tup
