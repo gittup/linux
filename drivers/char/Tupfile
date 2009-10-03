@@ -61,6 +61,7 @@ obj-@(RAW_DRIVER)	+= raw.c
 obj-@(SGI_SNSC)		+= snsc.c snsc_event.c
 obj-@(MSPEC)		+= mspec.c
 obj-@(MMTIMER)		+= mmtimer.c
+obj-@(UV_MMTIMER)	+= uv_mmtimer.c
 obj-@(VIOTAPE)		+= viotape.c
 obj-@(HVCS)		+= hvcs.c
 obj-@(IBM_BSR)		+= bsr.c

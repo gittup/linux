@@ -1,0 +1,31 @@
+include_rules
+modname = tuners
+#
+# Makefile for common V4L/DVB tuners
+#
+
+tda18271-y := tda18271-maps.c tda18271-common.c tda18271-fe.c
+
+obj-@(MEDIA_TUNER_XC2028) += tuner-xc2028.c
+obj-@(MEDIA_TUNER_SIMPLE) += tuner-simple.c
+# tuner-types will be merged into tuner-simple, in the future
+obj-@(MEDIA_TUNER_SIMPLE) += tuner-types.c
+obj-@(MEDIA_TUNER_MT20XX) += mt20xx.c
+obj-@(MEDIA_TUNER_TDA8290) += tda8290.c
+obj-@(MEDIA_TUNER_TEA5767) += tea5767.c
+obj-@(MEDIA_TUNER_TEA5761) += tea5761.c
+obj-@(MEDIA_TUNER_TDA9887) += tda9887.c
+obj-@(MEDIA_TUNER_TDA827X) += tda827x.c
+obj-@(MEDIA_TUNER_TDA18271) += tda18271.c
+obj-@(MEDIA_TUNER_XC5000) += xc5000.c
+obj-@(MEDIA_TUNER_MT2060) += mt2060.c
+obj-@(MEDIA_TUNER_MT2266) += mt2266.c
+obj-@(MEDIA_TUNER_QT1010) += qt1010.c
+obj-@(MEDIA_TUNER_MT2131) += mt2131.c
+obj-@(MEDIA_TUNER_MXL5005S) += mxl5005s.c
+obj-@(MEDIA_TUNER_MXL5007T) += mxl5007t.c
+obj-@(MEDIA_TUNER_MC44S803) += mc44s803.c
+
+EXTRA_CFLAGS += -Idrivers/media/dvb/dvb-core
+EXTRA_CFLAGS += -Idrivers/media/dvb/frontends
+include $(LINUX_ROOT)/linux.tup

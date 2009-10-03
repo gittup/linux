@@ -1,0 +1,10 @@
+include_rules
+modname = clocksource
+obj-@(ATMEL_TCB_CLKSRC)	+= tcb_clksrc.c
+obj-@(X86_CYCLONE_TIMER)	+= cyclone.c
+obj-@(X86_PM_TIMER)	+= acpi_pm.c
+obj-@(SCx200HR_TIMER)	+= scx200_hrt.c
+obj-@(SH_TIMER_CMT)	+= sh_cmt.c
+obj-@(SH_TIMER_MTU2)	+= sh_mtu2.c
+obj-@(SH_TIMER_TMU)	+= sh_tmu.c
+include $(LINUX_ROOT)/linux.tup

@@ -1,6 +1,6 @@
 include_rules
 modname = time
-obj-y += timekeeping.c ntp.c clocksource.c jiffies.c timer_list.c timecompare.c
+obj-y += timekeeping.c ntp.c clocksource.c jiffies.c timer_list.c timecompare.c timeconv.c
 
 obj-@(GENERIC_CLOCKEVENTS_BUILD)		+= clockevents.c
 obj-@(GENERIC_CLOCKEVENTS)		+= tick-common.c

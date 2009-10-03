@@ -1,0 +1,26 @@
+include_rules
+modname = x86
+#
+# Makefile for linux/drivers/platform/x86
+# x86 Platform-Specific Drivers
+#
+obj-@(ASUS_LAPTOP)	+= asus-laptop.c
+obj-@(EEEPC_LAPTOP)	+= eeepc-laptop.c
+obj-@(MSI_LAPTOP)	+= msi-laptop.c
+obj-@(COMPAL_LAPTOP)	+= compal-laptop.c
+obj-@(DELL_LAPTOP)	+= dell-laptop.c
+obj-@(DELL_WMI)		+= dell-wmi.c
+obj-@(ACER_WMI)		+= acer-wmi.c
+obj-@(ACERHDF)		+= acerhdf.c
+obj-@(HP_WMI)		+= hp-wmi.c
+obj-@(TC1100_WMI)	+= tc1100-wmi.c
+obj-@(SONY_LAPTOP)	+= sony-laptop.c
+obj-@(THINKPAD_ACPI)	+= thinkpad_acpi.c
+obj-@(FUJITSU_LAPTOP)	+= fujitsu-laptop.c
+obj-@(PANASONIC_LAPTOP)	+= panasonic-laptop.c
+obj-@(INTEL_MENLOW)	+= intel_menlow.c
+obj-@(ACPI_WMI)		+= wmi.c
+obj-@(ACPI_ASUS)		+= asus_acpi.c
+obj-@(TOPSTAR_LAPTOP)	+= topstar-laptop.c
+obj-@(ACPI_TOSHIBA)	+= toshiba_acpi.c
+include $(LINUX_ROOT)/linux.tup

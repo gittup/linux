@@ -1,0 +1,28 @@
+include_rules
+modname = misc
+#
+# Makefile for misc devices that really don't fit anywhere else.
+#
+
+obj-@(IBM_ASM)		+= ibmasm/built-in.o
+obj-@(HDPU_FEATURES)	+= hdpuftrs/built-in.o
+obj-@(ATMEL_PWM)		+= atmel_pwm.c
+obj-@(ATMEL_SSC)		+= atmel-ssc.c
+obj-@(ATMEL_TCLIB)	+= atmel_tclib.c
+obj-@(ICS932S401)	+= ics932s401.c
+obj-@(LKDTM)		+= lkdtm.c
+obj-@(TIFM_CORE)       	+= tifm_core.c
+obj-@(TIFM_7XX1)       	+= tifm_7xx1.c
+obj-@(PHANTOM)		+= phantom.c
+obj-@(SGI_IOC4)		+= ioc4.c
+obj-@(ENCLOSURE_SERVICES) += enclosure.c
+obj-@(KGDB_TESTS)	+= kgdbts.c
+obj-@(SGI_XP)		+= sgi-xp/built-in.o
+obj-@(SGI_GRU)		+= sgi-gru/built-in.o
+obj-@(HP_ILO)		+= hpilo.c
+obj-@(ISL29003)		+= isl29003.c
+obj-@(EP93XX_PWM)	+= ep93xx_pwm.c
+obj-@(C2PORT)		+= c2port/built-in.o
+obj-y				+= eeprom/built-in.o
+obj-y				+= cb710/built-in.o
+include $(LINUX_ROOT)/linux.tup

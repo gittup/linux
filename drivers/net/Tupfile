@@ -91,6 +91,7 @@ obj-@(SKY2) += sky2.c
 link-@(SKFP) += skfp/built-in.o
 obj-@(KS8842)	+= ks8842.c
 obj-@(KS8851)	+= ks8851.c
+obj-@(KS8851_MLL)	+= ks8851_mll.c
 obj-@(VIA_RHINE) += via-rhine.c
 obj-@(VIA_VELOCITY) += via-velocity.c
 obj-@(ADAPTEC_STARFIRE) += starfire.c

@@ -1,0 +1,55 @@
+include_rules
+modname = mfd
+#
+# Makefile for multifunction miscellaneous devices
+#
+
+obj-@(MFD_SM501)		+= sm501.c
+obj-@(MFD_ASIC3)		+= asic3.c
+
+obj-@(HTC_EGPIO)		+= htc-egpio.c
+obj-@(HTC_PASIC3)	+= htc-pasic3.c
+
+obj-@(MFD_DM355EVM_MSP)	+= dm355evm_msp.c
+
+obj-@(MFD_T7L66XB)	+= t7l66xb.c
+obj-@(MFD_TC6387XB)	+= tc6387xb.c
+obj-@(MFD_TC6393XB)	+= tc6393xb.c
+
+obj-@(MFD_WM8400)	+= wm8400-core.c
+wm831x-y			:= wm831x-core.c wm831x-irq.c wm831x-otp.c
+obj-@(MFD_WM831X)	+= wm831x.c
+wm8350-y			:= wm8350-core.c wm8350-regmap.c wm8350-gpio.c
+obj-@(MFD_WM8350)	+= wm8350.c
+obj-@(MFD_WM8350_I2C)	+= wm8350-i2c.c
+
+obj-@(TPS65010)		+= tps65010.c
+obj-@(MENELAUS)		+= menelaus.c
+
+obj-@(TWL4030_CORE)	+= twl4030-core.c twl4030-irq.c
+obj-@(TWL4030_POWER)    += twl4030-power.c
+
+obj-@(MFD_MC13783)	+= mc13783-core.c
+
+obj-@(MFD_CORE)		+= mfd-core.c
+
+obj-@(EZX_PCAP)		+= ezx-pcap.c
+
+obj-@(MCP)		+= mcp-core.c
+obj-@(MCP_SA11X0)	+= mcp-sa11x0.c
+obj-@(MCP_UCB1200)	+= ucb1x00-core.c
+obj-@(MCP_UCB1200_TS)	+= ucb1x00-ts.c
+
+ifeq (@(SA1100_ASSABET),y)
+obj-@(MCP_UCB1200)	+= ucb1x00-assabet.c
+endif
+obj-@(UCB1400_CORE)	+= ucb1400_core.c
+
+obj-@(PMIC_DA903X)	+= da903x.c
+
+obj-@(MFD_PCF50633)	+= pcf50633-core.c
+obj-@(PCF50633_ADC)	+= pcf50633-adc.c
+obj-@(PCF50633_GPIO)	+= pcf50633-gpio.c
+obj-@(AB3100_CORE)	+= ab3100-core.c
+obj-@(AB3100_OTP)	+= ab3100-otp.c
+include $(LINUX_ROOT)/linux.tup

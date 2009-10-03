@@ -28,7 +28,7 @@ acpi-@(ACPI_FUTURE_USAGE) += hwtimer.c
 acpi-y += nsaccess.c  nsload.c    nssearch.c  nsxfeval.c \
 	 nsalloc.c   nseval.c    nsnames.c   nsutils.c   nsxfname.c \
 	 nsdump.c    nsinit.c    nsobject.c  nswalk.c    nsxfobj.c  \
-	 nsparse.c   nspredef.c
+	 nsparse.c   nspredef.c  nsrepair.c
 
 acpi-@(ACPI_FUTURE_USAGE) += nsdumpdv.c
 
@@ -44,7 +44,7 @@ acpi-y += tbxface.c tbinstal.c tbutils.c tbfind.c tbfadt.c tbxfroot.c
 
 acpi-y += utalloc.c utdebug.c uteval.c utinit.c utmisc.c utxface.c \
 		utcopy.c utdelete.c utglobal.c utmath.c utobject.c \
-		utstate.c utmutex.c utresrc.c utlock.c
+		utstate.c utmutex.c utresrc.c utlock.c utids.c
 
 obj-@(ACPI)	+= $(acpi-y)
 include $(LINUX_ROOT)/linux.tup

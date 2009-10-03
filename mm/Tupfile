@@ -7,16 +7,15 @@ modname = mm
 mmu-y			:= nommu.c
 mmu-@(MMU)	:= fremap.c highmem.c madvise.c memory.c mincore.c \
 			   mlock.c mmap.c mprotect.c mremap.c msync.c rmap.c \
-			   vmalloc.c
+			   vmalloc.c pagewalk.c
 
 obj-y			:= bootmem.c filemap.c mempool.c oom_kill.c fadvise.c \
 			   maccess.c page_alloc.c page-writeback.c \
 			   readahead.c swap.c truncate.c vmscan.c shmem.c \
 			   prio_tree.c util.c mmzone.c vmstat.c backing-dev.c \
-			   page_isolation.c mm_init.c $(mmu-y)
+			   page_isolation.c mm_init.c mmu_context.c $(mmu-y)
 obj-y += init-mm.c
 
-obj-@(PROC_PAGE_MONITOR) += pagewalk.c
 obj-@(BOUNCE)	+= bounce.c
 obj-@(SWAP)	+= page_io.c swap_state.c swapfile.c thrash.c
 obj-@(HAS_DMA)	+= dmapool.c
@@ -27,6 +26,7 @@ obj-@(SPARSEMEM_VMEMMAP) += sparse-vmemmap.c
 obj-@(TMPFS_POSIX_ACL) += shmem_acl.c
 obj-@(SLOB) += slob.c
 obj-@(MMU_NOTIFIER) += mmu_notifier.c
+obj-@(KSM) += ksm.c
 obj-@(PAGE_POISONING) += debug-pagealloc.c
 obj-@(SLAB) += slab.c
 obj-@(SLUB) += slub.c
@@ -47,6 +47,8 @@ obj-@(SMP) += $(percpu-)
 
 obj-@(QUICKLIST) += quicklist.c
 obj-@(CGROUP_MEM_RES_CTLR) += memcontrol.c page_cgroup.c
+obj-@(MEMORY_FAILURE) += memory-failure.c
+obj-@(HWPOISON_INJECT) += hwpoison-inject.c
 obj-@(DEBUG_KMEMLEAK) += kmemleak.c
 obj-@(DEBUG_KMEMLEAK_TEST) += kmemleak-test.c
 obj-y += $(mm-y)

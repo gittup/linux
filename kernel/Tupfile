@@ -58,7 +58,6 @@ obj-@(KEXEC) += kexec.c
 obj-@(BACKTRACE_SELF_TEST) += backtracetest.c
 obj-@(COMPAT) += compat.c
 obj-@(CGROUPS) += cgroup.c
-obj-@(CGROUP_DEBUG) += cgroup_debug.c
 obj-@(CGROUP_FREEZER) += cgroup_freezer.c
 obj-@(CPUSETS) += cpuset.c
 obj-@(CGROUP_NS) += ns_cgroup.c

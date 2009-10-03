@@ -1,0 +1,11 @@
+include_rules
+modname = crypto
+obj-@(CRYPTO_DEV_PADLOCK_AES) += padlock-aes.c
+obj-@(CRYPTO_DEV_PADLOCK_SHA) += padlock-sha.c
+obj-@(CRYPTO_DEV_GEODE) += geode-aes.c
+obj-@(CRYPTO_DEV_HIFN_795X) += hifn_795x.c
+obj-@(CRYPTO_DEV_MV_CESA) += mv_cesa.c
+obj-@(CRYPTO_DEV_TALITOS) += talitos.c
+obj-@(CRYPTO_DEV_IXP4XX) += ixp4xx_crypto.c
+obj-@(CRYPTO_DEV_PPC4XX) += amcc/built-in.o
+include $(LINUX_ROOT)/linux.tup

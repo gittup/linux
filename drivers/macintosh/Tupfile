@@ -1,0 +1,53 @@
+include_rules
+modname = macintosh
+#
+# Makefile for the Macintosh-specific device drivers.
+#
+
+# Each configuration option enables a list of files.
+
+obj-@(PPC_PMAC)		+= macio_asic.c macio_sysfs.c
+
+obj-@(PMAC_MEDIABAY)	+= mediabay.c
+obj-@(MAC_EMUMOUSEBTN)	+= mac_hid.c
+obj-@(INPUT_ADBHID)	+= adbhid.c
+obj-@(ANSLCD)		+= ans-lcd.c
+
+obj-@(ADB_PMU)		+= via-pmu.c via-pmu-event.c
+obj-@(ADB_PMU_LED)	+= via-pmu-led.c
+obj-@(PMAC_BACKLIGHT)	+= via-pmu-backlight.c
+obj-@(ADB_CUDA)		+= via-cuda.c
+obj-@(PMAC_APM_EMU)	+= apm_emu.c
+obj-@(PMAC_SMU)		+= smu.c
+
+obj-@(ADB)		+= adb.c
+obj-@(ADB_MACII)		+= via-macii.c
+obj-@(ADB_MACIISI)	+= via-maciisi.c
+obj-@(ADB_IOP)		+= adb-iop.c
+obj-@(ADB_PMU68K)	+= via-pmu68k.c
+obj-@(ADB_MACIO)		+= macio-adb.c
+
+obj-@(THERM_PM72)	+= therm_pm72.c
+obj-@(THERM_WINDTUNNEL)	+= therm_windtunnel.c
+obj-@(THERM_ADT746X)	+= therm_adt746x.c
+obj-@(WINDFARM)	        += windfarm_core.c
+obj-@(WINDFARM_PM81)     += windfarm_smu_controls.c \
+				   windfarm_smu_sensors.c \
+				   windfarm_lm75_sensor.c windfarm_pid.c \
+				   windfarm_cpufreq_clamp.c windfarm_pm81.c
+obj-@(WINDFARM_PM91)     += windfarm_smu_controls.c \
+				   windfarm_smu_sensors.c \
+				   windfarm_lm75_sensor.c windfarm_pid.c \
+				   windfarm_cpufreq_clamp.c windfarm_pm91.c
+obj-@(WINDFARM_PM112)	+= windfarm_pm112.c windfarm_smu_sat.c \
+				   windfarm_smu_controls.c \
+				   windfarm_smu_sensors.c \
+				   windfarm_max6690_sensor.c \
+				   windfarm_lm75_sensor.c windfarm_pid.c
+obj-@(WINDFARM_PM121)	+= windfarm_pm121.c windfarm_smu_sat.c \
+				   windfarm_smu_controls.c \
+				   windfarm_smu_sensors.c \
+				   windfarm_max6690_sensor.c \
+				   windfarm_lm75_sensor.c windfarm_pid.c
+obj-@(PMAC_RACKMETER)	+= rack-meter.c
+include $(LINUX_ROOT)/linux.tup

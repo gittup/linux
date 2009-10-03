@@ -1,0 +1,11 @@
+include_rules
+modname = common
+saa7146-y    := saa7146_i2c.c saa7146_core.c
+saa7146_vv-y := saa7146_fops.c saa7146_video.c saa7146_hlp.c saa7146_vbi.c
+ir-common-y  := ir-functions.c ir-keymaps.c
+
+obj-y += tuners/built-in.o
+obj-@(VIDEO_SAA7146) += saa7146.c
+obj-@(VIDEO_SAA7146_VV) += saa7146_vv.c
+obj-@(VIDEO_IR) += $(common-y)
+include $(LINUX_ROOT)/linux.tup

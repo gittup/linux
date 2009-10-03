@@ -1,0 +1,5 @@
+include_rules
+modname = idle
+obj-@(I7300_IDLE)			+= i7300_idle.c
+
+include $(LINUX_ROOT)/linux.tup

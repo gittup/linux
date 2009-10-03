@@ -1,0 +1,8 @@
+include_rules
+modname = eeprom
+obj-@(EEPROM_AT24)	+= at24.c
+obj-@(EEPROM_AT25)	+= at25.c
+obj-@(EEPROM_MAX6875)	+= max6875.c
+obj-@(EEPROM_93CX6)	+= eeprom_93cx6.c
+obj-@(EEPROM_LEGACY)	+= $(eeprom-y)
+include $(LINUX_ROOT)/linux.tup

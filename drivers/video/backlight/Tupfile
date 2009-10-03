@@ -5,6 +5,7 @@ modname = backlight
 obj-@(LCD_CLASS_DEVICE)     += lcd.c
 obj-@(LCD_CORGI)		   += corgi_lcd.c
 obj-@(LCD_HP700)		   += jornada720_lcd.c
+obj-@(LCD_LMS283GF05)	   += lms283gf05.c
 obj-@(LCD_LTV350QV)	   += ltv350qv.c
 obj-@(LCD_ILI9320)	   += ili9320.c
 obj-@(LCD_PLATFORM)	   += platform_lcd.c
@@ -25,6 +26,9 @@ obj-@(BACKLIGHT_DA903X)	+= da903x_bl.c
 obj-@(BACKLIGHT_MBP_NVIDIA) += mbp_nvidia_bl.c
 obj-@(BACKLIGHT_TOSA)	+= tosa_bl.c
 obj-@(BACKLIGHT_SAHARA)	+= kb3886_bl.c
+obj-@(BACKLIGHT_WM831X)	+= wm831x_bl.c
+obj-@(BACKLIGHT_ADX)    += adx_bl.c
+obj-@(BACKLIGHT_ADP5520)	+= adp5520_bl.c
 
 obj-@(BACKLIGHT_CLASS_DEVICE) += $(backlight-y)
 include $(LINUX_ROOT)/linux.tup

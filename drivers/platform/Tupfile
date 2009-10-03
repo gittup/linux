@@ -1,0 +1,8 @@
+include_rules
+modname = platform
+#
+# Makefile for linux/drivers/platform
+#
+
+obj-@(X86)		+= x86/built-in.o
+include $(LINUX_ROOT)/linux.tup

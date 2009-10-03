@@ -1,0 +1,11 @@
+include_rules
+modname = cb710
+ifeq (@(CB710_DEBUG),y)
+	EXTRA_CFLAGS		+= -DDEBUG
+endif
+
+
+cb710-y				:= core.c sgbuf2.c
+cb710-@(CB710_DEBUG)	+= debug.c
+obj-@(CB710_CORE)	+= $(cb710-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,11 @@
+include_rules
+modname = media
+#
+# Makefile for the kernel multimedia device drivers.
+#
+
+obj-y += common/built-in.o video/built-in.o
+
+obj-@(VIDEO_DEV) += radio/built-in.o
+obj-@(DVB_CORE)  += dvb/built-in.o
+include $(LINUX_ROOT)/linux.tup

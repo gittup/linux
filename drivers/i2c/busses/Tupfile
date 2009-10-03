@@ -4,6 +4,9 @@ modname = busses
 # Makefile for the i2c bus drivers.
 #
 
+# ACPI drivers
+obj-@(I2C_SCMI)         += i2c-scmi.c
+
 # PC SMBus host controller drivers
 obj-@(I2C_ALI1535)	+= i2c-ali1535.c
 obj-@(I2C_ALI1563)	+= i2c-ali1563.c

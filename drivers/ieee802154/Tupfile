@@ -1,0 +1,6 @@
+include_rules
+modname = ieee802154
+obj-@(IEEE802154_FAKEHARD) += fakehard.c
+
+EXTRA_CFLAGS += -DDEBUG -DCONFIG_FFD
+include $(LINUX_ROOT)/linux.tup

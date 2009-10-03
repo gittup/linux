@@ -14,7 +14,7 @@ extra-y                := head_$(BITS).S head$(BITS).c head.c init_task.c
 CPPFLAGS_vmlinux.lds += -U$(UTS_MACHINE)
 
 generated_headers += ../include/asm/asm-offsets.h
-: vmlinux.lds.S | $(generated_headers) $(compiler_proper) |> ^ CPP %o^ $(CC) $(CFLAGS) -P -C -Ui386 -Ui386 -D__ASSEMBLY__ -E %f > %o |> vmlinux.lds
+: vmlinux.lds.S | $(generated_headers) $(compiler_proper) |> ^ CPP %o^ $(CC) $(CFLAGS) -P -C -Ui386 -Ui386 -D__ASSEMBLY__ -DLINKER_SCRIPT -E %f > %o |> vmlinux.lds
 
 #ifdef CONFIG_FUNCTION_TRACER
 ## Do not profile debug and lowlevel utilities
@@ -68,6 +68,7 @@ obj-@(INTEL_TXT)	+= tboot.c
 obj-@(STACKTRACE)	+= stacktrace.c
 obj-y				+= cpu/built-in.o
 obj-y				+= acpi/built-in.o
+obj-@(SFI)			+= sfi.c
 obj-y				+= reboot.c
 obj-@(MCA)		+= mca_32.c
 obj-@(X86_MSR)		+= msr.c

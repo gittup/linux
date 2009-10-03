@@ -53,6 +53,7 @@ acpi-@(ACPI_HOTPLUG_MEMORY) += acpi_memhotplug.c
 acpi-@(ACPI_BATTERY)	+= battery.c
 acpi-@(ACPI_SBS)		+= sbshc.c
 acpi-@(ACPI_SBS)		+= sbs.c
+acpi-@(ACPI_POWER_METER)	+= power_meter.c
 
 # processor has its own "processor." module_param namespace
 processor-y			:= processor_core.c processor_throttling.c

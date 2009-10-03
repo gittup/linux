@@ -1,0 +1,9 @@
+include_rules
+modname = auxdisplay
+#
+# Makefile for the kernel auxiliary displays device drivers.
+#
+
+obj-@(KS0108)		+= ks0108.c
+obj-@(CFAG12864B)	+= cfag12864b.c cfag12864bfb.c
+include $(LINUX_ROOT)/linux.tup

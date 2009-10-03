@@ -1,0 +1,22 @@
+include_rules
+modname = gpio
+# gpio support: dedicated expander chips, etc
+
+ccflags-@(DEBUG_GPIO)	+= -DDEBUG
+
+obj-@(GPIOLIB)		+= gpiolib.c
+
+obj-@(GPIO_LANGWELL)	+= langwell_gpio.c
+obj-@(GPIO_MAX7301)	+= max7301.c
+obj-@(GPIO_MAX732X)	+= max732x.c
+obj-@(GPIO_MC33880)	+= mc33880.c
+obj-@(GPIO_MCP23S08)	+= mcp23s08.c
+obj-@(GPIO_PCA953X)	+= pca953x.c
+obj-@(GPIO_PCF857X)	+= pcf857x.c
+obj-@(GPIO_PL061)	+= pl061.c
+obj-@(GPIO_UCB1400)	+= ucb1400_gpio.c
+obj-@(GPIO_XILINX)	+= xilinx_gpio.c
+obj-@(GPIO_BT8XX)	+= bt8xxgpio.c
+obj-@(GPIO_VR41XX)	+= vr41xx_giu.c
+obj-@(GPIO_WM831X)	+= $(gpio-y)
+include $(LINUX_ROOT)/linux.tup

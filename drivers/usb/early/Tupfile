@@ -1,0 +1,8 @@
+include_rules
+modname = early
+#
+# Makefile for early USB devices
+#
+
+obj-@(EARLY_PRINTK_DBGP)        += ehci-dbgp.c
+include $(LINUX_ROOT)/linux.tup

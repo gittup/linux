@@ -18,6 +18,7 @@ host-@(USB_UHCI_HCD) = y
 host-@(USB_FHCI_HCD) = y
 host-@(USB_XHCI_HCD) = y
 host-@(USB_SL811_HCD) = y
+host-@(USB_IPS1362_HCD) = y
 host-@(USB_U132_HCD) = y
 host-@(USB_R8A66597_HCD) = y
 host-@(USB_HWA_HCD) = y
@@ -45,6 +46,7 @@ obj-$(image-y)		+= image/built-in.o
 obj-@(USB_SERIAL)	+= serial/built-in.o
 
 obj-@(USB)		+= misc/built-in.o
+obj-y 			+= early/built-in.o
 
 atm-@(USB_ATM) = y
 atm-@(USB_SPEEDTOUCH) = y

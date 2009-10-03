@@ -86,6 +86,7 @@ obj-@(FB_Q40)              += q40fb.c
 obj-@(FB_TGA)              += tgafb.c
 obj-@(FB_HP300)            += hpfb.c
 obj-@(FB_G364)             += g364fb.c
+obj-@(FB_EP93XX)             += ep93xx-fb.c
 obj-@(FB_SA1100)           += sa1100fb.c
 obj-@(FB_HIT)              += hitfb.c
 obj-@(FB_EPSON1355)	  += epson1355fb.c
@@ -127,6 +128,7 @@ link-@(FB_OMAP)             += omap/built-in.o
 obj-@(XEN_FBDEV_FRONTEND)  += xen-fbfront.c
 obj-@(FB_CARMINE)          += carminefb.c
 link-@(FB_MB862XX)	  += mb862xx/built-in.o
+obj-@(FB_MSM)          += msm/built-in.o
 
 # Platform or fallback drivers go here
 obj-@(FB_UVESA)            += uvesafb.c
@@ -137,6 +139,7 @@ obj-@(FB_OF)               += offb.c
 obj-@(FB_BF54X_LQ043)	  += bf54x-lq043fb.c
 obj-@(FB_BFIN_T350MCQB)	  += bfin-t350mcqb-fb.c
 obj-@(FB_MX3)		  += mx3fb.c
+obj-@(FB_DA8XX)		  += da8xx-fb.c
 
 # the test framebuffer is last
 obj-@(FB_VIRTUAL)          += vfb.c

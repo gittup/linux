@@ -23,6 +23,7 @@ obj-@(PCI)		+= pci-quirks.c
 obj-@(USB_EHCI_HCD)	+= ehci-hcd.c
 obj-@(USB_OXU210HP_HCD)	+= oxu210hp-hcd.c
 obj-@(USB_ISP116X_HCD)	+= isp116x-hcd.c
+obj-@(USB_ISP1362_HCD)	+= isp1362-hcd.c
 obj-@(USB_OHCI_HCD)	+= ohci-hcd.c
 obj-@(USB_UHCI_HCD)	+= uhci-hcd.c
 obj-@(USB_FHCI_HCD)	+= fhci.c

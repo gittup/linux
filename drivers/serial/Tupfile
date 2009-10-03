@@ -36,6 +36,7 @@ obj-@(SERIAL_CLPS711X) += clps711x.c
 obj-@(SERIAL_PXA) += pxa.c
 obj-@(SERIAL_PNX8XXX) += pnx8xxx_uart.c
 obj-@(SERIAL_SA1100) += sa1100.c
+obj-@(SERIAL_BCM63XX) += bcm63xx_uart.c
 obj-@(SERIAL_BFIN) += bfin_5xx.c
 obj-@(SERIAL_BFIN_SPORT) += bfin_sport_uart.c
 obj-@(SERIAL_SAMSUNG) += samsung.c

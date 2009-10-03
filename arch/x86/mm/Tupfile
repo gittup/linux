@@ -5,9 +5,10 @@ BITS=32
 
 modname = mm
 obj-y:= init.c init_$(BITS).c fault.c ioremap.c extable.c pageattr.c mmap.c \
-	    pat.c pgtable.c physaddr.c gup.c
+	    pat.c pgtable.c physaddr.c gup.c setup_nx.c
 
 CFLAGS_physaddr.c += -fno-stack-protector
+CFLAGS_setup_nx.c += -fno-stack-protector
 
 obj-@(SMP)		+= tlb.c
 
