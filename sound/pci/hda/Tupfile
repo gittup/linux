@@ -1,0 +1,71 @@
+include_rules
+modname = hda
+snd-hda-intel-y := hda_intel.c
+
+snd-hda-codec-y := hda_codec.c
+snd-hda-codec-@(SND_HDA_GENERIC) += hda_generic.c
+snd-hda-codec-@(PROC_FS) += hda_proc.c
+# snd-hda-codec-@(SND_HDA_ELD) += hda_eld.c
+snd-hda-codec-@(SND_HDA_HWDEP) += hda_hwdep.c
+snd-hda-codec-@(SND_HDA_INPUT_BEEP) += hda_beep.c
+
+snd-hda-codec-realtek-y :=	patch_realtek.c
+snd-hda-codec-cmedia-y :=	patch_cmedia.c
+snd-hda-codec-analog-y :=	patch_analog.c
+snd-hda-codec-idt-y :=	patch_sigmatel.c
+snd-hda-codec-si3054-y :=	patch_si3054.c
+snd-hda-codec-atihdmi-y :=	patch_atihdmi.c
+snd-hda-codec-cirrus-y :=	patch_cirrus.c
+snd-hda-codec-ca0110-y :=	patch_ca0110.c
+snd-hda-codec-conexant-y :=	patch_conexant.c
+snd-hda-codec-via-y :=	patch_via.c
+snd-hda-codec-nvhdmi-y :=	patch_nvhdmi.c
+snd-hda-codec-intelhdmi-y :=	patch_intelhdmi.c hda_eld.c
+
+# common driver
+obj-@(SND_HDA_INTEL) := $(snd-hda-codec-y)
+
+# codec drivers (note: CONFIG_SND_HDA_CODEC_XXX are booleans)
+# TODO: ifdef?
+ifeq (@(SND_HDA_CODEC_REALTEK),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-realtek-y)
+endif
+ifeq (@(SND_HDA_CODEC_CMEDIA),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-cmedia-y)
+endif
+ifeq (@(SND_HDA_CODEC_ANALOG),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-analog-y)
+endif
+ifeq (@(SND_HDA_CODEC_SIGMATEL),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-idt-y)
+endif
+ifeq (@(SND_HDA_CODEC_SI3054),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-si3054-y)
+endif
+ifeq (@(SND_HDA_CODEC_ATIHDMI),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-atihdmi-y)
+endif
+ifeq (@(SND_HDA_CODEC_CIRRUS),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-cirrus-y)
+endif
+ifeq (@(SND_HDA_CODEC_CA0110),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-ca0110-y)
+endif
+ifeq (@(SND_HDA_CODEC_CONEXANT),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-conexant-y)
+endif
+ifeq (@(SND_HDA_CODEC_VIA),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-via-y)
+endif
+ifeq (@(SND_HDA_CODEC_NVHDMI),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-nvhdmi-y)
+endif
+ifeq (@(SND_HDA_CODEC_INTELHDMI),y)
+obj-@(SND_HDA_INTEL) += $(snd-hda-codec-intelhdmi-y)
+endif
+
+# this must be the last entry after codec drivers;
+# otherwise the codec patches won't be hooked before the PCI probe
+# when built in kernel
+obj-@(SND_HDA_INTEL) += $(snd-hda-intel-y)
+include $(LINUX_ROOT)/linux.tup

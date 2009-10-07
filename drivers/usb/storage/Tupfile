@@ -22,7 +22,7 @@ else
 	usb-storage-y	+= usual-tables.c
 endif
 
-obj-y += $(usb-storage-y) $(usb-libusual-y)
+obj-@(USB_STORAGE) += $(usb-storage-y) $(usb-libusual-y)
 obj-@(USB_STORAGE_ALAUDA)	+= alauda.c
 obj-@(USB_STORAGE_CYPRESS_ATACB) += cypress_atacb.c
 obj-@(USB_STORAGE_DATAFAB)	+= datafab.c

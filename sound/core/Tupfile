@@ -15,7 +15,7 @@ snd-pcm-y := pcm.c pcm_native.c pcm_lib.c pcm_timer.c pcm_misc.c \
 		pcm_memory.c
 
 snd-page-alloc-y := memalloc.c
-snd-page-alloc-@(HAS_DMA) += sgbuf.c
+snd-page-alloc-@(SND_DMA_SGBUF) += sgbuf.c
 
 snd-rawmidi-y  := rawmidi.c
 snd-timer-y    := timer.c
@@ -23,14 +23,14 @@ snd-hrtimer-y  := hrtimer.c
 snd-rtctimer-y := rtctimer.c
 snd-hwdep-y    := hwdep.c
 
-obj-@(SND) 		+= snd.c
-obj-@(SND_HWDEP)		+= snd-hwdep.c
-obj-@(SND_TIMER)		+= snd-timer.c
-obj-@(SND_HRTIMER)	+= snd-hrtimer.c
-obj-@(SND_RTCTIMER)	+= snd-rtctimer.c
-obj-@(SND_PCM)		+= snd-pcm.c snd-page-alloc.c
-obj-@(SND_RAWMIDI)	+= snd-rawmidi.c
+obj-@(SND) 		+= $(snd-y)
+obj-@(SND_HWDEP)		+= $(snd-hwdep-y)
+obj-@(SND_TIMER)		+= $(snd-timer-y)
+obj-@(SND_HRTIMER)	+= $(snd-hrtimer-y)
+obj-@(SND_RTCTIMER)	+= $(snd-rtctimer-y)
+obj-@(SND_PCM)		+= $(snd-pcm-y) $(snd-page-alloc-y)
+obj-@(SND_RAWMIDI)	+= $(snd-rawmidi-y)
 
-link-@(SND_OSSEMUL)	+= oss/built-in.o
-link-@(SND_SEQUENCER)	+= seq/built-in.o
+obj-@(SND_OSSEMUL)	+= oss/built-in.o
+obj-@(SND_SEQUENCER)	+= seq/built-in.o
 include $(LINUX_ROOT)/linux.tup

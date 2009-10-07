@@ -1,0 +1,15 @@
+include_rules
+modname = oss
+#
+# Makefile for ALSA
+# Copyright (c) 1999 by Jaroslav Kysela <perex@perex.cz>
+#
+
+snd-mixer-oss-y := mixer_oss.c
+
+snd-pcm-oss-y := pcm_oss.c
+snd-pcm-oss-@(SND_PCM_OSS_PLUGINS) += pcm_plugin.c \
+	io.c copy.c linear.c mulaw.c route.c rate.c
+
+obj-@(SND_PCM_OSS) += $(snd-pcm-oss-y)
+include $(LINUX_ROOT)/linux.tup

@@ -1,0 +1,83 @@
+include_rules
+modname = pci
+#
+# Makefile for ALSA
+# Copyright (c) 2001 by Jaroslav Kysela <perex@perex.cz>
+#
+
+snd-ad1889-y := ad1889.c
+snd-als300-y := als300.c
+snd-als4000-y := als4000.c
+snd-atiixp-y := atiixp.c
+snd-atiixp-modem-y := atiixp_modem.c
+snd-azt3328-y := azt3328.c
+snd-bt87x-y := bt87x.c
+snd-cmipci-y := cmipci.c
+snd-cs4281-y := cs4281.c
+snd-cs5530-y := cs5530.c
+snd-ens1370-y := ens1370.c ak4531_codec.c
+snd-ens1371-y := ens1371.c
+snd-es1938-y := es1938.c
+snd-es1968-y := es1968.c
+snd-fm801-y := fm801.c
+snd-intel8x0-y := intel8x0.c
+snd-intel8x0m-y := intel8x0m.c
+snd-maestro3-y := maestro3.c
+snd-rme32-y := rme32.c
+snd-rme96-y := rme96.c
+snd-sis7019-y := sis7019.c
+snd-sonicvibes-y := sonicvibes.c
+snd-via82xx-y := via82xx.c
+snd-via82xx-modem-y := via82xx_modem.c
+
+# Toplevel Module Dependency
+obj-@(SND_AD1889) += $(snd-ad1889-y)
+obj-@(SND_ALS300) += $(snd-als300-y)
+obj-@(SND_ALS4000) += $(snd-als4000-y)
+obj-@(SND_ATIIXP) += $(snd-atiixp-y)
+obj-@(SND_ATIIXP_MODEM) += $(snd-atiixp-modem-y)
+obj-@(SND_AZT3328) += $(snd-azt3328-y)
+obj-@(SND_BT87X) += $(snd-bt87x-y)
+obj-@(SND_CMIPCI) += $(snd-cmipci-y)
+obj-@(SND_CS4281) += $(snd-cs4281-y)
+obj-@(SND_CS5530) += $(snd-cs5530-y)
+obj-@(SND_ENS1370) += $(snd-ens1370-y)
+obj-@(SND_ENS1371) += $(snd-ens1371-y)
+obj-@(SND_ES1938) += $(snd-es1938-y)
+obj-@(SND_ES1968) += $(snd-es1968-y)
+obj-@(SND_FM801) += $(snd-fm801-y)
+obj-@(SND_INTEL8X0) += $(snd-intel8x0-y)
+obj-@(SND_INTEL8X0M) += $(snd-intel8x0m-y)
+obj-@(SND_MAESTRO3) += $(snd-maestro3-y)
+obj-@(SND_RME32) += $(snd-rme32-y)
+obj-@(SND_RME96) += $(snd-rme96-y)
+obj-@(SND_SIS7019) += $(snd-sis7019-y)
+obj-@(SND_SONICVIBES) += $(snd-sonicvibes-y)
+obj-@(SND_VIA82XX) += $(snd-via82xx-y)
+obj-@(SND_VIA82XX_MODEM) += $(snd-via82xx-modem-y)
+
+#obj-@(SND) += ac97/built-in.o
+#obj-@(SND) += ali5451/built-in.o
+#obj-@(SND) += au88x0/built-in.o
+#obj-@(SND) += aw2/built-in.o
+#obj-@(SND) += ctxfi/built-in.o
+#obj-@(SND) += ca0106/built-in.o
+#obj-@(SND) += cs46xx/built-in.o
+#obj-@(SND) += cs5535audio/built-in.o
+#obj-@(SND) += lx6464es/built-in.o
+#obj-@(SND) += echoaudio/built-in.o
+#obj-@(SND) += emu10k1/built-in.o
+obj-@(SND) += hda/built-in.o
+#obj-@(SND) += ice1712/built-in.o
+#obj-@(SND) += korg1212/built-in.o
+#obj-@(SND) += mixart/built-in.o
+#obj-@(SND) += nm256/built-in.o
+#obj-@(SND) += oxygen/built-in.o
+#obj-@(SND) += pcxhr/built-in.o
+#obj-@(SND) += riptide/built-in.o
+#obj-@(SND) += rme9652/built-in.o
+#obj-@(SND) += trident/built-in.o
+#obj-@(SND) += ymfpci/built-in.o
+#obj-@(SND) += vx222/built-in.o
+
+include $(LINUX_ROOT)/linux.tup
