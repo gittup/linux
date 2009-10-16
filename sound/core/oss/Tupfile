@@ -11,5 +11,6 @@ snd-pcm-oss-y := pcm_oss.c
 snd-pcm-oss-@(SND_PCM_OSS_PLUGINS) += pcm_plugin.c \
 	io.c copy.c linear.c mulaw.c route.c rate.c
 
+obj-@(SND_MIXER_OSS) += $(snd-mixer-oss-y)
 obj-@(SND_PCM_OSS) += $(snd-pcm-oss-y)
 include $(LINUX_ROOT)/linux.tup
