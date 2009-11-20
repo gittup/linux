@@ -1,0 +1,9 @@
+include_rules
+modname = display
+# Display drivers
+
+display-y				:= display-sysfs.c
+
+
+obj-@(DISPLAY_SUPPORT)		+= $(display-y)
+include $(LINUX_ROOT)/linux.tup
