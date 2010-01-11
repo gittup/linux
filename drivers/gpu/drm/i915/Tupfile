@@ -1,0 +1,38 @@
+include_rules
+modname = i915
+#
+# Makefile for the drm device driver.  This driver provides support for the
+# Direct Rendering Infrastructure (DRI) in XFree86 4.1.0 and higher.
+
+CFLAGS += -I$(LINUX_ROOT)/include/drm
+i915-y := i915_drv.c i915_dma.c i915_irq.c i915_mem.c \
+	  i915_debugfs.c \
+          i915_suspend.c \
+	  i915_gem.c \
+	  i915_gem_debug.c \
+	  i915_gem_tiling.c \
+	  i915_trace_points.c \
+	  intel_display.c \
+	  intel_crt.c \
+	  intel_lvds.c \
+	  intel_bios.c \
+	  intel_dp.c \
+	  intel_dp_i2c.c \
+	  intel_hdmi.c \
+	  intel_sdvo.c \
+	  intel_modes.c \
+	  intel_i2c.c \
+	  intel_fb.c \
+	  intel_tv.c \
+	  intel_dvo.c \
+	  dvo_ch7xxx.c \
+	  dvo_ch7017.c \
+	  dvo_ivch.c \
+	  dvo_tfp410.c \
+	  dvo_sil164.c
+
+i915-@(ACPI)	+= i915_opregion.c
+i915-@(COMPAT)   += i915_ioc32.c
+
+obj-@(DRM_I915)  += $(i915-y)
+include $(LINUX_ROOT)/linux.tup
