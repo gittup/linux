@@ -1,11 +1,10 @@
 include compiler.tup
 
 ifeq ($(modname),)
-!cc_linux.c = | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" |>
+!cc_linux = | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" |>
 else
-!cc_linux.c = | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR($(modname))" |>
+!cc_linux = | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR($(modname))" |>
 endif
-!cc_linux.S = !cc_linux.c
 !cc_linux.o = |> |>
 
 : foreach $(obj-y) |> !cc_linux |> %B.o {objs}
