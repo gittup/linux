@@ -1,131 +1,128 @@
 include_rules
-modname = fs
 #
-# Makefile for the Linux filesystems.
+# Tupfile for the Linux filesystems.
 #
-# 14 Sep 2000, Christoph Hellwig <hch@infradead.crg>
+# 14 Sep 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 # 
 
-obj-y :=	open.c read_write.c file_table.c super.c \
-		char_dev.c stat.c exec.c pipe.c namei.c fcntl.c \
-		ioctl.c readdir.c select.c fifo.c dcache.c inode.c \
-		attr.c bad_inode.c file.c filesystems.c namespace.c \
-		seq_file.c xattr.c libfs.c fs-writeback.c \
-		pnode.c drop_caches.c splice.c sync.c utimes.c \
-		stack.c fs_struct.c
+obj-y :=	open.o read_write.o file_table.o super.o \
+		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
+		ioctl.o readdir.o select.o fifo.o dcache.o inode.o \
+		attr.o bad_inode.o file.o filesystems.o namespace.o \
+		seq_file.o xattr.o libfs.o fs-writeback.o \
+		pnode.o drop_caches.o splice.o sync.o utimes.o \
+		stack.o fs_struct.o
 
-ifeq (@(BLOCK),y)
-obj-y +=	buffer.c bio.c block_dev.c direct-io.c mpage.c ioprio.c
+ifeq ($(CONFIG_BLOCK),y)
+obj-y +=	buffer.o bio.o block_dev.o direct-io.o mpage.o ioprio.o
 else
-obj-y +=	no-block.c
+obj-y +=	no-block.o
 endif
 
-obj-@(BLK_DEV_INTEGRITY) += bio-integrity.c
-link-y				+= notify/built-in.o
-obj-@(EPOLL)		+= eventpoll.c
-obj-@(ANON_INODES)	+= anon_inodes.c
-obj-@(SIGNALFD)		+= signalfd.c
-obj-@(TIMERFD)		+= timerfd.c
-obj-@(EVENTFD)		+= eventfd.c
-obj-@(AIO)               += aio.c
-obj-@(FILE_LOCKING)      += locks.c
-obj-@(COMPAT)		+= compat.c compat_ioctl.c
+obj-$(CONFIG_BLK_DEV_INTEGRITY) += bio-integrity.o
+obj-y				+= notify/built-in.o
+obj-$(CONFIG_EPOLL)		+= eventpoll.o
+obj-$(CONFIG_ANON_INODES)	+= anon_inodes.o
+obj-$(CONFIG_SIGNALFD)		+= signalfd.o
+obj-$(CONFIG_TIMERFD)		+= timerfd.o
+obj-$(CONFIG_EVENTFD)		+= eventfd.o
+obj-$(CONFIG_AIO)               += aio.o
+obj-$(CONFIG_FILE_LOCKING)      += locks.o
+obj-$(CONFIG_COMPAT)		+= compat.o compat_ioctl.o
 
-nfsd-@(NFSD)		:= nfsctl.c
+nfsd-$(CONFIG_NFSD)		:= nfsctl.c
 obj-y				+= $(nfsd-y) $(nfsd-m)
 
-obj-@(BINFMT_AOUT)	+= binfmt_aout.c
-obj-@(BINFMT_EM86)	+= binfmt_em86.c
-obj-@(BINFMT_MISC)	+= binfmt_misc.c
+obj-$(CONFIG_BINFMT_AOUT)	+= binfmt_aout.o
+obj-$(CONFIG_BINFMT_EM86)	+= binfmt_em86.o
+obj-$(CONFIG_BINFMT_MISC)	+= binfmt_misc.o
 
 # binfmt_script is always there
-obj-y				+= binfmt_script.c
+obj-y				+= binfmt_script.o
 
-obj-@(BINFMT_ELF)	+= binfmt_elf.c
-obj-@(COMPAT_BINFMT_ELF)	+= compat_binfmt_elf.c
-obj-@(BINFMT_ELF_FDPIC)	+= binfmt_elf_fdpic.c
-obj-@(BINFMT_SOM)	+= binfmt_som.c
-obj-@(BINFMT_FLAT)	+= binfmt_flat.c
+obj-$(CONFIG_BINFMT_ELF)	+= binfmt_elf.o
+obj-$(CONFIG_COMPAT_BINFMT_ELF)	+= compat_binfmt_elf.o
+obj-$(CONFIG_BINFMT_ELF_FDPIC)	+= binfmt_elf_fdpic.o
+obj-$(CONFIG_BINFMT_SOM)	+= binfmt_som.o
+obj-$(CONFIG_BINFMT_FLAT)	+= binfmt_flat.o
 
-obj-@(FS_MBCACHE)	+= mbcache.c
-obj-@(FS_POSIX_ACL)	+= posix_acl.c xattr_acl.c
-link-@(NFS_COMMON)	+= nfs_common/built-in.o
-obj-@(GENERIC_ACL)	+= generic_acl.c
+obj-$(CONFIG_FS_MBCACHE)	+= mbcache.o
+obj-$(CONFIG_FS_POSIX_ACL)	+= posix_acl.o xattr_acl.o
+obj-$(CONFIG_NFS_COMMON)	+= nfs_common/built-in.o
+obj-$(CONFIG_GENERIC_ACL)	+= generic_acl.o
 
-link-y				+= quota/built-in.o*
+obj-y				+= quota/built-in.o
 
-link-@(PROC_FS)		+= proc/built-in.o
-link-y				+= partitions/built-in.o
-link-@(SYSFS)		+= sysfs/built-in.o
-link-@(CONFIGFS_FS)	+= configfs/built-in.o
-link-y				+= devpts/built-in.o
+obj-$(CONFIG_PROC_FS)		+= proc/built-in.o
+obj-y				+= partitions/built-in.o
+obj-$(CONFIG_SYSFS)		+= sysfs/built-in.o
+obj-$(CONFIG_CONFIGFS_FS)	+= configfs/built-in.o
+obj-y				+= devpts/built-in.o
 
-obj-@(PROFILING)		+= dcookies.c
-link-@(DLM)		+= dlm/built-in.o
+obj-$(CONFIG_PROFILING)		+= dcookies.o
+obj-$(CONFIG_DLM)		+= dlm/built-in.o
  
 # Do not add any filesystems before this line
-link-@(FSCACHE)		+= fscache/built-in.o
-link-@(REISERFS_FS)	+= reiserfs/built-in.o
-
-# Before ext2 so root fs can be ext3
-link-@(EXT3_FS)		+= ext3/built-in.o
-link-@(EXT2_FS)		+= ext2/built-in.o
+obj-$(CONFIG_FSCACHE)		+= fscache/built-in.o
+obj-$(CONFIG_REISERFS_FS)	+= reiserfs/built-in.o
+obj-$(CONFIG_EXT3_FS)		+= ext3/built-in.o
+obj-$(CONFIG_EXT2_FS)		+= ext2/built-in.o
 # We place ext4 after ext2 so plain ext2 root fs's are mounted using ext2
 # unless explicitly requested by rootfstype
-link-@(EXT4_FS)		+= ext4/built-in.o
-link-@(JBD)		+= jbd/built-in.o
-link-@(JBD2)		+= jbd2/built-in.o
-link-@(CRAMFS)		+= cramfs/built-in.o
-link-@(SQUASHFS)		+= squashfs/built-in.o
-link-y				+= ramfs/built-in.o
-link-@(HUGETLBFS)		+= hugetlbfs/built-in.o
-link-@(CODA_FS)		+= coda/built-in.o
-link-@(MINIX_FS)		+= minix/built-in.o
-link-@(FAT_FS)		+= fat/built-in.o
-link-@(BFS_FS)		+= bfs/built-in.o
-link-@(ISO9660_FS)	+= isofs/built-in.o
-link-@(HFSPLUS_FS)	+= hfsplus/built-in.o # Before hfs to find wrapped HFS+
-link-@(HFS_FS)		+= hfs/built-in.o
-link-@(ECRYPT_FS)		+= ecryptfs/built-in.o
-link-@(VXFS_FS)		+= freevxfs/built-in.o
-link-@(NFS_FS)		+= nfs/built-in.o
-link-@(EXPORTFS)		+= exportfs/built-in.o
-link-@(NFSD)		+= nfsd/built-in.o
-link-@(LOCKD)		+= lockd/built-in.o
-link-@(NLS)		+= nls/built-in.o
-link-@(SYSV_FS)		+= sysv/built-in.o
-link-@(SMB_FS)		+= smbfs/built-in.o
-link-@(CIFS)		+= cifs/built-in.o
-link-@(NCP_FS)		+= ncpfs/built-in.o
-link-@(HPFS_FS)		+= hpfs/built-in.o
-link-@(NTFS_FS)		+= ntfs/built-in.o
-link-@(UFS_FS)		+= ufs/built-in.o
-link-@(EFS_FS)		+= efs/built-in.o
-link-@(JFFS2_FS)		+= jffs2/built-in.o
-link-@(UBIFS_FS)		+= ubifs/built-in.o
-link-@(AFFS_FS)		+= affs/built-in.o
-link-@(ROMFS_FS)		+= romfs/built-in.o
-link-@(QNX4FS_FS)		+= qnx4/built-in.o
-link-@(AUTOFS_FS)		+= autofs/built-in.o
-link-@(AUTOFS4_FS)	+= autofs4/built-in.o
-link-@(ADFS_FS)		+= adfs/built-in.o
-link-@(FUSE_FS)		+= fuse/built-in.o
-link-@(UDF_FS)		+= udf/built-in.o
-link-@(SUN_OPENPROMFS)	+= openpromfs/built-in.o
-link-@(OMFS_FS)		+= omfs/built-in.o
-link-@(JFS_FS)		+= jfs/built-in.o
-link-@(XFS_FS)		+= xfs/built-in.o
-link-@(9P_FS)		+= 9p/built-in.o
-link-@(AFS_FS)		+= afs/built-in.o
-link-@(NILFS2_FS)		+= nilfs2/built-in.o
-link-@(BEFS_FS)		+= befs/built-in.o
-link-@(HOSTFS)		+= hostfs/built-in.o
-link-@(HPPFS)		+= hppfs/built-in.o
-link-@(CACHEFILES)	+= cachefiles/built-in.o
-link-@(DEBUG_FS)		+= debugfs/built-in.o
-link-@(OCFS2_FS)		+= ocfs2/built-in.o
-link-@(BTRFS_FS)		+= btrfs/built-in.o
-link-@(GFS2_FS)           += gfs2/built-in.o
-link-@(EXOFS_FS)          += exofs/built-in.o
-include $(LINUX_ROOT)/linux.tup
+obj-$(CONFIG_EXT4_FS)		+= ext4/built-in.o
+obj-$(CONFIG_JBD)		+= jbd/built-in.o
+obj-$(CONFIG_JBD2)		+= jbd2/built-in.o
+obj-$(CONFIG_CRAMFS)		+= cramfs/built-in.o
+obj-$(CONFIG_SQUASHFS)		+= squashfs/built-in.o
+obj-y				+= ramfs/built-in.o
+obj-$(CONFIG_HUGETLBFS)		+= hugetlbfs/built-in.o
+obj-$(CONFIG_CODA_FS)		+= coda/built-in.o
+obj-$(CONFIG_MINIX_FS)		+= minix/built-in.o
+obj-$(CONFIG_FAT_FS)		+= fat/built-in.o
+obj-$(CONFIG_BFS_FS)		+= bfs/built-in.o
+obj-$(CONFIG_ISO9660_FS)	+= isofs/built-in.o
+obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/built-in.o
+obj-$(CONFIG_HFS_FS)		+= hfs/built-in.o
+obj-$(CONFIG_ECRYPT_FS)		+= ecryptfs/built-in.o
+obj-$(CONFIG_VXFS_FS)		+= freevxfs/built-in.o
+obj-$(CONFIG_NFS_FS)		+= nfs/built-in.o
+obj-$(CONFIG_EXPORTFS)		+= exportfs/built-in.o
+obj-$(CONFIG_NFSD)		+= nfsd/built-in.o
+obj-$(CONFIG_LOCKD)		+= lockd/built-in.o
+obj-$(CONFIG_NLS)		+= nls/built-in.o
+obj-$(CONFIG_SYSV_FS)		+= sysv/built-in.o
+obj-$(CONFIG_SMB_FS)		+= smbfs/built-in.o
+obj-$(CONFIG_CIFS)		+= cifs/built-in.o
+obj-$(CONFIG_NCP_FS)		+= ncpfs/built-in.o
+obj-$(CONFIG_HPFS_FS)		+= hpfs/built-in.o
+obj-$(CONFIG_NTFS_FS)		+= ntfs/built-in.o
+obj-$(CONFIG_UFS_FS)		+= ufs/built-in.o
+obj-$(CONFIG_EFS_FS)		+= efs/built-in.o
+obj-$(CONFIG_JFFS2_FS)		+= jffs2/built-in.o
+obj-$(CONFIG_UBIFS_FS)		+= ubifs/built-in.o
+obj-$(CONFIG_AFFS_FS)		+= affs/built-in.o
+obj-$(CONFIG_ROMFS_FS)		+= romfs/built-in.o
+obj-$(CONFIG_QNX4FS_FS)		+= qnx4/built-in.o
+obj-$(CONFIG_AUTOFS_FS)		+= autofs/built-in.o
+obj-$(CONFIG_AUTOFS4_FS)	+= autofs4/built-in.o
+obj-$(CONFIG_ADFS_FS)		+= adfs/built-in.o
+obj-$(CONFIG_FUSE_FS)		+= fuse/built-in.o
+obj-$(CONFIG_UDF_FS)		+= udf/built-in.o
+obj-$(CONFIG_SUN_OPENPROMFS)	+= openpromfs/built-in.o
+obj-$(CONFIG_OMFS_FS)		+= omfs/built-in.o
+obj-$(CONFIG_JFS_FS)		+= jfs/built-in.o
+obj-$(CONFIG_XFS_FS)		+= xfs/built-in.o
+obj-$(CONFIG_9P_FS)		+= 9p/built-in.o
+obj-$(CONFIG_AFS_FS)		+= afs/built-in.o
+obj-$(CONFIG_NILFS2_FS)		+= nilfs2/built-in.o
+obj-$(CONFIG_BEFS_FS)		+= befs/built-in.o
+obj-$(CONFIG_HOSTFS)		+= hostfs/built-in.o
+obj-$(CONFIG_HPPFS)		+= hppfs/built-in.o
+obj-$(CONFIG_CACHEFILES)	+= cachefiles/built-in.o
+obj-$(CONFIG_DEBUG_FS)		+= debugfs/built-in.o
+obj-$(CONFIG_OCFS2_FS)		+= ocfs2/built-in.o
+obj-$(CONFIG_BTRFS_FS)		+= btrfs/built-in.o
+obj-$(CONFIG_GFS2_FS)           += gfs2/built-in.o
+obj-$(CONFIG_EXOFS_FS)          += exofs/built-in.o
+include $(LINUX_ROOT)/linux2.tup

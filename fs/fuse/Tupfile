@@ -1,11 +1,10 @@
 include_rules
-modname = fuse
 #
-# Makefile for the FUSE filesystem.
+# Tupfile for the FUSE filesystem.
 #
 
-obj-@(CUSE) += cuse.c
+obj-$(CONFIG_FUSE_FS) += fuse.o
+obj-$(CONFIG_CUSE) += cuse.o
 
-fuse-y := dev.c dir.c file.c inode.c control.c
-obj-@(FUSE_FS) += $(fuse-y)
-include $(LINUX_ROOT)/linux.tup
+fuse-objs := dev.c dir.c file.c inode.c control.c
+include $(LINUX_ROOT)/linux2.tup

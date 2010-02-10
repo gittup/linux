@@ -1,7 +1,6 @@
 include_rules
-modname = notify
-obj-@(FSNOTIFY)		+= fsnotify.c notification.c group.c inode_mark.c
+obj-$(CONFIG_FSNOTIFY)		+= fsnotify.o notification.o group.o inode_mark.o
 
-link-y			+= dnotify/built-in.o*
-link-y			+= inotify/built-in.o*
-include $(LINUX_ROOT)/linux.tup
+obj-y			+= dnotify/built-in.o
+obj-y			+= inotify/built-in.o
+include $(LINUX_ROOT)/linux2.tup

@@ -1,10 +1,9 @@
 include_rules
-modname = jbd
 #
-# Makefile for the linux journaling routines.
+# Tupfile for the linux journaling routines.
 #
 
+obj-$(CONFIG_JBD) += jbd.o
 
-jbd-y := transaction.c commit.c recovery.c checkpoint.c revoke.c journal.c
-obj-@(JBD) += $(jbd-y)
-include $(LINUX_ROOT)/linux.tup
+jbd-objs := transaction.c commit.c recovery.c checkpoint.c revoke.c journal.c
+include $(LINUX_ROOT)/linux2.tup

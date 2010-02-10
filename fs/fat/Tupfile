@@ -1,14 +1,13 @@
 include_rules
-modname = fat
 #
-# Makefile for the Linux fat filesystem support.
+# Tupfile for the Linux fat filesystem support.
 #
 
-vfat-@(VFAT_FS) += namei_vfat.c
-msdos-@(MSDOS_FS) += namei_msdos.c
+obj-$(CONFIG_FAT_FS) += fat.o
+obj-$(CONFIG_VFAT_FS) += vfat.o
+obj-$(CONFIG_MSDOS_FS) += msdos.o
 
 fat-y := cache.c dir.c fatent.c file.c inode.c misc.c
-obj-@(FAT_FS) += $(fat-y)
-obj-@(FAT_FS) += $(vfat-y)
-obj-@(FAT_FS) += $(msdos-y)
-include $(LINUX_ROOT)/linux.tup
+vfat-y := namei_vfat.c
+msdos-y := namei_msdos.c
+include $(LINUX_ROOT)/linux2.tup

@@ -40,4 +40,14 @@ CFLAGS += -fno-delete-null-pointer-checks
 CFLAGS += -fno-strict-overflow
 CFLAGS += -fno-dwarf2-cfi-asm
 CFLAGS += -ftup-linux
+
+!cc_linux = foreach | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" |> %B.o
+!cc_linux.o = |> |>
+
+!ld_linux = | $(link-y) $(LD) |> ^ LD %o^ $(LD) -m elf_i386 -r -o %o %f $(link-y) |>
+!ld_linux.EMPTY = |> ^ EMPTY %o^ ar crs %o |>
+
+*chain[%B.c*] = !cc_linux
+*chain[%B.S*] = !cc_linux
+*chain[$(%B-y) $(%B-objs)] = !cc_linux |> !ld_linux
 endif

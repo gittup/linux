@@ -1,9 +1,8 @@
 include_rules
-modname = sysfs
 #
-# Makefile for the sysfs virtual filesystem
+# Tupfile for the sysfs virtual filesystem
 #
 
-obj-y		:= inode.c file.c dir.c symlink.c mount.c bin.c \
-		   group.c
-include $(LINUX_ROOT)/linux.tup
+obj-y		:= inode.o file.o dir.o symlink.o mount.o bin.o \
+		   group.o
+include $(LINUX_ROOT)/linux2.tup

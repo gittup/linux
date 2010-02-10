@@ -1,12 +1,12 @@
 include_rules
-modname = proc
 #
-# Makefile for the Linux proc filesystem routines.
+# Tupfile for the Linux proc filesystem routines.
 #
 
+obj-$(CONFIG_PROC_FS) += proc.o
 
 proc-y			:= nommu.c task_nommu.c
-proc-@(MMU)	:= mmu.c task_mmu.c
+proc-$(CONFIG_MMU)	:= mmu.c task_mmu.c
 
 proc-y       += inode.c root.c base.c generic.c array.c \
 		proc_tty.c
@@ -20,12 +20,11 @@ proc-y	+= stat.c
 proc-y	+= uptime.c
 proc-y	+= version.c
 proc-y	+= softirqs.c
-proc-@(PROC_SYSCTL)	+= proc_sysctl.c
-proc-@(NET)		+= proc_net.c
-proc-@(PROC_KCORE)	+= kcore.c
-proc-@(PROC_VMCORE)	+= vmcore.c
-proc-@(PROC_DEVICETREE)	+= proc_devtree.c
-proc-@(PRINTK)	+= kmsg.c
-proc-@(PROC_PAGE_MONITOR)	+= page.c
-obj-@(PROC_FS) += $(proc-y)
-include $(LINUX_ROOT)/linux.tup
+proc-$(CONFIG_PROC_SYSCTL)	+= proc_sysctl.c
+proc-$(CONFIG_NET)		+= proc_net.c
+proc-$(CONFIG_PROC_KCORE)	+= kcore.c
+proc-$(CONFIG_PROC_VMCORE)	+= vmcore.c
+proc-$(CONFIG_PROC_DEVICETREE)	+= proc_devtree.c
+proc-$(CONFIG_PRINTK)	+= kmsg.c
+proc-$(CONFIG_PROC_PAGE_MONITOR)	+= page.c
+include $(LINUX_ROOT)/linux2.tup

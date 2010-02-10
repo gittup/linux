@@ -1,11 +1,14 @@
 include_rules
-modname = ext3
+#
+# Tupfile for the linux ext3-filesystem routines.
+#
+
+obj-$(CONFIG_EXT3_FS) += ext3.o
 
 ext3-y	:= balloc.c bitmap.c dir.c file.c fsync.c ialloc.c inode.c \
 	   ioctl.c namei.c super.c symlink.c hash.c resize.c ext3_jbd.c
 
-ext3-@(EXT3_FS_XATTR)	 += xattr.c xattr_user.c xattr_trusted.c
-ext3-@(EXT3_FS_POSIX_ACL) += acl.c
-ext3-@(EXT3_FS_SECURITY)	 += xattr_security.c
-obj-@(EXT3_FS) += $(ext3-y)
-include $(LINUX_ROOT)/linux.tup
+ext3-$(CONFIG_EXT3_FS_XATTR)	 += xattr.c xattr_user.c xattr_trusted.c
+ext3-$(CONFIG_EXT3_FS_POSIX_ACL) += acl.c
+ext3-$(CONFIG_EXT3_FS_SECURITY)	 += xattr_security.c
+include $(LINUX_ROOT)/linux2.tup

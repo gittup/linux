@@ -1,5 +1,4 @@
 include_rules
-modname = xfs
 #
 # Copyright (c) 2000-2005 Silicon Graphics, Inc.
 # All Rights Reserved.
@@ -22,29 +21,30 @@ EXTRA_CFLAGS +=	 -I$(src) -I$(src)/linux-2.6 -funsigned-char
 
 XFS_LINUX := linux-2.6
 
-ifeq (@(XFS_DEBUG),y)
+ifeq ($(CONFIG_XFS_DEBUG),y)
 	EXTRA_CFLAGS += -g
 endif
 
+obj-$(CONFIG_XFS_FS)		+= xfs.o
 
-xfs-@(XFS_QUOTA)		+= $(addprefix quota/, \
-				   xfs_dquot.c \
-				   xfs_dquot_item.c \
-				   xfs_trans_dquot.c \
-				   xfs_qm_syscalls.c \
-				   xfs_qm_bhv.c \
-				   xfs_qm.c)
-xfs-@(XFS_QUOTA)		+= linux-2.6/xfs_quotaops.c
+xfs-$(CONFIG_XFS_QUOTA)		+= $(addprefix quota/, \
+				   xfs_dquot.o \
+				   xfs_dquot_item.o \
+				   xfs_trans_dquot.o \
+				   xfs_qm_syscalls.o \
+				   xfs_qm_bhv.o \
+				   xfs_qm.o)
+xfs-$(CONFIG_XFS_QUOTA)		+= linux-2.6/xfs_quotaops.c
 
-ifeq (@(XFS_QUOTA),y)
-xfs-@(PROC_FS)		+= quota/xfs_qm_stats.c
+ifeq ($(CONFIG_XFS_QUOTA),y)
+xfs-$(CONFIG_PROC_FS)		+= quota/xfs_qm_stats.c
 endif
 
-xfs-@(XFS_RT)		+= xfs_rtalloc.c
-xfs-@(XFS_POSIX_ACL)	+= $(XFS_LINUX)/xfs_acl.c
-xfs-@(PROC_FS)		+= $(XFS_LINUX)/xfs_stats.c
-xfs-@(SYSCTL)		+= $(XFS_LINUX)/xfs_sysctl.c
-xfs-@(COMPAT)		+= $(XFS_LINUX)/xfs_ioctl32.c
+xfs-$(CONFIG_XFS_RT)		+= xfs_rtalloc.c
+xfs-$(CONFIG_XFS_POSIX_ACL)	+= $(XFS_LINUX)/xfs_acl.o
+xfs-$(CONFIG_PROC_FS)		+= $(XFS_LINUX)/xfs_stats.o
+xfs-$(CONFIG_SYSCTL)		+= $(XFS_LINUX)/xfs_sysctl.o
+xfs-$(CONFIG_COMPAT)		+= $(XFS_LINUX)/xfs_ioctl32.o
 
 
 xfs-y				+= xfs_alloc.c \
@@ -91,31 +91,30 @@ xfs-y				+= xfs_alloc.c \
 				   xfs_rw.c \
 				   xfs_dmops.c
 
-xfs-@(XFS_TRACE)		+= xfs_btree_trace.c \
+xfs-$(CONFIG_XFS_TRACE)		+= xfs_btree_trace.c \
 				   xfs_dir2_trace.c
 
 # Objects in linux/
 xfs-y				+= $(addprefix $(XFS_LINUX)/, \
-				   kmem.c \
-				   xfs_aops.c \
-				   xfs_buf.c \
-				   xfs_export.c \
-				   xfs_file.c \
-				   xfs_fs_subr.c \
-				   xfs_globals.c \
-				   xfs_ioctl.c \
-				   xfs_iops.c \
-				   xfs_lrw.c \
-				   xfs_super.c \
-				   xfs_sync.c \
-				   xfs_xattr.c)
+				   kmem.o \
+				   xfs_aops.o \
+				   xfs_buf.o \
+				   xfs_export.o \
+				   xfs_file.o \
+				   xfs_fs_subr.o \
+				   xfs_globals.o \
+				   xfs_ioctl.o \
+				   xfs_iops.o \
+				   xfs_lrw.o \
+				   xfs_super.o \
+				   xfs_sync.o \
+				   xfs_xattr.o)
 
 # Objects in support/
 xfs-y				+= $(addprefix support/, \
-				   debug.c \
-				   uuid.c)
+				   debug.o \
+				   uuid.o)
 
-xfs-@(XFS_TRACE)		+= support/ktrace.c
+xfs-$(CONFIG_XFS_TRACE)		+= support/ktrace.c
 
-obj-@(XFS_FS)		+= $(xfs-y)
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup
