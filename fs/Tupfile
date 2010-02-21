@@ -31,7 +31,7 @@ obj-$(CONFIG_AIO)               += aio.o
 obj-$(CONFIG_FILE_LOCKING)      += locks.o
 obj-$(CONFIG_COMPAT)		+= compat.o compat_ioctl.o
 
-nfsd-$(CONFIG_NFSD)		:= nfsctl.c
+nfsd-$(CONFIG_NFSD)		:= nfsctl.o
 obj-y				+= $(nfsd-y) $(nfsd-m)
 
 obj-$(CONFIG_BINFMT_AOUT)	+= binfmt_aout.o
@@ -125,4 +125,4 @@ obj-$(CONFIG_OCFS2_FS)		+= ocfs2/built-in.o
 obj-$(CONFIG_BTRFS_FS)		+= btrfs/built-in.o
 obj-$(CONFIG_GFS2_FS)           += gfs2/built-in.o
 obj-$(CONFIG_EXOFS_FS)          += exofs/built-in.o
-include $(LINUX_ROOT)/linux2.tup
+include $(LINUX_ROOT)/linux3.tup

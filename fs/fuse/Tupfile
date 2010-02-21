@@ -1,10 +1,3 @@
 include_rules
-#
-# Tupfile for the FUSE filesystem.
-#
-
-obj-$(CONFIG_FUSE_FS) += fuse.o
-obj-$(CONFIG_CUSE) += cuse.o
-
-fuse-objs := dev.c dir.c file.c inode.c control.c
-include $(LINUX_ROOT)/linux2.tup
+include Makefile
+include $(LINUX_ROOT)/linux3.tup

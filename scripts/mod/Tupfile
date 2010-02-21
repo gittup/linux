@@ -1,0 +1,13 @@
+include_rules
+# TODO
+srcs += modpost.c
+srcs += file2alias.c
+srcs += sumversion.c
+
+: empty.c |> gcc -c %f -o %o |> empty.o
+: mk_elfconfig.c |> gcc -I/usr/include -O2 -fomit-frame-pointer $(CFLAGS_%f) -I$(LINUX_ROOT)/arch/x86/include %f -o %o |> mk_elfconfig
+: mk_elfconfig | empty.o |> ./%f @(ARCH) < empty.o > %o |> elfconfig.h
+
+: foreach $(srcs) | elfconfig.h |> gcc -I/usr/include -O2 -fomit-frame-pointer $(CFLAGS_%e) $(CFLAGS_%f) -I$(LINUX_ROOT)/arch/x86/include -I$(LINUX_ROOT)/include -c %f -o %o |> %B.o {objs}
+: {objs} |> gcc %f -o %o |> modpost
+include $(LINUX_ROOT)/host.tup

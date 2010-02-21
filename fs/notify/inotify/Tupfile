@@ -1,4 +1,3 @@
 include_rules
-obj-$(CONFIG_INOTIFY)		+= inotify.o
-obj-$(CONFIG_INOTIFY_USER)	+= inotify_fsnotify.o inotify_user.o
-include $(LINUX_ROOT)/linux2.tup
+include Makefile
+include $(LINUX_ROOT)/linux3.tup

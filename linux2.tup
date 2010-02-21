@@ -1,4 +1,0 @@
-include compiler.tup
-
-: foreach $(obj-y) <| *chain <|
-: $(obj-y) |> !ld_linux |> built-in.o
