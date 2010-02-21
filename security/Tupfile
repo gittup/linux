@@ -1,29 +1,28 @@
 include_rules
-modname = security
 #
-# Makefile for the kernel security code
+# Tupfile for the kernel security code
 #
 
-link-@(KEYS)			+= keys/built-in.o
-subdir-@(SECURITY_SELINUX)	+= selinux
-subdir-@(SECURITY_SMACK)		+= smack
-subdir-@(SECURITY_TOMOYO)        += tomoyo
+obj-$(CONFIG_KEYS)			+= keys/built-in.o
+subdir-$(CONFIG_SECURITY_SELINUX)	+= selinux
+subdir-$(CONFIG_SECURITY_SMACK)		+= smack
+subdir-$(CONFIG_SECURITY_TOMOYO)        += tomoyo
 
 # always enable default capabilities
-obj-y		+= commoncap.c min_addr.c
+obj-y		+= commoncap.o min_addr.o
 
 # Object file lists
-obj-@(SECURITY)			+= security.c capability.c
-obj-@(SECURITYFS)		+= inode.c
-# Must precede capability.c in order to stack properly.
-obj-@(SECURITY_SELINUX)		+= selinux/built-in.c
-obj-@(SECURITY_SMACK)		+= smack/built-in.c
-obj-@(AUDIT)			+= lsm_audit.c
-obj-@(SECURITY_TOMOYO)		+= tomoyo/built-in.c
-obj-@(SECURITY_ROOTPLUG)		+= root_plug.c
-obj-@(CGROUP_DEVICE)		+= device_cgroup.c
+obj-$(CONFIG_SECURITY)			+= security.o capability.o
+obj-$(CONFIG_SECURITYFS)		+= inode.o
+# Must precede capability.o in order to stack properly.
+obj-$(CONFIG_SECURITY_SELINUX)		+= selinux/built-in.o
+obj-$(CONFIG_SECURITY_SMACK)		+= smack/built-in.o
+obj-$(CONFIG_AUDIT)			+= lsm_audit.o
+obj-$(CONFIG_SECURITY_TOMOYO)		+= tomoyo/built-in.o
+obj-$(CONFIG_SECURITY_ROOTPLUG)		+= root_plug.o
+obj-$(CONFIG_CGROUP_DEVICE)		+= device_cgroup.o
 
 # Object integrity file lists
-subdir-@(IMA)			+= integrity/ima
-obj-@(IMA)			+= integrity/ima/built-in.c
-include $(LINUX_ROOT)/linux.tup
+subdir-$(CONFIG_IMA)			+= integrity/ima
+obj-$(CONFIG_IMA)			+= integrity/ima/built-in.o
+include $(LINUX_ROOT)/linux3.tup
