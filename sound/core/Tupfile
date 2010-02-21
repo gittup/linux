@@ -1,36 +1,35 @@
 include_rules
-modname = core
 #
-# Makefile for ALSA
+# Tupfile for ALSA
 # Copyright (c) 1999,2001 by Jaroslav Kysela <perex@perex.cz>
 #
 
-snd-y     := sound.c init.c memory.c info.c control.c misc.c device.c
-snd-@(ISA_DMA_API) += isadma.c
-snd-@(SND_OSSEMUL) += sound_oss.c info_oss.c
-snd-@(SND_VMASTER) += vmaster.c
-snd-@(SND_JACK)	  += jack.c
+snd-y     := sound.o init.o memory.o info.o control.o misc.o device.o
+snd-$(CONFIG_ISA_DMA_API) += isadma.o
+snd-$(CONFIG_SND_OSSEMUL) += sound_oss.o info_oss.o
+snd-$(CONFIG_SND_VMASTER) += vmaster.o
+snd-$(CONFIG_SND_JACK)	  += jack.o
 
-snd-pcm-y := pcm.c pcm_native.c pcm_lib.c pcm_timer.c pcm_misc.c \
-		pcm_memory.c
+snd-pcm-objs := pcm.o pcm_native.o pcm_lib.o pcm_timer.o pcm_misc.o \
+		pcm_memory.o
 
-snd-page-alloc-y := memalloc.c
-snd-page-alloc-@(SND_DMA_SGBUF) += sgbuf.c
+snd-page-alloc-y := memalloc.o
+snd-page-alloc-$(CONFIG_SND_DMA_SGBUF) += sgbuf.o
 
-snd-rawmidi-y  := rawmidi.c
-snd-timer-y    := timer.c
-snd-hrtimer-y  := hrtimer.c
-snd-rtctimer-y := rtctimer.c
-snd-hwdep-y    := hwdep.c
+snd-rawmidi-objs  := rawmidi.o
+snd-timer-objs    := timer.o
+snd-hrtimer-objs  := hrtimer.o
+snd-rtctimer-objs := rtctimer.o
+snd-hwdep-objs    := hwdep.o
 
-obj-@(SND) 		+= $(snd-y)
-obj-@(SND_HWDEP)		+= $(snd-hwdep-y)
-obj-@(SND_TIMER)		+= $(snd-timer-y)
-obj-@(SND_HRTIMER)	+= $(snd-hrtimer-y)
-obj-@(SND_RTCTIMER)	+= $(snd-rtctimer-y)
-obj-@(SND_PCM)		+= $(snd-pcm-y) $(snd-page-alloc-y)
-obj-@(SND_RAWMIDI)	+= $(snd-rawmidi-y)
+obj-$(CONFIG_SND) 		+= snd.o
+obj-$(CONFIG_SND_HWDEP)		+= snd-hwdep.o
+obj-$(CONFIG_SND_TIMER)		+= snd-timer.o
+obj-$(CONFIG_SND_HRTIMER)	+= snd-hrtimer.o
+obj-$(CONFIG_SND_RTCTIMER)	+= snd-rtctimer.o
+obj-$(CONFIG_SND_PCM)		+= snd-pcm.o snd-page-alloc.o
+obj-$(CONFIG_SND_RAWMIDI)	+= snd-rawmidi.o
 
-obj-@(SND_OSSEMUL)	+= oss/built-in.o
-obj-@(SND_SEQUENCER)	+= seq/built-in.o
-include $(LINUX_ROOT)/linux.tup
+obj-$(CONFIG_SND_OSSEMUL)	+= oss/built-in.o
+obj-$(CONFIG_SND_SEQUENCER)	+= seq/built-in.o
+include $(LINUX_ROOT)/linux3.tup

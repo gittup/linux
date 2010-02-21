@@ -1,10 +1,9 @@
 include_rules
-modname = sound
 # Makefile for the Linux sound card driver
 #
 
-obj-@(SOUND) += sound_core.c
-obj-@(SOUND_PRIME) += sound_firmware.c
+obj-@(SOUND) += sound_core.o
+obj-@(SOUND_PRIME) += sound_firmware.o
 obj-@(SOUND_PRIME) += oss/built-in.o
 obj-@(DMASOUND) += oss/built-in.o
 obj-@(SND) += core/built-in.o
@@ -27,10 +26,10 @@ obj-@(SND) += pci/built-in.o
 obj-@(SND_AOA) += aoa/built-in.o
 
 # This one must be compilable even if sound is configured out
-obj-@(AC97_BUS) += ac97_bus.c
+obj-@(AC97_BUS) += ac97_bus.o
 
 ifeq (@(SND),y)
-  obj-y += last.c
+  obj-y += last.o
 endif
 
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup
