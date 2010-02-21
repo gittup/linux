@@ -1,10 +1,5 @@
+ifeq (@(NET),y)
 include_rules
-modname = ethernet
-#
-# Makefile for the Linux Ethernet layer.
-#
-
-obj-y					+= eth.c
-obj-$(subst m,y,@(IPX))		+= pe2.c
-obj-$(subst m,y,@(ATALK))	+= pe2.c
-include $(LINUX_ROOT)/linux.tup
+include Makefile
+include $(LINUX_ROOT)/linux3.tup
+endif
