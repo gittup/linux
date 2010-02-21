@@ -1,19 +1,17 @@
 include_rules
-modname = init
 #
-# Makefile for the linux kernel.
+# Tupfile for the linux kernel.
 #
 
-mounts-y			+= do_mounts.c
-mounts-@(BLK_DEV_RAM)	+= do_mounts_rd.c
-mounts-@(BLK_DEV_INITRD)	+= do_mounts_initrd.c
-mounts-@(BLK_DEV_MD)	+= do_mounts_md.c
-obj-y                          += main.c version.c $(mounts-y)
-
-initramfs-y = noinitramfs.c
-initramfs-@(BLK_DEV_INITRD) = initramfs.c
+obj-y                          := main.o version.o mounts.o
+initramfs-y = noinitramfs.o
+initramfs-$(CONFIG_BLK_DEV_INITRD) = initramfs.o
 obj-y += $(initramfs-y)
+obj-$(CONFIG_GENERIC_CALIBRATE_DELAY) += calibrate.o
 
-obj-@(GENERIC_CALIBRATE_DELAY) += calibrate.c
+mounts-y			:= do_mounts.o
+mounts-$(CONFIG_BLK_DEV_RAM)	+= do_mounts_rd.o
+mounts-$(CONFIG_BLK_DEV_INITRD)	+= do_mounts_initrd.o
+mounts-$(CONFIG_BLK_DEV_MD)	+= do_mounts_md.o
 
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup
