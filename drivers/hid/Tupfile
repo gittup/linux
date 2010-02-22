@@ -50,4 +50,4 @@ obj-$(CONFIG_USB_HID)		+= usbhid/built-in.o
 obj-$(CONFIG_USB_MOUSE)		+= usbhid/built-in.o
 obj-$(CONFIG_USB_KBD)		+= usbhid/built-in.o
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

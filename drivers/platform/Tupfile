@@ -4,4 +4,4 @@ include_rules
 #
 
 obj-$(CONFIG_X86)		+= x86/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

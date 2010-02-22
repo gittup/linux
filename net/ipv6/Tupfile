@@ -44,4 +44,4 @@ obj-y += addrconf_core.o exthdrs_core.o
 ifdef IPV6
 obj-y += inet6_hashtables.o
 endif
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

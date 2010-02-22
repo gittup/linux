@@ -45,4 +45,4 @@ ums-onetouch-objs	:= onetouch.o
 ums-sddr09-objs		:= sddr09.o
 ums-sddr55-objs		:= sddr55.o
 ums-usbat-objs		:= shuttle_usbat.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

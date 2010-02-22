@@ -284,4 +284,4 @@ obj-$(CONFIG_VIRTIO_NET) += virtio_net.o
 obj-$(CONFIG_SFC) += sfc/built-in.o
 
 obj-$(CONFIG_WIMAX) += wimax/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

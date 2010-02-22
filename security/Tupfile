@@ -25,4 +25,4 @@ obj-$(CONFIG_CGROUP_DEVICE)		+= device_cgroup.o
 # Object integrity file lists
 subdir-$(CONFIG_IMA)			+= integrity/ima
 obj-$(CONFIG_IMA)			+= integrity/ima/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

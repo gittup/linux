@@ -14,4 +14,4 @@ mounts-$(CONFIG_BLK_DEV_RAM)	+= do_mounts_rd.o
 mounts-$(CONFIG_BLK_DEV_INITRD)	+= do_mounts_initrd.o
 mounts-$(CONFIG_BLK_DEV_MD)	+= do_mounts_md.o
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

@@ -98,4 +98,4 @@ obj-$(CONFIG_NETFILTER_XT_MATCH_U32) += xt_u32.o
 
 # IPVS
 obj-$(CONFIG_IP_VS) += ipvs/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

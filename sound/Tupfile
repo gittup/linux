@@ -32,4 +32,4 @@ ifeq (@(SND),y)
   obj-y += last.o
 endif
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

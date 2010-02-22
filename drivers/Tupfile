@@ -112,4 +112,4 @@ obj-$(CONFIG_VLYNQ)		+= vlynq/built-in.o
 obj-$(CONFIG_STAGING)		+= staging/built-in.o
 obj-y				+= platform/built-in.o
 obj-y				+= ieee802154/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

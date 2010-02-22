@@ -175,4 +175,4 @@ oktagon_esp_mod-objs	:= oktagon_esp.o oktagon_io.o
 # If you want to play with the firmware, uncomment
 # GENERATE_FIRMWARE := 1
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

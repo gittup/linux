@@ -17,4 +17,4 @@ include $(LINUX_ROOT)/host.tup
 
 generated_headers += initramfs_data.cpio
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

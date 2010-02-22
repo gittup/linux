@@ -170,4 +170,4 @@ obj-$(CONFIG_ARCH_DAVINCI)	+= davinci/built-in.o
 EXTRA_CFLAGS += -Idrivers/media/dvb/dvb-core
 EXTRA_CFLAGS += -Idrivers/media/dvb/frontends
 EXTRA_CFLAGS += -Idrivers/media/common/tuners
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

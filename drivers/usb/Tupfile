@@ -45,4 +45,4 @@ obj-y				+= early/built-in.o
 
 obj-$(CONFIG_USB_ATM)		+= atm/built-in.o
 obj-$(CONFIG_USB_SPEEDTOUCH)	+= atm/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

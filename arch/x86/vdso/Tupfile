@@ -157,4 +157,4 @@ link-y += vdso32-syms.lds
 #
 #clean-files := vdso32-syscall* vdso32-sysenter* vdso32-int80*
 #obj-$(VDSO64-y)			+= $(vdso-y)
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

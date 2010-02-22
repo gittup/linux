@@ -31,4 +31,4 @@ obj-$(CONFIG_USB_SISUSBVGA)	+= sisusbvga/built-in.o
 ifeq ($(CONFIG_USB_DEBUG),y)
 EXTRA_CFLAGS += -DDEBUG
 endif
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

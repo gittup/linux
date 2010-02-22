@@ -79,4 +79,4 @@ obj-@(SND) += hda/built-in.o
 #obj-@(SND) += ymfpci/built-in.o
 #obj-@(SND) += vx222/built-in.o
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

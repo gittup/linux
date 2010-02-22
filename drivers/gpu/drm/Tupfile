@@ -32,4 +32,4 @@ obj-$(CONFIG_DRM_I915)  += i915/built-in.o
 obj-$(CONFIG_DRM_SIS)   += sis/built-in.o
 obj-$(CONFIG_DRM_SAVAGE)+= savage/built-in.o
 obj-$(CONFIG_DRM_VIA)	+=via/built-in.o
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

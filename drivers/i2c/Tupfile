@@ -11,4 +11,4 @@ obj-y				+= busses/built-in.o chips/built-in.o algos/built-in.o
 ifeq ($(CONFIG_I2C_DEBUG_CORE),y)
 EXTRA_CFLAGS += -DDEBUG
 endif
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

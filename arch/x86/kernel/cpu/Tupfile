@@ -44,4 +44,4 @@ obj-$(CONFIG_X86_LOCAL_APIC)		+= perfctr-watchdog.o
 #	$(call if_changed,mkcapflags)
 cpufeature = ../../include/asm/cpufeature.h
 : mkcapflags.pl |> ^ MKCAP %o^ perl %f $(cpufeature) %o |> capflags.c
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

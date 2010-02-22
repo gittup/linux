@@ -1,5 +1,5 @@
 ifeq ($(CONFIG_ACPI),y)
 include_rules
 include Makefile
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup
 endif

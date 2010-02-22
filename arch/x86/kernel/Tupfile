@@ -145,4 +145,4 @@ ifeq ($(CONFIG_X86_64),y)
 endif
 
 include $(LINUX_ROOT)/extra.tup
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

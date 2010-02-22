@@ -17,4 +17,4 @@ endif
 #$(obj)/realmode/wakeup.bin: FORCE
 #	$(Q)$(MAKE) $(build)=$(obj)/realmode
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup

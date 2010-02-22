@@ -116,4 +116,4 @@ js-rtc-y = rtc.o
 : ../../scripts/conmakehash |> ^ CONMAKEHASH %o^ ./%f $(FONTMAPFILE) > %o |> consolemap_deftbl.c
 : defkeymap.map |> ^ LOADKEYS %o^ loadkeys --mktable %f | sed 's/^static *//' > %o |> defkeymap.c
 
-include $(LINUX_ROOT)/linux3.tup
+include $(LINUX_ROOT)/linux.tup
