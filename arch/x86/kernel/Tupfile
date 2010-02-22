@@ -41,107 +41,108 @@ GCOV_PROFILE_paravirt.c		:= n
 
 CFLAGS_S += -D__ASSEMBLY__
 
-obj-y			:= process_$(BITS).c signal.c entry_$(BITS).S
-obj-y			+= traps.c irq.c irq_$(BITS).c dumpstack_$(BITS).c
-obj-y			+= time.c ioport.c ldt.c dumpstack.c
-obj-y			+= setup.c x86_init.c i8259.c irqinit.c
-obj-@(X86_VISWS)	+= visws_quirks.c
-obj-@(X86_32)	+= probe_roms_32.c
-obj-@(X86_32)	+= sys_i386_32.c i386_ksyms_32.c
-obj-@(X86_64)	+= sys_x86_64.c x8664_ksyms_64.c
-obj-@(X86_64)	+= syscall_64.c vsyscall_64.c
-obj-y			+= bootflag.c e820.c
-obj-y			+= pci-dma.c quirks.c i8237.c topology.c kdebugfs.c
-obj-y			+= alternative.c i8253.c pci-nommu.c
-obj-y			+= tsc.c io_delay.c rtc.c
+obj-y			:= process_$(BITS).o signal.o entry_$(BITS).o
+obj-y			+= traps.o irq.o irq_$(BITS).o dumpstack_$(BITS).o
+obj-y			+= time.o ioport.o ldt.o dumpstack.o
+obj-y			+= setup.o x86_init.o i8259.o irqinit.o
+obj-$(CONFIG_X86_VISWS)	+= visws_quirks.o
+obj-$(CONFIG_X86_32)	+= probe_roms_32.o
+obj-$(CONFIG_X86_32)	+= sys_i386_32.o i386_ksyms_32.o
+obj-$(CONFIG_X86_64)	+= sys_x86_64.o x8664_ksyms_64.o
+obj-$(CONFIG_X86_64)	+= syscall_64.o vsyscall_64.o
+obj-y			+= bootflag.o e820.o
+obj-y			+= pci-dma.o quirks.o i8237.o topology.o kdebugfs.o
+obj-y			+= alternative.o i8253.o pci-nommu.o
+obj-y			+= tsc.o io_delay.o rtc.o
 
-obj-@(X86_TRAMPOLINE)	+= trampoline.c
-obj-y				+= process.c
-obj-y				+= i387.c xsave.c
-obj-y				+= ptrace.c
-obj-@(X86_DS)		+= ds.c
-obj-@(X86_DS_SELFTEST)		+= ds_selftest.c
-obj-@(X86_32)		+= tls.c
-obj-@(IA32_EMULATION)	+= tls.c
-obj-y				+= step.c
-obj-@(INTEL_TXT)	+= tboot.c
-obj-@(STACKTRACE)	+= stacktrace.c
+obj-$(CONFIG_X86_TRAMPOLINE)	+= trampoline.o
+obj-y				+= process.o
+obj-y				+= i387.o xsave.o
+obj-y				+= ptrace.o
+obj-$(CONFIG_X86_DS)		+= ds.o
+obj-$(CONFIG_X86_DS_SELFTEST)		+= ds_selftest.o
+obj-$(CONFIG_X86_32)		+= tls.o
+obj-$(CONFIG_IA32_EMULATION)	+= tls.o
+obj-y				+= step.o
+obj-$(CONFIG_INTEL_TXT)		+= tboot.o
+obj-$(CONFIG_STACKTRACE)	+= stacktrace.o
 obj-y				+= cpu/built-in.o
 obj-y				+= acpi/built-in.o
-obj-@(SFI)			+= sfi.c
-obj-y				+= reboot.c
-obj-@(MCA)		+= mca_32.c
-obj-@(X86_MSR)		+= msr.c
-obj-@(X86_CPUID)		+= cpuid.c
-obj-@(PCI)		+= early-quirks.c
-apm-y				:= apm_32.c
-obj-@(APM)		+= apm.c
-obj-@(SMP)		+= smp.c
-obj-@(SMP)		+= smpboot.c tsc_sync.c
-obj-@(SMP)		+= setup_percpu.c
-obj-@(X86_64_SMP)	+= tsc_sync.c
-obj-@(X86_TRAMPOLINE)	+= trampoline_$(BITS).S
-obj-@(X86_MPPARSE)	+= mpparse.c
-obj-y				+= apic/built-in.o*
-obj-@(X86_REBOOTFIXUPS)	+= reboot_fixups_32.c
-obj-@(DYNAMIC_FTRACE)	+= ftrace.c
-obj-@(FUNCTION_GRAPH_TRACER) += ftrace.c
-obj-@(FTRACE_SYSCALLS)	+= ftrace.c
-obj-@(KEXEC)		+= machine_kexec_$(BITS).c
-obj-@(KEXEC)		+= relocate_kernel_$(BITS).c crash.c
-obj-@(CRASH_DUMP)	+= crash_dump_$(BITS).c
-obj-@(KPROBES)		+= kprobes.c
-obj-@(MODULES)		+= module.c
-obj-@(EFI) 		+= efi.c efi_$(BITS).c efi_stub_$(BITS).c
-obj-@(DOUBLEFAULT) 	+= doublefault_32.c
-obj-@(KGDB)		+= kgdb.c
-obj-@(VM86)		+= vm86_32.c
-obj-@(EARLY_PRINTK)	+= early_printk.c
+obj-$(CONFIG_SFI)		+= sfi.o
+obj-y				+= reboot.o
+obj-$(CONFIG_MCA)		+= mca_32.o
+obj-$(CONFIG_X86_MSR)		+= msr.o
+obj-$(CONFIG_X86_CPUID)		+= cpuid.o
+obj-$(CONFIG_PCI)		+= early-quirks.o
+apm-y				:= apm_32.o
+obj-$(CONFIG_APM)		+= apm.o
+obj-$(CONFIG_SMP)		+= smp.o
+obj-$(CONFIG_SMP)		+= smpboot.o tsc_sync.o
+obj-$(CONFIG_SMP)		+= setup_percpu.o
+obj-$(CONFIG_X86_64_SMP)	+= tsc_sync.o
+obj-$(CONFIG_X86_TRAMPOLINE)	+= trampoline_$(BITS).o
+obj-$(CONFIG_X86_MPPARSE)	+= mpparse.o
+obj-y				+= apic/built-in.o
+obj-$(CONFIG_X86_REBOOTFIXUPS)	+= reboot_fixups_32.o
+obj-$(CONFIG_DYNAMIC_FTRACE)	+= ftrace.o
+obj-$(CONFIG_FUNCTION_GRAPH_TRACER) += ftrace.o
+obj-$(CONFIG_FTRACE_SYSCALLS)	+= ftrace.o
+obj-$(CONFIG_KEXEC)		+= machine_kexec_$(BITS).o
+obj-$(CONFIG_KEXEC)		+= relocate_kernel_$(BITS).o crash.o
+obj-$(CONFIG_CRASH_DUMP)	+= crash_dump_$(BITS).o
+obj-$(CONFIG_KPROBES)		+= kprobes.o
+obj-$(CONFIG_MODULES)		+= module.o
+obj-$(CONFIG_EFI) 		+= efi.o efi_$(BITS).o efi_stub_$(BITS).o
+obj-$(CONFIG_DOUBLEFAULT) 	+= doublefault_32.o
+obj-$(CONFIG_KGDB)		+= kgdb.o
+obj-$(CONFIG_VM86)		+= vm86_32.o
+obj-$(CONFIG_EARLY_PRINTK)	+= early_printk.o
 
-obj-@(HPET_TIMER) 	+= hpet.c
+obj-$(CONFIG_HPET_TIMER) 	+= hpet.o
 
-obj-@(K8_NB)		+= k8.c
-obj-@(MGEODE_LX)		+= geode_32.c mfgpt_32.c
-obj-@(DEBUG_RODATA_TEST)	+= test_rodata.c
-obj-@(DEBUG_NX_TEST)	+= test_nx.c
+obj-$(CONFIG_K8_NB)		+= k8.o
+obj-$(CONFIG_MGEODE_LX)		+= geode_32.o mfgpt_32.o
+obj-$(CONFIG_DEBUG_RODATA_TEST)	+= test_rodata.o
+obj-$(CONFIG_DEBUG_NX_TEST)	+= test_nx.o
 
-obj-@(VMI)		+= vmi_32.c vmiclock_32.c
-obj-@(KVM_GUEST)		+= kvm.c
-obj-@(KVM_CLOCK)		+= kvmclock.c
-obj-@(PARAVIRT)		+= paravirt.c paravirt_patch_$(BITS).c
-obj-@(PARAVIRT_SPINLOCKS)+= paravirt-spinlocks.c
-obj-@(PARAVIRT_CLOCK)	+= pvclock.c
+obj-$(CONFIG_VMI)		+= vmi_32.o vmiclock_32.o
+obj-$(CONFIG_KVM_GUEST)		+= kvm.o
+obj-$(CONFIG_KVM_CLOCK)		+= kvmclock.o
+obj-$(CONFIG_PARAVIRT)		+= paravirt.o paravirt_patch_$(BITS).o
+obj-$(CONFIG_PARAVIRT_SPINLOCKS)+= paravirt-spinlocks.o
+obj-$(CONFIG_PARAVIRT_CLOCK)	+= pvclock.o
 
-obj-@(PCSPKR_PLATFORM)	+= pcspeaker.c
+obj-$(CONFIG_PCSPKR_PLATFORM)	+= pcspeaker.o
 
-obj-@(SCx200)		+= scx200.c
-scx200-y			+= scx200_32.c
+obj-$(CONFIG_SCx200)		+= scx200.o
+scx200-y			+= scx200_32.o
 
-obj-@(OLPC)		+= olpc.c
-obj-@(X86_MRST)		+= mrst.c
+obj-$(CONFIG_OLPC)		+= olpc.o
+obj-$(CONFIG_X86_MRST)		+= mrst.o
 
-microcode-y				:= microcode_core.c
-microcode-@(MICROCODE_INTEL)	+= microcode_intel.c
-microcode-@(MICROCODE_AMD)	+= microcode_amd.c
-obj-@(MICROCODE)			+= microcode.c
+microcode-y				:= microcode_core.o
+microcode-$(CONFIG_MICROCODE_INTEL)	+= microcode_intel.o
+microcode-$(CONFIG_MICROCODE_AMD)	+= microcode_amd.o
+obj-$(CONFIG_MICROCODE)			+= microcode.o
 
-obj-@(X86_CHECK_BIOS_CORRUPTION) += check.c
+obj-$(CONFIG_X86_CHECK_BIOS_CORRUPTION) += check.o
 
-obj-@(SWIOTLB)			+= pci-swiotlb.c
+obj-$(CONFIG_SWIOTLB)			+= pci-swiotlb.o
 
 ###
 # 64 bit specific files
-ifeq (@(X86_64),y)
-	obj-@(X86_UV)		+= tlb_uv.c bios_uv.c uv_irq.c uv_sysfs.c uv_time.c
-	obj-@(X86_PM_TIMER)	+= pmtimer_64.c
-	obj-@(AUDIT)		+= audit_64.c
+ifeq ($(CONFIG_X86_64),y)
+	obj-$(CONFIG_X86_UV)		+= tlb_uv.o bios_uv.o uv_irq.o uv_sysfs.o uv_time.o
+	obj-$(CONFIG_X86_PM_TIMER)	+= pmtimer_64.o
+	obj-$(CONFIG_AUDIT)		+= audit_64.o
 
-	obj-@(GART_IOMMU)	+= pci-gart_64.c aperture_64.c
-	obj-@(CALGARY_IOMMU)	+= pci-calgary_64.c tce_64.c
-	obj-@(AMD_IOMMU)		+= amd_iommu_init.c amd_iommu.c
+	obj-$(CONFIG_GART_IOMMU)	+= pci-gart_64.o aperture_64.o
+	obj-$(CONFIG_CALGARY_IOMMU)	+= pci-calgary_64.o tce_64.o
+	obj-$(CONFIG_AMD_IOMMU)		+= amd_iommu_init.o amd_iommu.o
 
-	obj-@(PCI_MMCONFIG)	+= mmconf-fam10h_64.c
-	obj-y				+= vsmp_64.c
+	obj-$(CONFIG_PCI_MMCONFIG)	+= mmconf-fam10h_64.o
+	obj-y				+= vsmp_64.o
 endif
+
 include $(LINUX_ROOT)/extra.tup
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup

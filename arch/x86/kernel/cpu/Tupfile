@@ -10,29 +10,29 @@ modname = cpu
 #CFLAGS_REMOVE_common.c = -pg
 #endif
 
-obj-y			:= intel_cacheinfo.c addon_cpuid_features.c
-obj-y			+= proc.c capflags.c powerflags.c common.c
-obj-y			+= vmware.c hypervisor.c
+obj-y			:= intel_cacheinfo.o addon_cpuid_features.o
+obj-y			+= proc.o capflags.o powerflags.o common.o
+obj-y			+= vmware.o hypervisor.o sched.o
 
-obj-@(X86_32)	+= bugs.c cmpxchg.c
-obj-@(X86_64)	+= bugs_64.c
+obj-$(CONFIG_X86_32)	+= bugs.o cmpxchg.o
+obj-$(CONFIG_X86_64)	+= bugs_64.o
 
-obj-@(X86_CPU_DEBUG)		+= cpu_debug.c
+obj-$(CONFIG_X86_CPU_DEBUG)		+= cpu_debug.o
 
-obj-@(CPU_SUP_INTEL)		+= intel.c
-obj-@(CPU_SUP_AMD)		+= amd.c
-obj-@(CPU_SUP_CYRIX_32)		+= cyrix.c
-obj-@(CPU_SUP_CENTAUR)		+= centaur.c
-obj-@(CPU_SUP_TRANSMETA_32)	+= transmeta.c
-obj-@(CPU_SUP_UMC_32)		+= umc.c
+obj-$(CONFIG_CPU_SUP_INTEL)		+= intel.o
+obj-$(CONFIG_CPU_SUP_AMD)		+= amd.o
+obj-$(CONFIG_CPU_SUP_CYRIX_32)		+= cyrix.o
+obj-$(CONFIG_CPU_SUP_CENTAUR)		+= centaur.o
+obj-$(CONFIG_CPU_SUP_TRANSMETA_32)	+= transmeta.o
+obj-$(CONFIG_CPU_SUP_UMC_32)		+= umc.o
 
-obj-@(PERF_COUNTERS)		+= perf_counter.c
+obj-$(CONFIG_PERF_EVENTS)		+= perf_event.o
 
-obj-@(X86_MCE)			+= mcheck/built-in.o
-obj-@(MTRR)			+= mtrr/built-in.o
-obj-@(CPU_FREQ)			+= cpufreq/built-in.o
+obj-$(CONFIG_X86_MCE)			+= mcheck/built-in.o
+obj-$(CONFIG_MTRR)			+= mtrr/built-in.o
+obj-$(CONFIG_CPU_FREQ)			+= cpufreq/built-in.o
 
-obj-@(X86_LOCAL_APIC)		+= perfctr-watchdog.c
+obj-$(CONFIG_X86_LOCAL_APIC)		+= perfctr-watchdog.o
 
 #quiet_cmd_mkcapflags = MKCAP   $@
 #      cmd_mkcapflags = $(PERL) $(srctree)/$(src)/mkcapflags.pl $< $@
@@ -44,4 +44,4 @@ obj-@(X86_LOCAL_APIC)		+= perfctr-watchdog.c
 #	$(call if_changed,mkcapflags)
 cpufeature = ../../include/asm/cpufeature.h
 : mkcapflags.pl |> ^ MKCAP %o^ perl %f $(cpufeature) %o |> capflags.c
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup

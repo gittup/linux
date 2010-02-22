@@ -1,8 +1,8 @@
 include_rules
 
-link-y += kernel/built-in.o
-link-y += mm/built-in.o
-#link-y += crypto/built-in.o
-link-y += vdso/built-in.o
+obj-y += kernel/built-in.o
+obj-y += mm/built-in.o
+#obj-y += crypto/built-in.o
+obj-y += vdso/built-in.o
 
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup

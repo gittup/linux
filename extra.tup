@@ -1,3 +1,3 @@
 include compiler.tup
 
-: foreach $(extra-y) | $(generated_headers) $(compiler_proper) $(LD) |> ^ CC %f^ $(CC) $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR($(modname))" -c %f -o %o |> %B.o {objs}
+: foreach $(extra-y) |> !cc_linux |>

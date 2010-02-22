@@ -1,5 +1,5 @@
 include_rules
-#TODO
-BITS = 32
+# TODO
+BITS=32
 include Makefile
 include $(LINUX_ROOT)/linux3.tup
