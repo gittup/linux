@@ -1,12 +1,3 @@
 include_rules
-modname = intelfb
-
-intelfb-y := intelfbdrv.c intelfbhw.c
-intelfb-@(FB_INTEL_I2C) += intelfb_i2c.c
-obj-@(FB_INTEL) += $(intelfb-y)
-
-ifdef FB_INTEL_DEBUG
-#EXTRA_CFLAGS += -DDEBUG -DVERBOSE -DREGDUMP
-EXTRA_CFLAGS += -DDEBUG -DREGDUMP
-endif
-include $(LINUX_ROOT)/linux.tup
+include Makefile
+include $(LINUX_ROOT)/linux3.tup

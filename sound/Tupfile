@@ -1,5 +1,5 @@
 include_rules
-# Makefile for the Linux sound card driver
+# Tupfile for the Linux sound card driver
 #
 
 obj-@(SOUND) += sound_core.o

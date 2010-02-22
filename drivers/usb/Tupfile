@@ -1,54 +1,48 @@
 include_rules
-modname = usb
 #
-# Makefile for the kernel USB device drivers.
+# Tupfile for the kernel USB device drivers.
 #
 
 # Object files in subdirectories
 
-obj-@(USB)		+= core/built-in.o
+obj-$(CONFIG_USB)		+= core/built-in.o
 
-obj-@(USB_MON)		+= mon/built-in.o
+obj-$(CONFIG_USB_MON)		+= mon/built-in.o
 
-host-@(PCI) = y
-host-@(USB_EHCI_HCD) = y
-host-@(USB_ISP116X_HCD)	 = y
-host-@(USB_OHCI_HCD) = y
-host-@(USB_UHCI_HCD) = y
-host-@(USB_FHCI_HCD) = y
-host-@(USB_XHCI_HCD) = y
-host-@(USB_SL811_HCD) = y
-host-@(USB_IPS1362_HCD) = y
-host-@(USB_U132_HCD) = y
-host-@(USB_R8A66597_HCD) = y
-host-@(USB_HWA_HCD) = y
-host-@(USB_ISP1760_HCD) = y
-obj-$(host-y)		+= host/built-in.o
+obj-$(CONFIG_PCI)		+= host/built-in.o
+obj-$(CONFIG_USB_EHCI_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_ISP116X_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_OHCI_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_UHCI_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_FHCI_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_XHCI_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_SL811_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_ISP1362_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_U132_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_R8A66597_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_HWA_HCD)	+= host/built-in.o
+obj-$(CONFIG_USB_ISP1760_HCD)	+= host/built-in.o
 
-obj-@(USB_C67X00_HCD)	+= c67x00/built-in.o
+obj-$(CONFIG_USB_C67X00_HCD)	+= c67x00/built-in.o
 
-obj-@(USB_WUSB)		+= wusbcore/built-in.o
+obj-$(CONFIG_USB_WUSB)		+= wusbcore/built-in.o
 
-class-@(USB_ACM) = y
-class-@(USB_PRINTER) = y
-class-@(USB_WDM) = y
-class-@(USB_TMC) = y
-obj-$(class-y)		+= class/built-in.o
+obj-$(CONFIG_USB_ACM)		+= class/built-in.o
+obj-$(CONFIG_USB_PRINTER)	+= class/built-in.o
+obj-$(CONFIG_USB_WDM)		+= class/built-in.o
+obj-$(CONFIG_USB_TMC)		+= class/built-in.o
 
-storage-@(USB_STORAGE) = y
-storage-@(USB) = y
-obj-$(storage-y)	+= storage/built-in.o
+obj-$(CONFIG_USB_STORAGE)	+= storage/built-in.o
+obj-$(CONFIG_USB)		+= storage/built-in.o
 
-image-@(USB_MDC800) = y
-image-@(USB_MICROTEK) = y
-obj-$(image-y)		+= image/built-in.o
+obj-$(CONFIG_USB_MDC800)	+= image/built-in.o
+obj-$(CONFIG_USB_MICROTEK)	+= image/built-in.o
 
-obj-@(USB_SERIAL)	+= serial/built-in.o
+obj-$(CONFIG_USB_SERIAL)	+= serial/built-in.o
 
-obj-@(USB)		+= misc/built-in.o
-obj-y 			+= early/built-in.o
+obj-$(CONFIG_USB)		+= misc/built-in.o
+obj-y				+= early/built-in.o
 
-atm-@(USB_ATM) = y
-atm-@(USB_SPEEDTOUCH) = y
-obj-$(atm-y)		+= atm/built-in.o
-include $(LINUX_ROOT)/linux.tup
+obj-$(CONFIG_USB_ATM)		+= atm/built-in.o
+obj-$(CONFIG_USB_SPEEDTOUCH)	+= atm/built-in.o
+include $(LINUX_ROOT)/linux3.tup

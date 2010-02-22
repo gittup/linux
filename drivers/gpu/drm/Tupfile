@@ -1,36 +1,35 @@
 include_rules
-modname = drm
 #
-# Makefile for the drm device driver.  This driver provides support for the
+# Tupfile for the drm device driver.  This driver provides support for the
 # Direct Rendering Infrastructure (DRI) in XFree86 4.1.0 and higher.
 
-CFLAGS += -I$(LINUX_ROOT)/include/drm
+ccflags-y := -Iinclude/drm
 
-drm-y       :=	drm_auth.c drm_bufs.c drm_cache.c \
-		drm_context.c drm_dma.c drm_drawable.c \
-		drm_drv.c drm_fops.c drm_gem.c drm_ioctl.c drm_irq.c \
-		drm_lock.c drm_memory.c drm_proc.c drm_stub.c drm_vm.c \
-		drm_agpsupport.c drm_scatter.c ati_pcigart.c drm_pci.c \
-		drm_sysfs.c drm_hashtab.c drm_sman.c drm_mm.c \
-		drm_crtc.c drm_modes.c drm_edid.c \
-		drm_info.c drm_debugfs.c drm_encoder_slave.c
+drm-y       :=	drm_auth.o drm_bufs.o drm_cache.o \
+		drm_context.o drm_dma.o drm_drawable.o \
+		drm_drv.o drm_fops.o drm_gem.o drm_ioctl.o drm_irq.o \
+		drm_lock.o drm_memory.o drm_proc.o drm_stub.o drm_vm.o \
+		drm_agpsupport.o drm_scatter.o ati_pcigart.o drm_pci.o \
+		drm_sysfs.o drm_hashtab.o drm_sman.o drm_mm.o \
+		drm_crtc.o drm_modes.o drm_edid.o \
+		drm_info.o drm_debugfs.o drm_encoder_slave.o
 
-drm-@(COMPAT) += drm_ioc32.c
+drm-$(CONFIG_COMPAT) += drm_ioc32.o
 
-drm_kms_helper-y := drm_fb_helper.c drm_crtc_helper.c
+drm_kms_helper-y := drm_fb_helper.o drm_crtc_helper.o
 
-obj-@(DRM_KMS_HELPER) += $(drm_kms_helper-y)
+obj-$(CONFIG_DRM_KMS_HELPER) += drm_kms_helper.o
 
-obj-@(DRM_TTM)	+= ttm/built-in.o
-obj-@(DRM_TDFX)	+= tdfx/built-in.o
-obj-@(DRM_R128)	+= r128/built-in.o
-obj-@(DRM_RADEON)+= radeon/built-in.o
-obj-@(DRM_MGA)	+= mga/built-in.o
-obj-@(DRM_I810)	+= i810/built-in.o
-obj-@(DRM_I830)	+= i830/built-in.o
-obj-@(DRM_I915)  += i915/built-in.o
-obj-@(DRM_SIS)   += sis/built-in.o
-obj-@(DRM_SAVAGE)+= savage/built-in.o
-obj-@(DRM_VIA)	+=via/built-in.o
-obj-@(DRM)	+= $(drm-y)
-include $(LINUX_ROOT)/linux.tup
+obj-$(CONFIG_DRM)	+= drm.o
+obj-$(CONFIG_DRM_TTM)	+= ttm/built-in.o
+obj-$(CONFIG_DRM_TDFX)	+= tdfx/built-in.o
+obj-$(CONFIG_DRM_R128)	+= r128/built-in.o
+obj-$(CONFIG_DRM_RADEON)+= radeon/built-in.o
+obj-$(CONFIG_DRM_MGA)	+= mga/built-in.o
+obj-$(CONFIG_DRM_I810)	+= i810/built-in.o
+obj-$(CONFIG_DRM_I830)	+= i830/built-in.o
+obj-$(CONFIG_DRM_I915)  += i915/built-in.o
+obj-$(CONFIG_DRM_SIS)   += sis/built-in.o
+obj-$(CONFIG_DRM_SAVAGE)+= savage/built-in.o
+obj-$(CONFIG_DRM_VIA)	+=via/built-in.o
+include $(LINUX_ROOT)/linux3.tup

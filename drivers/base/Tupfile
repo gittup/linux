@@ -1,28 +1,27 @@
 include_rules
-modname = base
-# Makefile for the Linux device tree
+# Tupfile for the Linux device tree
 
-obj-y			:= core.c sys.c bus.c dd.c \
-			   driver.c class.c platform.c \
-			   cpu.c firmware.c init.c map.c devres.c \
-			   attribute_container.c transport_class.c
-obj-@(DEVTMPFS) += devtmpfs.c
-obj-y += power/built-in.o
-obj-@(HAS_DMA)	+= dma-mapping.c
-obj-@(HAVE_GENERIC_DMA_COHERENT) += dma-coherent.c
-obj-@(ISA)	+= isa.c
-obj-@(FW_LOADER)	+= firmware_class.c
-obj-@(NUMA)	+= node.c
-obj-@(MEMORY_HOTPLUG_SPARSE) += memory.c
-obj-@(SMP)	+= topology.c
-obj-@(IOMMU_API) += iommu.c
-ifeq (@(SYSFS),y)
-obj-@(MODULES)	+= module.c
+obj-y			:= core.o sys.o bus.o dd.o \
+			   driver.o class.o platform.o \
+			   cpu.o firmware.o init.o map.o devres.o \
+			   attribute_container.o transport_class.o
+obj-$(CONFIG_DEVTMPFS)	+= devtmpfs.o
+obj-y			+= power/built-in.o
+obj-$(CONFIG_HAS_DMA)	+= dma-mapping.o
+obj-$(CONFIG_HAVE_GENERIC_DMA_COHERENT) += dma-coherent.o
+obj-$(CONFIG_ISA)	+= isa.o
+obj-$(CONFIG_FW_LOADER)	+= firmware_class.o
+obj-$(CONFIG_NUMA)	+= node.o
+obj-$(CONFIG_MEMORY_HOTPLUG_SPARSE) += memory.o
+obj-$(CONFIG_SMP)	+= topology.o
+obj-$(CONFIG_IOMMU_API) += iommu.o
+ifeq ($(CONFIG_SYSFS),y)
+obj-$(CONFIG_MODULES)	+= module.o
 endif
-obj-@(SYS_HYPERVISOR) += hypervisor.c
+obj-$(CONFIG_SYS_HYPERVISOR) += hypervisor.o
 
-ifeq (@(DEBUG_DRIVER),y)
+ifeq ($(CONFIG_DEBUG_DRIVER),y)
 EXTRA_CFLAGS += -DDEBUG
 endif
 
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup

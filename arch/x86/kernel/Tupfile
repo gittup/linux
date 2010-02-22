@@ -6,7 +6,7 @@ BITS=32
 
 modname = kernel
 #
-# Makefile for the linux kernel.
+# Tupfile for the linux kernel.
 #
 
 extra-y                := head_$(BITS).S head$(BITS).c head.c init_task.c

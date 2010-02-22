@@ -1,64 +1,66 @@
+ifeq (@(ACPI),y)
 include_rules
-modname = acpi
 #
-# Makefile for the Linux ACPI interpreter
+# Tupfile for the Linux ACPI interpreter
 #
 
 ccflags-y			:= -Os
-ccflags-@(ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
+ccflags-$(CONFIG_ACPI_DEBUG)	+= -DACPI_DEBUG_OUTPUT
 
 #
 # ACPI Boot-Time Table Parsing
 #
-acpi-y				+= tables.c
-acpi-@(X86)		+= blacklist.c
+acpi-y				+= tables.o
+acpi-$(CONFIG_X86)		+= blacklist.o
 
+#
+# ACPI Core Subsystem (Interpreter)
+#
+acpi-y				+= acpi.o \
+					acpica/built-in.o
 
 # All the builtin files are in the "acpi." module_param namespace.
-acpi-y				+= osl.c utils.c reboot.c
+acpi-y				+= osl.o utils.o reboot.o
 
 # sleep related files
-acpi-y				+= wakeup.c
-acpi-y				+= sleep.c
-acpi-@(ACPI_SLEEP)	+= proc.c
+acpi-y				+= wakeup.o
+acpi-y				+= sleep.o
+acpi-$(CONFIG_ACPI_SLEEP)	+= proc.o
 
 
 #
 # ACPI Bus and Device Drivers
 #
-acpi-y				+= bus.c glue.c
-acpi-y				+= scan.c
-acpi-y				+= ec.c
-acpi-@(ACPI_DOCK)	+= dock.c
-acpi-y				+= pci_root.c pci_link.c pci_irq.c pci_bind.c
-acpi-y				+= power.c
-acpi-y				+= system.c event.c
-acpi-@(ACPI_DEBUG)	+= debug.c
-acpi-@(ACPI_NUMA)	+= numa.c
-acpi-@(ACPI_PROCFS_POWER) += cm_sbs.c
-# TODO: ifdef?
-#ifdef CONFIG_ACPI_VIDEO
-acpi-@(ACPI_VIDEO) += video_detect.c
+acpi-y				+= bus.o glue.o
+acpi-y				+= scan.o
+acpi-y				+= ec.o
+acpi-$(CONFIG_ACPI_DOCK)	+= dock.o
+acpi-y				+= pci_root.o pci_link.o pci_irq.o pci_bind.o
+acpi-y				+= power.o
+acpi-y				+= system.o event.o
+acpi-$(CONFIG_ACPI_DEBUG)	+= debug.o
+acpi-$(CONFIG_ACPI_NUMA)	+= numa.o
+acpi-$(CONFIG_ACPI_PROCFS_POWER) += cm_sbs.o
+acpi-$(CONFIG_ACPI_VIDEO)				+= video_detect.o
 
 # These are (potentially) separate modules
-acpi-@(ACPI_AC) 		+= ac.c
-acpi-@(ACPI_BUTTON)	+= button.c
-acpi-@(ACPI_FAN)		+= fan.c
-acpi-@(ACPI_VIDEO)	+= video.c
-acpi-@(ACPI_PCI_SLOT)	+= pci_slot.c
-acpi-@(ACPI_PROCESSOR)	+= processor.c
-acpi-@(ACPI_CONTAINER)	+= container.c
-acpi-@(ACPI_THERMAL)	+= thermal.c
-acpi-@(ACPI_HOTPLUG_MEMORY) += acpi_memhotplug.c
-acpi-@(ACPI_BATTERY)	+= battery.c
-acpi-@(ACPI_SBS)		+= sbshc.c
-acpi-@(ACPI_SBS)		+= sbs.c
-acpi-@(ACPI_POWER_METER)	+= power_meter.c
+obj-$(CONFIG_ACPI_AC) 		+= ac.o
+obj-$(CONFIG_ACPI_BUTTON)	+= button.o
+obj-$(CONFIG_ACPI_FAN)		+= fan.o
+obj-$(CONFIG_ACPI_VIDEO)	+= video.o
+obj-$(CONFIG_ACPI_PCI_SLOT)	+= pci_slot.o
+obj-$(CONFIG_ACPI_PROCESSOR)	+= processor.o
+obj-$(CONFIG_ACPI_CONTAINER)	+= container.o
+obj-$(CONFIG_ACPI_THERMAL)	+= thermal.o
+obj-$(CONFIG_ACPI_HOTPLUG_MEMORY) += acpi_memhotplug.o
+obj-$(CONFIG_ACPI_BATTERY)	+= battery.o
+obj-$(CONFIG_ACPI_SBS)		+= sbshc.o
+obj-$(CONFIG_ACPI_SBS)		+= sbs.o
+obj-$(CONFIG_ACPI_POWER_METER)	+= power_meter.o
 
 # processor has its own "processor." module_param namespace
-processor-y			:= processor_core.c processor_throttling.c
-processor-y			+= processor_idle.c processor_thermal.c
-processor-@(CPU_FREQ)	+= processor_perflib.c
-obj-@(ACPI) += $(acpi-y)
-# TODO: link-y acpica
-include $(LINUX_ROOT)/linux.tup
+processor-y			:= processor_core.o processor_throttling.o
+processor-y			+= processor_idle.o processor_thermal.o
+processor-$(CONFIG_CPU_FREQ)	+= processor_perflib.o
+include $(LINUX_ROOT)/linux3.tup
+endif

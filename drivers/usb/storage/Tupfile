@@ -1,38 +1,48 @@
 include_rules
-modname = storage
 #
-# Makefile for the USB Mass Storage device drivers.
+# Tupfile for the USB Mass Storage device drivers.
 #
-# 15 Aug 2000, Christoph Hellwig <hch@infradead.crg>
+# 15 Aug 2000, Christoph Hellwig <hch@infradead.org>
 # Rewritten to use lists instead of if-statements.
 #
 
 EXTRA_CFLAGS	:= -Idrivers/scsi
 
+obj-$(CONFIG_USB_STORAGE)	+= usb-storage.o
 
-usb-storage-obj-@(USB_STORAGE_DEBUG)	+= debug.c
+usb-storage-obj-$(CONFIG_USB_STORAGE_DEBUG)	+= debug.o
 
-usb-storage-y :=	scsiglue.c protocol.c transport.c usb.c \
-			initializers.c sierra_ms.c option_ms.c $(usb-storage-obj-y)
+usb-storage-objs :=	scsiglue.o protocol.o transport.o usb.o \
+			initializers.o sierra_ms.o option_ms.o $(usb-storage-obj-y)
 
-ifeq (@(USB_LIBUSUAL),y)
-	obj-@(USB)	+= usb-libusual.c
-	usb-libusual-y	:= libusual.c usual-tables.c
+ifeq ($(CONFIG_USB_LIBUSUAL),y)
+	obj-$(CONFIG_USB)	+= usb-libusual.o
+	usb-libusual-objs	:= libusual.o usual-tables.o
 else
-	usb-storage-y	+= usual-tables.c
+	usb-storage-objs	+= usual-tables.o
 endif
 
-obj-@(USB_STORAGE) += $(usb-storage-y) $(usb-libusual-y)
-obj-@(USB_STORAGE_ALAUDA)	+= alauda.c
-obj-@(USB_STORAGE_CYPRESS_ATACB) += cypress_atacb.c
-obj-@(USB_STORAGE_DATAFAB)	+= datafab.c
-obj-@(USB_STORAGE_FREECOM)	+= freecom.c
-obj-@(USB_STORAGE_ISD200)	+= isd200.c
-obj-@(USB_STORAGE_JUMPSHOT)	+= jumpshot.c
-obj-@(USB_STORAGE_KARMA)	+= karma.c
-obj-@(USB_STORAGE_ONETOUCH)	+= onetouch.c
-obj-@(USB_STORAGE_SDDR09)	+= sddr09.c
-obj-@(USB_STORAGE_SDDR55)	+= sddr55.c
-obj-@(USB_STORAGE_USBAT)	+= usbat.c
+obj-$(CONFIG_USB_STORAGE_ALAUDA)	+= ums-alauda.o
+obj-$(CONFIG_USB_STORAGE_CYPRESS_ATACB) += ums-cypress.o
+obj-$(CONFIG_USB_STORAGE_DATAFAB)	+= ums-datafab.o
+obj-$(CONFIG_USB_STORAGE_FREECOM)	+= ums-freecom.o
+obj-$(CONFIG_USB_STORAGE_ISD200)	+= ums-isd200.o
+obj-$(CONFIG_USB_STORAGE_JUMPSHOT)	+= ums-jumpshot.o
+obj-$(CONFIG_USB_STORAGE_KARMA)		+= ums-karma.o
+obj-$(CONFIG_USB_STORAGE_ONETOUCH)	+= ums-onetouch.o
+obj-$(CONFIG_USB_STORAGE_SDDR09)	+= ums-sddr09.o
+obj-$(CONFIG_USB_STORAGE_SDDR55)	+= ums-sddr55.o
+obj-$(CONFIG_USB_STORAGE_USBAT)		+= ums-usbat.o
 
-include $(LINUX_ROOT)/linux.tup
+ums-alauda-objs		:= alauda.o
+ums-cypress-objs	:= cypress_atacb.o
+ums-datafab-objs	:= datafab.o
+ums-freecom-objs	:= freecom.o
+ums-isd200-objs		:= isd200.o
+ums-jumpshot-objs	:= jumpshot.o
+ums-karma-objs		:= karma.o
+ums-onetouch-objs	:= onetouch.o
+ums-sddr09-objs		:= sddr09.o
+ums-sddr55-objs		:= sddr55.o
+ums-usbat-objs		:= shuttle_usbat.o
+include $(LINUX_ROOT)/linux3.tup
