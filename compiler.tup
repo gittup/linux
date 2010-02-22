@@ -49,8 +49,8 @@ CFLAGS += -ftup-linux
 !ld_linux = | $(link-y) $(LD) |> ^ LD %o^ $(LD) -m elf_i386 -r -o %o %f $(link-y) |>
 !ld_linux.EMPTY = |> ^ EMPTY %o^ ar crs %o |>
 
-*linux[%B.c*] = !cc_linux
-*linux[%B.S*] = !cc_linux
+*linux[%B.c] = !cc_linux
+*linux[%B.S] = !cc_linux
 *linux[$(%B-y) $(%B-objs)] = !ld_linux
 
 endif

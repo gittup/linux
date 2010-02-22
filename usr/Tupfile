@@ -1,21 +1,20 @@
 include_rules
-modname = usr
 #
-# kbuild file for usr/ - including initramfs image
+# Tupfile for usr/ - including initramfs image
 #
 
 # NOTES: Must remove usr/ prefix from initramfs_data.S and gen_initramfs_list.sh
 
 # Generate builtin.c based on initramfs_data.c
-obj-@(BLK_DEV_INITRD) := initramfs_data.S
+obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
 
 hostprogs-y += gen_init_cpio.c
 CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/include
-CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/arch/@(ARCH)/include
+CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/arch/$(CONFIG_ARCH)/include
 include $(LINUX_ROOT)/host.tup
 
 : ../scripts/gen_initramfs_list.sh | gen_init_cpio |> sh %f -o %o -d |> initramfs_data.cpio
 
 generated_headers += initramfs_data.cpio
 
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup
