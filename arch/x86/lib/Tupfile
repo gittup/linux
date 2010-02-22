@@ -4,32 +4,32 @@ modname = lib
 #TODO
 BITS=32
 
-obj-@(SMP) := msr.c
+obj-@(SMP) := msr.o
 
-lib-y := delay.c
-lib-y += thunk_$(BITS).S
-lib-y += usercopy_$(BITS).c getuser.S putuser.S
+lib-y := delay.o
+lib-y += thunk_$(BITS).o
+lib-y += usercopy_$(BITS).o getuser.o putuser.o
 
 CFLAGS_S += -D__ASSEMBLY__
 
 ifeq (@(X86_32),y)
-        obj-y += atomic64_32.c
-        lib-y += checksum_32.S
-        lib-y += strstr_32.c
-        lib-y += semaphore_32.S string_32.c cmpxchg8b_emu.S
-	lib-y += memcpy_32.c
+        obj-y += atomic64_32.o
+        lib-y += checksum_32.o
+        lib-y += strstr_32.o
+        lib-y += semaphore_32.o string_32.o cmpxchg8b_emu.o
+	lib-y += memcpy_32.o
 
-        lib-@(X86_USE_3DNOW) += mmx_32.c
+        lib-@(X86_USE_3DNOW) += mmx_32.o
 else
-        obj-y += io_64.c iomap_copy_64.S
-        lib-y += csum-partial_64.c csum-copy_64.S csum-wrappers_64.c
-        lib-y += clear_page_64.S copy_page_64.S
-        lib-y += memmove_64.c memset_64.S
-        lib-y += copy_user_64.c rwlock_64.S copy_user_nocache_64.S
-	lib-y += memcpy_64.S
+        obj-y += io_64.o iomap_copy_64.o
+        lib-y += csum-partial_64.o csum-copy_64.o csum-wrappers_64.o
+        lib-y += clear_page_64.o copy_page_64.o
+        lib-y += memmove_64.o memset_64.o
+        lib-y += copy_user_64.o rwlock_64.o copy_user_nocache_64.o
+	lib-y += memcpy_64.o
 endif
-obj-y += msr-reg.S msr-reg-export.c
+obj-y += msr-reg.o msr-reg-export.o
 
 generated_headers = ../include/asm/asm-offsets.h
 include $(LINUX_ROOT)/lib.tup
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux3.tup
