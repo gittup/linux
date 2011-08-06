@@ -1,5 +1,4 @@
 include_rules
-include $(LINUX_ROOT)/compiler.tup
 BITS=32
 
 generated_headers = ../../include/asm/asm-offsets.h

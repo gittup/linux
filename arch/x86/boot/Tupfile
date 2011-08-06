@@ -1,5 +1,4 @@
 include_rules
-include $(LINUX_ROOT)/compiler.tup
 #
 # arch/x86/boot/Makefile
 #

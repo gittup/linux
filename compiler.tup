@@ -1,6 +1,3 @@
-ifeq ($(linux_compiler),1)
-else
-linux_compiler = 1
 CFLAGS += -nostdinc
 CFLAGS += -I$(TUP_CWD)/include
 CFLAGS += -I$(TUP_CWD)/arch/@(ARCH)/include
@@ -50,5 +47,3 @@ CFLAGS += -ftup-linux
 *linux[%B.c] = !cc_linux
 *linux[%B.S] = !cc_linux
 *linux[$(%B-y) $(%B-objs)] = !ld_linux
-
-endif

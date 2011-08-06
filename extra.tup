@@ -1,3 +1,1 @@
-include compiler.tup
-
 : foreach $(extra-y) |> !cc_linux |>

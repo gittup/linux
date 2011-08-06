@@ -1,3 +1,2 @@
-include compiler.tup
 : foreach $(lib-y) <| *linux <|
 : $(lib-y) |> !ar |> lib.a

@@ -1,6 +1,6 @@
 include_rules
 
-CFLAGS += -Wall
+CFLAGS = -Wall
 CFLAGS += -Wstrict-prototypes
 CFLAGS += -fomit-frame-pointer
 CFLAGS += -I.

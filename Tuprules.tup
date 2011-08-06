@@ -1,1 +1,2 @@
 LINUX_ROOT = $(TUP_CWD)
+include compiler.tup
