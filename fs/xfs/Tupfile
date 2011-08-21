@@ -1,3 +1,0 @@
-include_rules
-include Makefile
-include $(LINUX_ROOT)/linux.tup

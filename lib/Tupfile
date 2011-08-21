@@ -105,5 +105,6 @@ include $(LINUX_ROOT)/host.tup
 
 generated_headers = crc32table.h
 : gen_crc32table |> ^ GEN %o^ ./%f > %o |> crc32table.h
-include $(LINUX_ROOT)/lib.tup
+
+run $(LINUX_ROOT)/lib.sh $(lib-y)
 include $(LINUX_ROOT)/linux.tup

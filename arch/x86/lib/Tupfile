@@ -31,5 +31,5 @@ endif
 obj-y += msr-reg.o msr-reg-export.o
 
 generated_headers = ../include/asm/asm-offsets.h
-include $(LINUX_ROOT)/lib.tup
+run $(LINUX_ROOT)/lib.sh $(lib-y)
 include $(LINUX_ROOT)/linux.tup

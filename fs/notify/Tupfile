@@ -1,6 +1,2 @@
 include_rules
-obj-$(CONFIG_FSNOTIFY)		+= fsnotify.o notification.o group.o inode_mark.o
-
-obj-y			+= dnotify/built-in.o
-obj-y			+= inotify/built-in.o
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup
