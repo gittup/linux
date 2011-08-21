@@ -6,4 +6,4 @@ include $(LINUX_ROOT)/host.tup
 generated_headers = crc32table.h
 : gen_crc32table |> ^ GEN %o^ ./%f > %o |> crc32table.h
 
-include $(LINUX_ROOT)/linux2.tup
+run $(LINUX_ROOT)/linux.py

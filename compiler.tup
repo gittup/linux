@@ -43,9 +43,3 @@ CFLAGS_S += -D__ASSEMBLY__
 !cc_linux = foreach | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" |> %B.o
 
 !ld_linux = | $(link-y) $(LD) |> ^ LD %o^ $(LD) -m elf_i386 -r -o %o %f $(link-y) |>
-!ld_linux.EMPTY = |> ^ EMPTY %o^ ar crs %o |>
-
-# TODO: Need $(%B-m) for modules instead of $(%B-y)? Or use both?
-*linux[%B.c] = !cc_linux
-*linux[%B.S] = !cc_linux
-*linux[$(%B-y) $(%B-objs)] = !ld_linux

@@ -1,4 +1,4 @@
 include_rules
 cpufeature = ../../include/asm/cpufeature.h
 : mkcapflags.pl |> ^ MKCAP %o^ perl %f $(cpufeature) %o |> capflags.c
-include $(LINUX_ROOT)/linux2.tup
+run $(LINUX_ROOT)/linux.py

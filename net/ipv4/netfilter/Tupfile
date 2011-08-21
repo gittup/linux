@@ -1,4 +1,4 @@
 ifeq (@(NETFILTER),y)
 include_rules
-include $(LINUX_ROOT)/linux2.tup
+run $(LINUX_ROOT)/linux.py
 endif
