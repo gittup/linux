@@ -1,5 +1,4 @@
 ifeq ($(CONFIG_MTRR),y)
 include_rules
-include Makefile
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup
 endif

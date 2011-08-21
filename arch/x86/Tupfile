@@ -1,8 +1,2 @@
 include_rules
-
-obj-y += kernel/built-in.o
-obj-y += mm/built-in.o
-#obj-y += crypto/built-in.o
-obj-y += vdso/built-in.o
-
-include $(LINUX_ROOT)/linux.tup
+run $(LINUX_ROOT)/linux.py Kbuild

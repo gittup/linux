@@ -1,20 +1,2 @@
 include_rules
-
-# TODO
-BITS=32
-
-obj-$(CONFIG_ACPI)		+= boot.o
-obj-$(CONFIG_ACPI_SLEEP)	+= sleep.o wakeup_rm.o wakeup_$(BITS).o
-
-# TODO: ifneq
-ifeq ($(CONFIG_ACPI_PROCESSOR),)
-else
-obj-y				+= cstate.o processor.o
-endif
-
-#$(obj)/wakeup_rm.c:    $(obj)/realmode/wakeup.bin
-#
-#$(obj)/realmode/wakeup.bin: FORCE
-#	$(Q)$(MAKE) $(build)=$(obj)/realmode
-
-include $(LINUX_ROOT)/linux.tup
+run $(LINUX_ROOT)/linux.py BITS=32

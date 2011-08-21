@@ -20,13 +20,13 @@ vdso-link = $(CC_LD) -nostdlib -fPIC -shared -Wl,--hash-style=sysv -m elf_i386 -
 
 : vdso32.S | vdso32-sysenter.so vdso32-int80.so $(compiler_proper) |> ^ ASM %f^ $(CC) $(CFLAGS) -D__ASSEMBLY__ -c %f -o %o  |> %B.o
 
-obj-y = vdso32-setup.o
-
 : foreach vdso32-int80.so.dbg vdso32-sysenter.so.dbg |> ^ NM %f^ nm %f | LC_ALL=C sed -n -e 's/^00*/0/' -e 's/^\([0-9a-fA-F]*\) . \(VDSO[a-zA-Z0-9_]*\)$/\2 = 0x\1;/p' | LC_ALL=C sort > %o |> %B-syms.lds
 : vdso32-int80.so-syms.lds vdso32-sysenter.so-syms.lds |> ^ GEN %o^ if LC_ALL=C sort -u %f > .tmp_vdso32-syms.lds && if grep -q VDSO32_SYSENTER_RETURN vdso32-int80.so-syms.lds; then diff -u .tmp_vdso32-syms.lds vdso32-int80.so-syms.lds; else sed /VDSO32_SYSENTER_RETURN/d .tmp_vdso32-syms.lds | diff -u - vdso32-int80.so-syms.lds; fi && if grep -q VDSO32_SYSENTER_RETURN vdso32-sysenter.so-syms.lds; then diff -u .tmp_vdso32-syms.lds vdso32-sysenter.so-syms.lds; else sed /VDSO32_SYSENTER_RETURN/d .tmp_vdso32-syms.lds | diff -u - vdso32-sysenter.so-syms.lds; fi && : ; then mv -f .tmp_vdso32-syms.lds %o; else rm -f .tmp_vdso32-syms.lds; exit 1; fi |> vdso32-syms.lds
 
+: foreach vdso32-setup.c |> !cc_linux |> {objs}
 link-y += vdso32.o
 link-y += vdso32-syms.lds
+: {objs} |> !ld_linux |> built-in.o
 
 # files to link into the vdso
 #vobjs-y := vdso-note.c vclock_gettime.c vgetcpu.c vvar.c
@@ -156,4 +156,3 @@ link-y += vdso32-syms.lds
 #
 #clean-files := vdso32-syscall* vdso32-sysenter* vdso32-int80*
 #obj-$(VDSO64-y)			+= $(vdso-y)
-include $(LINUX_ROOT)/linux.tup

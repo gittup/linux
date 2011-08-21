@@ -180,14 +180,17 @@ def process_m(obj, makevars):
     print "Process m:", obj
 
 makevars = {}
+file_to_parse = 'Makefile'
 
 realargs = sys.argv[1:]
 for i in realargs:
     eq = i.find('=')
     if(eq != -1):
         makevars[i[0:eq]] = [i[eq+1:]]
+    else:
+        file_to_parse = i
 
-parse('Makefile', makevars)
+parse(file_to_parse, makevars)
 cfiles = {}
 
 if('obj-y' in makevars):
@@ -207,3 +210,7 @@ if('lib-y' in makevars):
     for i in makevars['lib-y']:
         objlist.append(process_y(i, makevars, cfiles))
     print ":", ' '.join(objlist), "|> !ar |> lib.a"
+
+if('extra-y' in makevars):
+    for i in makevars['extra-y']:
+        process_y(i, makevars, cfiles)

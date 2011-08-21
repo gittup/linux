@@ -1,5 +1,2 @@
 include_rules
-#TODO
-BITS = 32
-include Makefile
-include $(LINUX_ROOT)/linux.tup
+run $(LINUX_ROOT)/linux.py BITS=32

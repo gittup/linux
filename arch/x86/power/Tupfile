@@ -1,13 +1,7 @@
 include_rules
-# TODO
-BITS=32
-
-modname = power
 # __restore_processor_state() restores %gs after S3 resume and so should not
 # itself be stack-protected
 nostackp := $(call cc-option, -fno-stack-protector)
 CFLAGS_cpu.c	:= $(nostackp)
 
-obj-@(PM_SLEEP)		+= cpu.o
-obj-@(HIBERNATION)	+= hibernate_$(BITS).o hibernate_asm_$(BITS).o
-include $(LINUX_ROOT)/linux.tup
+run $(LINUX_ROOT)/linux.py BITS=32
