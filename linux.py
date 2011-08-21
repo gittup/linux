@@ -26,12 +26,28 @@ def resolve_vars(s, makevars):
     if(dollarparen == -1):
         return s
 
-    rparen = s.find(')', dollarparen+2)
-    if(rparen == -1):
-        raise Exception("No right parenthesis found in expression: " + s)
+    while(True):
+        rparen = s.find(')', dollarparen+2)
+        if(rparen == -1):
+            raise Exception("No right parenthesis found in expression: " + s)
+        if(s.find('$(', dollarparen+2, rparen-1) == -1):
+            break
+        else:
+            s = s[0:dollarparen+2] + resolve_vars(s[dollarparen+2:], makevars)
+
     var = s[dollarparen+2:rparen]
     value = None
-    if(var in makevars):
+    if(var.startswith('subst')):
+        spattern = var[6:]
+        comma1 = spattern.find(',')
+        comma2 = spattern.find(',', comma1+1)
+        if(comma1 == -1 or comma2 == -2):
+            raise Exception('subst error: Need 2 commas')
+        sfind = spattern[0:comma1]
+        sreplace = spattern[comma1+1:comma2]
+        sstring = spattern[comma2+1:]
+        value = sstring.replace(sfind, sreplace)
+    elif(var in makevars):
         value = ' '.join(makevars[var])
     elif(var.startswith("CONFIG_")):
         value = tup_client.config_var(var[7:])
@@ -63,7 +79,10 @@ def parse(filename):
 
         hashsym = line.find('#')
         if(hashsym != -1):
-            line = line[0:hashsym-1]
+            if(hashsym == 0):
+                line = ""
+            else:
+                line = line[0:hashsym-1]
         line = resolve_vars(line, makevars).lstrip()
         if(line.startswith('ifeq')):
             process_if(line, ifs, True)
@@ -100,13 +119,14 @@ def parse(filename):
 def process_y(obj, makevars):
     if(obj.endswith('.o')):
         subvars = None
-        var_y = obj[:-2] + "-y"
-        if(var_y in makevars):
-            subvars = makevars[var_y]
+
+        var_objs = obj[:-2] + "-objs"
+        if(var_objs in makevars):
+            subvars = makevars[var_objs]
         else:
-            var_objs = obj[:-2] + "-objs"
-            if(var_objs in makevars):
-                subvars = makevars[var_objs]
+            var_y = obj[:-2] + "-y"
+            if(var_y in makevars):
+                subvars = makevars[var_y]
         if(subvars is not None):
             objlist = []
             for i in subvars:
