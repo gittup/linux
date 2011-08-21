@@ -1,7 +1,2 @@
 include_rules
-#
-# Tupfile for linux/drivers/platform
-#
-
-obj-$(CONFIG_X86)		+= x86/built-in.o
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup

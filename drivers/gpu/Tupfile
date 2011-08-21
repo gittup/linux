@@ -1,3 +1,2 @@
 include_rules
-obj-y			+= drm/built-in.o vga/built-in.o
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup

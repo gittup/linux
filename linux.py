@@ -21,6 +21,17 @@ def process_if(line, ifs, val):
     else:
         ifs.append(not val)
 
+def process_ifdef(sym, ifs, makevars, val):
+    if(sym in makevars):
+        ifs.append(val)
+        return
+    elif(sym.startswith('CONFIG_')):
+        value = tup_client.config_var(sym[7:])
+        if(value is not None and value != "n"):
+            ifs.append(val)
+            return
+    ifs.append(not val)
+
 def resolve_vars(s, makevars):
     dollarparen = s.find('$(')
     if(dollarparen == -1):
@@ -51,6 +62,11 @@ def resolve_vars(s, makevars):
         value = ' '.join(makevars[var])
     elif(var.startswith("CONFIG_")):
         value = tup_client.config_var(var[7:])
+        # Some Makefiles, like drivers/storage/usb/Makefile do things
+        # like: ifeq ($(CONFIG_USB_LIBUSUAL),) which expect 'n' to be
+        # an empty string.
+        if(value == "n"):
+            value = ""
 
     rc = []
     if(dollarparen != 0):
@@ -88,6 +104,10 @@ def parse(filename):
             process_if(line, ifs, True)
         elif(line.startswith('ifneq')):
             process_if(line, ifs, False)
+        elif(line.startswith('ifdef')):
+            process_ifdef(line[6:].lstrip(), ifs, makevars, True)
+        elif(line.startswith('ifndef')):
+            process_ifdef(line[7:].lstrip(), ifs, makevars, False)
         elif(line.startswith('else')):
             ifs[-1] = not ifs[-1]
         elif(line.startswith('endif')):
@@ -116,35 +136,41 @@ def parse(filename):
 
     return makevars
 
-def process_y(obj, makevars):
+def obj_compile(obj, objfiles):
+    if(obj in objfiles):
+        return ""
+    cfile = obj[:-2] + ".c"
+    print ":", cfile, "|> !cc_linux |>", obj
+    objfiles[obj] = True
+    return obj
+
+def process_y(obj, makevars, objfiles):
     if(obj.endswith('.o')):
-        subvars = None
+        subvars = []
 
         var_objs = obj[:-2] + "-objs"
         if(var_objs in makevars):
-            subvars = makevars[var_objs]
-        else:
-            var_y = obj[:-2] + "-y"
-            if(var_y in makevars):
-                subvars = makevars[var_y]
-        if(subvars is not None):
+            subvars.extend(makevars[var_objs])
+        var_y = obj[:-2] + "-y"
+        if(var_y in makevars):
+            subvars.extend(makevars[var_y])
+
+        if(subvars):
             objlist = []
             for i in subvars:
                 # Make sure we don't have a thing like:
                 # file-mmu-y := file-mmu.o
                 # which would cause an infinite recursion here
                 if(i == obj):
-                    cfile = obj[:-2] + ".c"
-                    print ":", cfile, "|> !cc_linux |>", obj
+                    # TODO: Need to add to objlist here?
+                    obj_compile(obj, objfiles)
                     continue
-                objlist.append(process_y(i, makevars))
+                objlist.append(process_y(i, makevars, objfiles))
             if(objlist):
                 print ":", ' '.join(objlist), "|> !ld_linux |>", obj
             return obj
         else:
-            cfile = obj[:-2] + ".c"
-            print ":", cfile, "|> !cc_linux |>", obj
-            return obj
+            return obj_compile(obj, objfiles)
     elif(obj.endswith('/')):
         return obj + "built-in.o"
     else:
@@ -155,11 +181,12 @@ def process_m(obj, makevars):
     print "Process m:", obj
 
 makevars = parse('Makefile')
+cfiles = {}
 
 if('obj-y' in makevars):
     objlist = []
     for i in makevars['obj-y']:
-        objlist.append(process_y(i, makevars))
+        objlist.append(process_y(i, makevars, cfiles))
     print ":", ' '.join(objlist), "|> !ld_linux |> built-in.o"
 else:
     print ": |> ^ EMPTY %o^ ar crs %o |> built-in.o"

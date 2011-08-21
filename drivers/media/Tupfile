@@ -1,10 +1,2 @@
 include_rules
-#
-# Tupfile for the kernel multimedia device drivers.
-#
-
-obj-y += common/built-in.o video/built-in.o
-
-obj-$(CONFIG_VIDEO_DEV) += radio/built-in.o
-obj-$(CONFIG_DVB_CORE)  += dvb/built-in.o
-include $(LINUX_ROOT)/linux.tup
+include $(LINUX_ROOT)/linux2.tup
