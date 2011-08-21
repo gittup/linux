@@ -77,10 +77,9 @@ def resolve_vars(s, makevars):
         rc.append(resolve_vars(s[rparen+1:], makevars))
     return ''.join(rc)
 
-def parse(filename):
+def parse(filename, makevars):
     m = open(filename, 'r')
     line = ""
-    makevars = {}
     ifs = []
     for l in m:
         l = l.rstrip('\n')
@@ -139,7 +138,7 @@ def parse(filename):
 def obj_compile(obj, objfiles):
     if(obj in objfiles):
         return ""
-    cfile = obj[:-2] + ".c"
+    cfile = obj[:-2] + ".[cS]"
     print ":", cfile, "|> !cc_linux |>", obj
     objfiles[obj] = True
     return obj
@@ -180,7 +179,15 @@ def process_y(obj, makevars, objfiles):
 def process_m(obj, makevars):
     print "Process m:", obj
 
-makevars = parse('Makefile')
+makevars = {}
+
+realargs = sys.argv[1:]
+for i in realargs:
+    eq = i.find('=')
+    if(eq != -1):
+        makevars[i[0:eq]] = [i[eq+1:]]
+
+parse('Makefile', makevars)
 cfiles = {}
 
 if('obj-y' in makevars):
@@ -194,3 +201,9 @@ else:
 if('obj-m' in makevars):
     for i in makevars['obj-m']:
         process_m(i, makevars)
+
+if('lib-y' in makevars):
+    objlist = []
+    for i in makevars['lib-y']:
+        objlist.append(process_y(i, makevars, cfiles))
+    print ":", ' '.join(objlist), "|> !ar |> lib.a"

@@ -1,35 +1,3 @@
 include_rules
-modname = lib
-
-#TODO
-BITS=32
-
-obj-@(SMP) := msr.o
-
-lib-y := delay.o
-lib-y += thunk_$(BITS).o
-lib-y += usercopy_$(BITS).o getuser.o putuser.o
-
-CFLAGS_S += -D__ASSEMBLY__
-
-ifeq (@(X86_32),y)
-        obj-y += atomic64_32.o
-        lib-y += checksum_32.o
-        lib-y += strstr_32.o
-        lib-y += semaphore_32.o string_32.o cmpxchg8b_emu.o
-	lib-y += memcpy_32.o
-
-        lib-@(X86_USE_3DNOW) += mmx_32.o
-else
-        obj-y += io_64.o iomap_copy_64.o
-        lib-y += csum-partial_64.o csum-copy_64.o csum-wrappers_64.o
-        lib-y += clear_page_64.o copy_page_64.o
-        lib-y += memmove_64.o memset_64.o
-        lib-y += copy_user_64.o rwlock_64.o copy_user_nocache_64.o
-	lib-y += memcpy_64.o
-endif
-obj-y += msr-reg.o msr-reg-export.o
-
 generated_headers = ../include/asm/asm-offsets.h
-run $(LINUX_ROOT)/lib.sh $(lib-y)
-include $(LINUX_ROOT)/linux.tup
+run $(LINUX_ROOT)/linux.py BITS=32

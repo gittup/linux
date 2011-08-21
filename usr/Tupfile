@@ -6,7 +6,7 @@ include_rules
 # NOTES: Must remove usr/ prefix from initramfs_data.S and gen_initramfs_list.sh
 
 # Generate builtin.c based on initramfs_data.c
-obj-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.o
+src-$(CONFIG_BLK_DEV_INITRD) := initramfs_data.S
 
 hostprogs-y += gen_init_cpio.c
 CFLAGS_gen_init_cpio.c += -I$(LINUX_ROOT)/include
@@ -17,4 +17,5 @@ include $(LINUX_ROOT)/host.tup
 
 generated_headers += initramfs_data.cpio
 
-include $(LINUX_ROOT)/linux.tup
+: foreach $(src-y) |> !cc_linux |> %B.o {objs}
+: {objs} |> !ld_linux |> built-in.o

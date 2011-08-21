@@ -38,6 +38,8 @@ CFLAGS += -fno-strict-overflow
 CFLAGS += -fno-dwarf2-cfi-asm
 CFLAGS += -ftup-linux
 
+CFLAGS_S += -D__ASSEMBLY__
+
 !cc_linux = foreach | $(generated_headers) $(compiler_proper) |> ^ CC %f^ $(CC) -c %f -o %o $(CFLAGS) $(CFLAGS_%e) $(CFLAGS_%f) -D"KBUILD_STR(s)=#s" -D"KBUILD_BASENAME=KBUILD_STR(%B)" -D"KBUILD_MODNAME=KBUILD_STR(%B)" |> %B.o
 
 !ld_linux = | $(link-y) $(LD) |> ^ LD %o^ $(LD) -m elf_i386 -r -o %o %f $(link-y) |>
