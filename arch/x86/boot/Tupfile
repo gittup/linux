@@ -35,7 +35,6 @@ setup-y		+= printf.c regs.c string.c tty.c video.c video-mode.c
 setup-y		+= version.c
 setup-@(X86_APM_BOOT) += apm.c
 
-CFLAGS_S += -D__ASSEMBLY__
 CFLAGS_S += -DSVGA_MODE=NORMAL_VGA
 
 # The link order of the video-*.o modules can matter.  In particular,

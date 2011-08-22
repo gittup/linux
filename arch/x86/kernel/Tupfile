@@ -3,7 +3,7 @@ include_rules
 CPPFLAGS_vmlinux.lds += -U$(UTS_MACHINE)
 
 generated_headers += ../include/asm/asm-offsets.h
-: vmlinux.lds.S | $(generated_headers) $(compiler_proper) |> ^ CPP %o^ $(CC) $(CFLAGS) -P -C -Ui386 -Ui386 -D__ASSEMBLY__ -DLINKER_SCRIPT -E %f > %o |> vmlinux.lds
+: foreach vmlinux.lds.S | $(generated_headers) $(compiler_proper) |> ^ CPP %o^ $(CC) $(CFLAGS) $(CFLAGS_%e) -P -C -Ui386 -Ui386 -DLINKER_SCRIPT -E %f > %o |> vmlinux.lds
 
 nostackp := $(call cc-option, -fno-stack-protector)
 CFLAGS_vsyscall_64.c	:= $(PROFILING) -g0 $(nostackp)
