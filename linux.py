@@ -1,9 +1,16 @@
 #! /usr/bin/python
+# This script can parse most data-driven linux Makefiles and output a set of
+# :-rules for tup to build the kernel. It does not parse make rules themselves,
+# so those have to be imported into the Tupfile manually.
 
 import sys
 import tup_client
 
 def if_true(ifs):
+    """ Return True/False based on whether or not a False if statement
+        is contained in the 'ifs' array.
+
+    """
     if(not ifs):
         return True
     if(False in ifs):
@@ -11,6 +18,7 @@ def if_true(ifs):
     return True
 
 def process_if(line, ifs, val):
+    """ Process an ifeq/ifneq statement, appending the result to 'ifs' """
     lparen = line.find('(')
     comma = line.find(',', lparen+1)
     rparen = line.find(')', comma+1)
@@ -22,6 +30,7 @@ def process_if(line, ifs, val):
         ifs.append(not val)
 
 def process_ifdef(sym, ifs, makevars, val):
+    """ Process an ifdef/ifndef statement, appending the result to 'ifs' """
     if(sym in makevars):
         ifs.append(val)
         return
@@ -33,6 +42,13 @@ def process_ifdef(sym, ifs, makevars, val):
     ifs.append(not val)
 
 def resolve_vars(s, makevars):
+    """ Replace all occurances of $(var) in 's' with the corresponding value of
+        the variable from 'makevars'. If a variable does not exist in 'makevars'
+        and begins with 'CONFIG_', then we also check with tup to see if it
+        is defined as an @-variable. Returns the string with all variable
+        expressions expanded.
+
+    """
     dollarparen = s.find('$(')
     if(dollarparen == -1):
         return s
@@ -78,6 +94,11 @@ def resolve_vars(s, makevars):
     return ''.join(rc)
 
 def parse(filename, makevars):
+    """ Parses the given file and returns all variable definitions in 'makevars'.
+        Some make syntax is supported, such as if-statements, comments, and
+        basic +=, :=, and = statements. Actual make rules are ignored.
+
+    """
     m = open(filename, 'r')
     line = ""
     ifs = []
@@ -136,6 +157,16 @@ def parse(filename, makevars):
     return makevars
 
 def obj_compile(obj, objfiles):
+    """ Print out a :-rule to compile a .c or .S file to generate the given
+        object. Note that we avoid looking at the directory itself to see
+        which type of file exists, and just use the .[cS] syntax to pick
+        up whichever file is there.
+
+        The 'objfiles' array is used to enforce uniqueness, since we only want
+        one :-rule for each object file, even though the object file may be
+        listed multiple times in the variable list.
+
+    """
     if(obj in objfiles):
         return ""
     cfile = obj[:-2] + ".[cS]"
@@ -144,6 +175,21 @@ def obj_compile(obj, objfiles):
     return obj
 
 def process_y(obj, makevars, objfiles):
+    """ Process a -y object. The object is either a .o file, or a directory.
+
+        For .o files, we have to check whether it just gets compiled from its
+        corresponding .c or .S file, or whether it is really a grouping of
+        multiple object files that get linked together to form a new .o. This
+        is determined by checking whether for 'foo.o' we have a 'foo-y' or
+        'foo-objs' variable that defines more objects, which are recursively
+        processed.
+
+        For directories, we simply return the directory name plus 'built-in.o'
+
+        The return value is the object name that should be included in the
+        linker rule.
+
+    """
     if(obj.endswith('.o')):
         subvars = []
 
@@ -175,13 +221,15 @@ def process_y(obj, makevars, objfiles):
     else:
         print >> sys.stderr, "Who knows:",obj
 
-
 def process_m(obj, makevars):
+    """ Not implemented yet - would create modules """
     print "Process m:", obj
 
 makevars = {}
 file_to_parse = 'Makefile'
 
+# Process arguments to see if we have been passed in a different filename, or
+# any initial variable definitions.
 realargs = sys.argv[1:]
 for i in realargs:
     eq = i.find('=')
@@ -190,27 +238,33 @@ for i in realargs:
     else:
         file_to_parse = i
 
+# Parse the file to get a list of make variables.
 parse(file_to_parse, makevars)
-cfiles = {}
+objfiles = {}
 
+# Process the 'obj-y' variable to create our built-in.o file.
 if('obj-y' in makevars):
     objlist = []
     for i in makevars['obj-y']:
-        objlist.append(process_y(i, makevars, cfiles))
+        objlist.append(process_y(i, makevars, objfiles))
     print ":", ' '.join(objlist), "|> !ld_linux |> built-in.o"
 else:
     print ": |> ^ EMPTY %o^ ar crs %o |> built-in.o"
 
+# Not implemented yet - process obj-m to create modules
 if('obj-m' in makevars):
     for i in makevars['obj-m']:
         process_m(i, makevars)
 
+# Process the 'lib-y' variable to create our lib.a file.
 if('lib-y' in makevars):
     objlist = []
     for i in makevars['lib-y']:
-        objlist.append(process_y(i, makevars, cfiles))
+        objlist.append(process_y(i, makevars, objfiles))
     print ":", ' '.join(objlist), "|> !ar |> lib.a"
 
+# Process 'extra-y' to compile extra files that aren't linked in to this
+# directory's built-in.o or lib.a
 if('extra-y' in makevars):
     for i in makevars['extra-y']:
-        process_y(i, makevars, cfiles)
+        process_y(i, makevars, objfiles)
