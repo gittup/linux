@@ -4,6 +4,12 @@
 # so those have to be imported into the Tupfile manually.
 
 import sys
+import os
+import string
+
+tup_path = os.getcwd() + "/" + string.replace(sys.argv[0], "linux.py", "../tup");
+sys.path.append(tup_path)
+sys.dont_write_bytecode = 1
 import tup_client
 
 def if_true(ifs):
