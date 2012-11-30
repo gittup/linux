@@ -1,0 +1,2 @@
+include_rules
+run $(LINUX_ROOT)/linux.py
