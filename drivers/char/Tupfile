@@ -2,6 +2,6 @@ include_rules
 FONTMAPFILE = cp437.uni
 
 : ../../scripts/conmakehash |> ^ CONMAKEHASH %o^ ./%f $(FONTMAPFILE) > %o |> consolemap_deftbl.c
-: defkeymap.map |> ^ LOADKEYS %o^ loadkeys --mktable %f | sed 's/^static *//' > %o |> defkeymap.c
+: defkeymap.c_shipped |> cp %f %o |> defkeymap.c
 
 run $(LINUX_ROOT)/linux.py
