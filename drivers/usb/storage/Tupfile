@@ -1,2 +1,4 @@
 include_rules
 run $(LINUX_ROOT)/linux.py
+#include Makefile
+#include $(LINUX_ROOT)/build.lua

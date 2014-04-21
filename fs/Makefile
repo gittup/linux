@@ -65,7 +65,7 @@ obj-$(CONFIG_DLM)		+= dlm/
 # Do not add any filesystems before this line
 obj-$(CONFIG_FSCACHE)		+= fscache/
 obj-$(CONFIG_REISERFS_FS)	+= reiserfs/
-obj-$(CONFIG_EXT3_FS)		+= ext3/ # Before ext2 so root fs can be ext3
+obj-$(CONFIG_EXT3_FS)		+= ext3/
 obj-$(CONFIG_EXT2_FS)		+= ext2/
 # We place ext4 after ext2 so plain ext2 root fs's are mounted using ext2
 # unless explicitly requested by rootfstype
@@ -81,7 +81,7 @@ obj-$(CONFIG_MINIX_FS)		+= minix/
 obj-$(CONFIG_FAT_FS)		+= fat/
 obj-$(CONFIG_BFS_FS)		+= bfs/
 obj-$(CONFIG_ISO9660_FS)	+= isofs/
-obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/ # Before hfs to find wrapped HFS+
+obj-$(CONFIG_HFSPLUS_FS)	+= hfsplus/
 obj-$(CONFIG_HFS_FS)		+= hfs/
 obj-$(CONFIG_ECRYPT_FS)		+= ecryptfs/
 obj-$(CONFIG_VXFS_FS)		+= freevxfs/
